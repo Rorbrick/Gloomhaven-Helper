@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="" method="post" style="display:inline;">
+    <h1>{{ party.name }}</h1>
+    <h3>Current Location: {{ party.location }}</h3> 
+    Update location: {{ form.loc }} 
+    <button type="submit" name="location">Save</button>
+</form>
+
+
+    <h3>Achievements</h3>
+<form action="" method="post" style="display:inline;">
+    {% for achievement in party_achievements %}
+    <button type="submit" name="delete_achievement" value="{{ achievement.id }}"><span style="font-size: 0.7em; color: red; border: none;">x</span></button> {{ achievement.text }}<br>
+    {% endfor %}
+</form>
+<form action="" method="post" style="display:inline;">
+    Add Achievement: {{ form.achievement }} <button type="submit" name="achievement">Add</button>
+</form>
+
+<h3>Party Notes</h3>
+<form action="" method="post" style="display:inline;">
+    {% for note in party_notes %}
+    <button type="submit" name="delete_party_note" value="{{ note.id }}"><span style="font-size: 0.7em; color: red; border: none;">x</span></button> {{ note.text }} <br>
+    {% endfor %}
+</form>
+<form action="" method="post" style="display:inline;">
+    Add Note: {{ form.note }} <button type="submit" name="note">Add</button>
+</form>
+
+<h3>Reputation</h3>
+<form action="" method="post" style="display:inline;">
+    Reputation: {{ form.reputation }}
+    <button type="submit" name="reputation">Save</button><br>
+</form>
+<b>Shop Modifier:</b> {% if party.reputation < -2 %}+{% endif %}{{ shop_modifier }}
+
+{% endblock %}

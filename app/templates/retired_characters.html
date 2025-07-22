@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Retired Characters</h1>
+
+<body>
+    <div>
+        {% for character in retired_characters %}
+        <b>{{ character.name }}</b><br>
+        Class: {{ character.class_name.name }}<br>
+        Level: {{ character.level }}<br>
+        Gold: {{ character.gold }}<br><br>
+        {% endfor %}
+    </div>
+{% endblock %}

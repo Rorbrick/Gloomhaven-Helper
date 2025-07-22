@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    hr { 
+      display: block;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      margin-left: auto;
+      margin-right: auto;
+      border-style: inset;
+      border-width: 1px;
+    } 
+</style>
+
+<form action="" method="post">
+
+{{ charStats.hidden_tag() }}
+
+<h2>{{ char.name }}</h2>
+<table>
+    <tr><td>Class: {{ char.class_name.name }}
+    <tr><td>Level: {{ char.level }}
+    <tr><td>{{ charStats.xp.label }} {{ charStats.xp(style="width: 40px;") }}
+    <tr><td>{{ charStats.gold.label }} {{ charStats.gold(style="width: 40px;") }}
+</table>
+<br>
+
+{% for error in charStats.xp.errors %}
+<span style="color: red;">XP: [{{ error }}]</span>
+{% endfor %}
+{% for error in charStats.gold.errors %}
+<span style="color: red;">GOLD: [{{ error }}]</span>
+{% endfor %}
+
+<h2>Perks</h2>
+
+{% set ns = namespace(skipnext=false) %}
+{% set form_fields = form|list %}
+
+{% for perk in form %}
+    
+    {% set current_index = loop.index0 %}
+    {% set next_perk =  form_fields[current_index + 1] if current_index + 1 < form_fields|length else None %}
+
+    {% if not ns.skipnext %}
+        {% if next_perk and '_2' in next_perk.name %}
+            <div> {{ perk }} {{ next_perk }} {{ perk.label }}
+            {% set ns.skipnext = True %}
+        {% else %}
+            <div> {{ perk }} {{ perk.label }}
+        {% endif %}
+    {% else %}
+        {% set ns.skipnext = False %}
+    {% endif %}
+
+{% endfor %}
+<br><br>
+<h3>Unlock perk every 3 checks</h3>
+{% for checkbox in perkCheckboxes.perk_points %}
+    {{ checkbox() }}
+    {% if loop.index % 3 == 0 %} ✔{% endif %}
+{% endfor %}<br>
+
+<h2>Notes</h2>
+
+{% for notes in char_notes %}
+{{ notes.text }} <button type="submit" name="delete_note_id" value="{{ notes.id }}"><span style="font-size: 0.7em; color: red; border: none;">x</span></button>
+<br>
+<span style="font-size: 0.7em; color: gray;">({{ notes.timestamp }})</span><br><hr> 
+{% endfor %}
+
+<br>{{ charStats.char_notes(style="width: 300px; height: 50px;") }} 
+<br><br>
+<div></div><button type="submit">Save</button>
+</form>
+
+{% endblock %}
