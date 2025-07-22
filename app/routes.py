@@ -15,7 +15,7 @@ def index():
     characters = db.session.scalars(get_characters).all() #storing existing DB entries from Character table
     parties = db.session.scalars(get_parties).all()
 
-    #TESTfeafafae
+    #TEST
     #Store characters and their details to a list to be used by REACT frontend
     charactersList = [
         {
