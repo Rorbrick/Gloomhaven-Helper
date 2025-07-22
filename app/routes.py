@@ -16,6 +16,7 @@ def index():
     parties = db.session.scalars(get_parties).all()
 
 
+    #BLAH BLAH BLAH
     #Store characters and their details to a list to be used by REACT frontend
     charactersList = [
         {
