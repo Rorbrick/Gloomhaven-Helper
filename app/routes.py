@@ -7,6 +7,27 @@ from sqlalchemy import and_
 import math
 
 #main page load
+@app.route('/api/characters', methods=['GET', 'POST'])
+def get_characters():
+    get_characters = sa.select(Character) #Selecting the Character class to get list of characters from DB
+    characters = db.session.scalars(get_characters).all() #storing existing DB entries from Character table
+
+    #Store characters and their details to a list to be used by REACT frontend
+    charactersList = [
+        {
+            'id': char.id,
+            'name': char.name,
+            'level': char.level,
+            'xp': char.xp,
+            'gold': char.gold,
+            'perk_points': char.perk_points,
+            'class_id': char.class_id
+        }
+        for char in characters
+        
+        ]
+    return jsonify({'characters': charactersList})  
+
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def index(): 
@@ -14,20 +35,6 @@ def index():
     get_parties = sa.select(Party)
     characters = db.session.scalars(get_characters).all() #storing existing DB entries from Character table
     parties = db.session.scalars(get_parties).all()
-
-    #Store characters and their details to a list to be used by REACT frontend
-    charactersList = [
-        {
-            char.id,
-            char.name,
-            char.level,
-            char.xp,
-            char.gold,
-            char.perk_points,
-            char.class_id
-        }
-        for char in characters
-    ]
 
     if request.method == 'POST':
         delete_char_id = request.form.get('delete_char_id')
@@ -39,8 +46,8 @@ def index():
             db.session.commit()
             return redirect(url_for('index'))
     
-    return jsonify({'characters': charactersList})        
-#    return render_template('index.html', title='Home', characters=characters, parties=parties) #passing this new dictionary ^ to the index.html page. on that page, they will be displayed.
+          
+    return render_template('index.html', title='Home', characters=characters, parties=parties) #passing this new dictionary ^ to the index.html page. on that page, they will be displayed.
 
 #Register new character page
 @app.route('/register', methods=['GET', 'POST'])
