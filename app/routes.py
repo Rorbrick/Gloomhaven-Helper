@@ -26,7 +26,45 @@ def get_characters():
         for char in characters
         
         ]
-    return jsonify({'characters': charactersList})  
+    return jsonify({'characters': charactersList})
+
+@app.route('/api/characters/<int:char_id>', methods=['GET', 'POST'])
+def get_character(char_id):
+    char = db.session.get(Character, char_id)
+    if not char:
+        return jsonify({'error': 'Character not found'}), 404
+
+    #Store characters and their details to a list to be used by REACT frontend
+    character_data = {
+            'id': char.id,
+            'name': char.name,
+            'level': char.level,
+            'xp': char.xp,
+            'gold': char.gold,
+            'perk_points': char.perk_points,
+            'class_id': char.class_id
+        }
+
+    return jsonify(character_data)
+
+@app.route('/api/parties', methods=['GET', 'POST'])
+def get_parties():
+    get_parties = sa.select(Party)
+    parties = db.session.scalars(get_parties).all()
+
+    #Store characters and their details to a list to be used by REACT frontend
+    partiesList = [
+        {
+            'id': party.id,
+            'name': party.name,
+            'reputation': party.reputation,
+            'location': party.location
+        }
+        for party in parties
+        
+        ]
+    return jsonify({'parties': partiesList})  
+
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
@@ -190,13 +228,13 @@ def handle_perk_form_submission(form, char, char_unlocked_perks):
     #loop through the form list and determin whether a perk needs to be added, removed, or times_unlocked needs to be incremented
     for checkbox in form:
         perk_is_unlocked = next((perk for perk in char_unlocked_perks if perk[0] == checkbox.name), None)
-        unchecked_but_stored = next((perk for perk in char_unlocked_perks if perk[0] == checkbox.label.text), None) if not checkbox.data else None
+        was_checked = next((perk for perk in char_unlocked_perks if perk[0] == checkbox.label.text), None) if not checkbox.data else None
         unlocked_character_perk = get_char_perk_record(char.name,checkbox.label.text)
         box_is_checked = checkbox.data
 
         if box_is_checked and not perk_is_unlocked:
             unlock_perk(checkbox, unlocked_character_perk, char)
-        elif unchecked_but_stored and unlocked_character_perk:
+        elif was_checked and unlocked_character_perk:
             remove_perk(checkbox, unlocked_character_perk)
 
 def handle_char_stats_submission(char,charStats):
