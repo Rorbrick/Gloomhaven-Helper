@@ -21,7 +21,6 @@ def get_characters():
             'xp': char.xp,
             'gold': char.gold,
             'perk_points': char.perk_points,
-            'class_id': char.class_id
         }
         for char in characters
         
@@ -29,7 +28,7 @@ def get_characters():
     return jsonify({'characters': charactersList})
 
 @app.route('/api/characters/<int:char_id>', methods=['GET', 'POST'])
-def get_character(char_id):
+def get_character_details(char_id):
     char = db.session.get(Character, char_id)
     if not char:
         return jsonify({'error': 'Character not found'}), 404
@@ -42,7 +41,6 @@ def get_character(char_id):
             'xp': char.xp,
             'gold': char.gold,
             'perk_points': char.perk_points,
-            'class_id': char.class_id
         }
 
     return jsonify(character_data)
@@ -65,6 +63,21 @@ def get_parties():
         ]
     return jsonify({'parties': partiesList})  
 
+@app.route('/api/parties/<int:party_id>', methods=['GET', 'POST'])
+def get_party_details(party_id):
+    party = db.session.get(Party, party_id)
+    if not party:
+        return jsonify({'error': 'Party not found'}), 404
+
+    #Store characters and their details to a list to be used by REACT frontend
+    party_data = {
+            'id': party.id,
+            'name': party.name,
+            'reputation': party.reputation,
+            'location': party.location
+        }
+
+    return jsonify(party_data)
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
