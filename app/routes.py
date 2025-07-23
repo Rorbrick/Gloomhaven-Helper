@@ -41,6 +41,7 @@ def get_character_details(char_id):
             'xp': char.xp,
             'gold': char.gold,
             'perk_points': char.perk_points,
+            'class_name': char.class_name.name
         }
 
     return jsonify(character_data)
