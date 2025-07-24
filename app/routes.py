@@ -27,7 +27,7 @@ def get_characters():
         ]
     return jsonify({'characters': charactersList})
 
-@app.route('/api/characters/<int:char_id>', methods=['GET', 'POST'])
+@app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH'])
 def get_character_details(char_id):
     char = db.session.get(Character, char_id)
     if not char:
@@ -43,6 +43,19 @@ def get_character_details(char_id):
             'perk_points': char.perk_points,
             'class_name': char.class_name.name
         }
+    
+    if request.method == 'PATCH':
+        data = request.get_json()
+
+        if not data:
+            return jsonify({'error': 'Missing JSON body'}), 400
+
+        if 'gold' in data:
+            char.gold = data['gold']
+        if 'xp' in data:
+            char.xp = data['xp']
+
+        db.session.commit()
 
     return jsonify(character_data)
 
@@ -64,7 +77,7 @@ def get_parties():
         ]
     return jsonify({'parties': partiesList})  
 
-@app.route('/api/parties/<int:party_id>', methods=['GET', 'POST'])
+@app.route('/api/parties/<int:party_id>', methods=['GET', 'POST', 'PATCH'])
 def get_party_details(party_id):
     party = db.session.get(Party, party_id)
     if not party:
@@ -77,6 +90,19 @@ def get_party_details(party_id):
             'reputation': party.reputation,
             'location': party.location
         }
+
+    if request.method == 'PATCH':
+        data = request.get_json()
+
+        if not data:
+            jsonify({'error': 'Missing JSON body'}), 400
+        
+        if 'reputation' in data:
+            party.reputation = data['reputation']
+        if 'location' in data:
+            party.location = data['location']
+
+        db.session.commit()
 
     return jsonify(party_data)
 
