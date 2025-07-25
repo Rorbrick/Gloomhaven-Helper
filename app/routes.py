@@ -32,17 +32,6 @@ def get_character_details(char_id):
     char = db.session.get(Character, char_id)
     if not char:
         return jsonify({'error': 'Character not found'}), 404
-
-    #Store characters and their details to a list to be used by REACT frontend
-    character_data = {
-            'id': char.id,
-            'name': char.name,
-            'level': char.level,
-            'xp': char.xp,
-            'gold': char.gold,
-            'perk_points': char.perk_points,
-            'class_name': char.class_name.name
-        }
     
     if request.method == 'PATCH':
         data = request.get_json()
@@ -54,8 +43,20 @@ def get_character_details(char_id):
             char.gold = data['gold']
         if 'xp' in data:
             char.xp = data['xp']
-
+            SetCharacterLevel(int(char.xp),char)
         db.session.commit()
+        db.session.refresh(char)
+
+    #Store characters and their details to a list to be used by REACT frontend
+    character_data = {
+            'id': char.id,
+            'name': char.name,
+            'level': char.level,
+            'xp': char.xp,
+            'gold': char.gold,
+            'perk_points': char.perk_points,
+            'class_name': char.class_name.name
+        }
 
     return jsonify(character_data)
 
