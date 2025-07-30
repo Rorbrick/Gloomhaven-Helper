@@ -25,6 +25,17 @@ def get_characters():
         for char in characters
         
         ]
+
+    if request.method == 'POST':
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Missing JSON body'}), 400
+        
+        char = Character(name=data["name"], class_name=db.session.query(Class).filter(Class.name==data["selected_class"]).first())
+
+        db.session.add(char) 
+        db.session.commit()
+
     return jsonify({'characters': charactersList})
 
 @app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH'])
@@ -102,10 +113,25 @@ def get_party_details(party_id):
             party.reputation = data['reputation']
         if 'location' in data:
             party.location = data['location']
-
+                                                                                                                                                                                                                                                                                                                        
         db.session.commit()
 
     return jsonify(party_data)
+
+@app.route('/api/classes', methods=['GET'])
+def get_classes():
+    get_classes = sa.select(Class)
+    classes = db.session.scalars(get_classes).all()
+
+    class_data = [
+        {
+        "id": _class.id,
+        "class_name": _class.name
+        }
+        for _class in classes
+    ]
+
+    return jsonify(class_data)
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
