@@ -1,0 +1,53 @@
+.main-class {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 1rem;
+}
+
+.characters{
+    width: 100%;
+}
+
+.parties{
+    width: 100%;
+}
+
+.link-list {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: column;
+}
+
+.plain-list {
+    list-style: none;
+}
+
+.link-list li a {
+    display: block; 
+    border-style: solid;
+    padding: 0.75rem 10rem;
+    font-size: 2rem;
+    width: 300px;
+    text-align: center;
+    transition: color 0.3s, background-color 0.3s;
+    text-decoration: none;
+}
+
+.link-list li a:hover {
+    background-color: #cfcbc163;
+    color: #cfcbc163;
+}
+
+.link-list a:visited {
+    color: #ccc;
+}
+
+.inputNum {
+    width: 50px;
+}
+
+input {
+    font-size: 1rem;
+}
