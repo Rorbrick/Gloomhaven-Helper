@@ -9,6 +9,21 @@ import math
 #main page load
 @app.route('/api/characters', methods=['GET', 'POST'])
 def get_characters():
+    if request.method == 'POST':
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Missing JSON body'}), 400
+        
+        with db.session.begin(): #this allows flush to work. will commit on success, and rollback on failure.
+            char = Character(name=data["character_name"], class_id=data["class_id"])
+            perks = db.session.scalars(sa.select(Class_Perk).where(Class_Perk.class_id == data["class_id"]).order_by(Class_Perk.perk_id)).all()
+
+            db.session.add(char) 
+            db.session.flush() #Holds the change in memory until the with is complete
+
+            db.session.add_all([Character_Perk(character_id=char.id, perk_id=pid.perk_id)
+                                for pid in perks])
+            
     get_characters = sa.select(Character) #Selecting the Character class to get list of characters from DB
     characters = db.session.scalars(get_characters).all() #storing existing DB entries from Character table
 
@@ -26,21 +41,13 @@ def get_characters():
         
         ]
 
-    if request.method == 'POST':
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'Missing JSON body'}), 400
-        
-        char = Character(name=data["name"], class_name=db.session.query(Class).filter(Class.name==data["selected_class"]).first())
-
-        db.session.add(char) 
-        db.session.commit()
-
     return jsonify({'characters': charactersList})
 
 @app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH'])
 def get_character_details(char_id):
     char = db.session.get(Character, char_id)
+    char_perks = db.session.scalars(sa.select(Character_Perk).where(Character_Perk.character_id == char_id).order_by(Character_Perk.perk_id)).all()
+
     if not char:
         return jsonify({'error': 'Character not found'}), 404
     
@@ -55,6 +62,10 @@ def get_character_details(char_id):
         if 'xp' in data:
             char.xp = data['xp']
             SetCharacterLevel(int(char.xp),char)
+        if "perk_id" in data:
+            perkToUpdate = db.session.get(Character_Perk, (char_id, data["perk_id"]))
+            perkToUpdate.times_unlocked = data["times_unlocked"]
+
         db.session.commit()
         db.session.refresh(char)
 
@@ -66,7 +77,16 @@ def get_character_details(char_id):
             'xp': char.xp,
             'gold': char.gold,
             'perk_points': char.perk_points,
-            'class_name': char.class_name.name
+            'class_name': char.class_name.name,
+            'class_id': char.class_id,
+            'perks': [
+                {
+                    "perk_id": p.perk_id,
+                    "perk_name": p.perk.name,
+                    "times_unlocked" : p.times_unlocked
+                }
+                for p in char_perks
+            ]
         }
 
     return jsonify(character_data)
@@ -129,6 +149,21 @@ def get_classes():
         "class_name": _class.name
         }
         for _class in classes
+    ]
+
+    return jsonify(class_data)
+
+@app.route('/api/class/<int:class_id>', methods=['GET'])
+def get_class_details(class_id):
+    perks = db.session.scalars(sa.select(Class_Perk).where(Class_Perk.class_id == class_id).order_by(Class_Perk.perk_id)).all()
+
+    class_data = [
+        {
+        "perk_id": perk.perk_id,
+        "perk_name": perk.perk.name,
+        "times_unlockable": perk.times_unlockable
+        }
+        for perk in perks
     ]
 
     return jsonify(class_data)
