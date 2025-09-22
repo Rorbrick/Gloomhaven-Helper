@@ -77,7 +77,7 @@ function CharacterDetails () {
     : [...prev, {perk_id,checkbox_id}]);
 
     let t_unlocked = e.target.checked ? checkbox_id : checkbox_id - 1;
-    const patch_data = {perk_id,times_unlocked: t_unlocked}
+    const patch_data = {perk_id,times_unlocked: t_unlocked};
     
     fetch(`http://127.0.0.1:5000/api/characters/${id}`,
     {
