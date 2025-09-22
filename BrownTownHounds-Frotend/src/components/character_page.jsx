@@ -1,8 +1,9 @@
 import { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom';
+import React from 'react';
 
 function CharacterDetails () {
-  const [character, setCharacter] = useState(null);
+  const [character, setCharacter] = useState([]);
   const [classDetails, setClassDetails] = useState([]);
   const [selectedPerks, setSelectedPerks] = useState([]);
   const { id } = useParams();
@@ -92,6 +93,23 @@ function CharacterDetails () {
     .catch(err => console.error("Error saving:", err));
   }
 
+  const handleCheckboxChangePP = (perkPointsUnlocked) => {
+    const patch_data = perkPointsUnlocked > character.perk_points ? {perk_points:perkPointsUnlocked} : {perk_points:(perkPointsUnlocked-1)}
+
+    fetch(`http://127.0.0.1:5000/api/characters/${id}`,
+    {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(patch_data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("Saved:", data);
+      setCharacter(data);
+    })
+    .catch(err => console.error("Error saving:", err));
+  }
+
   if (!character) return <p>Loading...</p>;
 
   return (
@@ -127,8 +145,20 @@ function CharacterDetails () {
             {perk.perk_name}</li>
           ))}
         </ul>
+
+        <h2>Perk Points</h2>
+        {Array.from({ length: 18 }).map((_,i) =>
+        <>
+          <input type="checkbox" 
+          key={i+1}
+          checked={i < character.perk_points}
+          onChange={(e) => handleCheckboxChangePP(i+1)}
+          disabled={(i+1) != 1 && i > character.perk_points}/>
+          
+          {(i + 1) % 3 === 0 && <>✓ </>}
+        </>
+        )}
     </div>
-    
   )
 }
 

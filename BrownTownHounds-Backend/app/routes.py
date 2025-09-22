@@ -62,6 +62,8 @@ def get_character_details(char_id):
         if 'xp' in data:
             char.xp = data['xp']
             SetCharacterLevel(int(char.xp),char)
+        if 'perk_points' in data:
+            char.perk_points = data['perk_points']
         if "perk_id" in data:
             perkToUpdate = db.session.get(Character_Perk, (char_id, data["perk_id"]))
             perkToUpdate.times_unlocked = data["times_unlocked"]
