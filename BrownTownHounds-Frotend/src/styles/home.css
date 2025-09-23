@@ -51,3 +51,8 @@
 input {
     font-size: 1rem;
 }
+
+.timestamp {
+    font-size: 0.6rem;
+    color:#cfcbc163
+}

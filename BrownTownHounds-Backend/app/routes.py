@@ -93,6 +93,26 @@ def get_character_details(char_id):
 
     return jsonify(character_data)
 
+@app.route('/api/characters/<int:char_id>/notes', methods=['GET','POST','PATCH'])
+def character_notes(char_id):
+    notes = Notes.query.filter_by(character_id=char_id).all()
+
+    if request.method == 'POST':
+        data = request.get_json()
+
+        new_note = Notes(character_id=char_id,text=data["text"])
+        db.session.add(new_note)
+        db.session.commit()
+        notes = Notes.query.filter_by(character_id=char_id).all()
+
+    notes_list = [{
+        'id': note.id,
+        'text': note.text,
+        'timestamp': note.timestamp
+    } for note in notes]
+    
+    return jsonify(notes_list)
+
 @app.route('/api/parties', methods=['GET', 'POST'])
 def get_parties():
     get_parties = sa.select(Party)
