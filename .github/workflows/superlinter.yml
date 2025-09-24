@@ -16,3 +16,12 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILTER_REGEX_EXCLUDE: /migrations/
+          FIX_PYTHON_BLACK: true
+
+      - name: Commit and push linting fixes to `lint-fixes` branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: lint auto-fixes from super-linter"
+          branch: lint-fixes
+          create_branch: true
+          push_options: '--force'
