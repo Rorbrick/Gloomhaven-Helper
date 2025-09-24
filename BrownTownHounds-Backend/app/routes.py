@@ -110,8 +110,17 @@ def character_notes(char_id):
         'text': note.text,
         'timestamp': note.timestamp
     } for note in notes]
-    
+
     return jsonify(notes_list)
+
+@app.route('/api/characters/<int:char_id>/notes/<int:note_id>', methods=['DELETE'])
+def delete_character_note(char_id,note_id):
+    note = Notes.query.filter_by(id=note_id, character_id=char_id).first()
+    if not note:
+        return jsonify({"error": "Note not found"}), 404
+    
+    handle_delete_button(Notes, note.id)
+    return '', 204
 
 @app.route('/api/parties', methods=['GET', 'POST'])
 def get_parties():
@@ -343,6 +352,7 @@ def handle_delete_button(model_class,id):
         id_to_delete = db.session.get(model_class, int(id))
         if id_to_delete:
             db.session.delete(id_to_delete)
+            db.session.commit()
 
 def handle_perk_points_submission(char,perkCheckboxes):
         checked_count = sum(1 for field in perkCheckboxes.perk_points if field.data)
