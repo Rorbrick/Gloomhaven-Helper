@@ -1,0 +1,22 @@
+name: Super-Linter
+
+on: push
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  super-lint:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Run Super-Linter
+        uses: github/super-linter@v6
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILTER_REGEX_EXCLUDE: /migrations/
