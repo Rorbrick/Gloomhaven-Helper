@@ -18,6 +18,18 @@ function PartyList() {
       });
   }, []);
 
+  const handleDeleteParty = (party_id) =>
+  {
+    fetch(`http://127.0.0.1:5000/api/parties/${party_id}`,
+      {method: 'DELETE',})
+      .then((res) => {
+      if (!res.ok) throw new Error("Failed to delete");
+      // Optionally refetch or update state manually
+      setParties(prev => prev.filter(party => party.id !== party_id));
+    })
+    .catch(err => console.error("Delete error:", err));
+  }
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -26,6 +38,7 @@ function PartyList() {
       <ul className='link-list'>
         {parties.map((party) => (
           <li key={party.id}>
+            <button onClick={() => handleDeleteParty(party.id)}>X</button>
             <Link to={`/parties/${party.id}`}>
               {party.name}
             </Link>

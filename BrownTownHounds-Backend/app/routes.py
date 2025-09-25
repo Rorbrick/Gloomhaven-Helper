@@ -43,8 +43,17 @@ def get_characters():
 
     return jsonify({'characters': charactersList})
 
-@app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH'])
+
+@app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH','DELETE'])
 def get_character_details(char_id):
+    if request.method == 'DELETE':
+        char = Character.query.filter_by(id = char_id).first()
+        if not char:
+            return jsonify({"error": "Character not found"}), 404
+        else:
+            handle_delete_button(Character, char.id)
+            return '', 204
+
     char = db.session.get(Character, char_id)
     char_perks = db.session.scalars(sa.select(Character_Perk).where(Character_Perk.character_id == char_id).order_by(Character_Perk.perk_id)).all()
 
@@ -93,6 +102,7 @@ def get_character_details(char_id):
 
     return jsonify(character_data)
 
+
 @app.route('/api/characters/<int:char_id>/notes', methods=['GET','POST','PATCH'])
 def character_notes(char_id):
     notes = Notes.query.filter_by(character_id=char_id).all()
@@ -113,6 +123,7 @@ def character_notes(char_id):
 
     return jsonify(notes_list)
 
+
 @app.route('/api/characters/<int:char_id>/notes/<int:note_id>', methods=['DELETE'])
 def delete_character_note(char_id,note_id):
     note = Notes.query.filter_by(id=note_id, character_id=char_id).first()
@@ -122,10 +133,22 @@ def delete_character_note(char_id,note_id):
     handle_delete_button(Notes, note.id)
     return '', 204
 
+
 @app.route('/api/parties', methods=['GET', 'POST'])
 def get_parties():
     get_parties = sa.select(Party)
     parties = db.session.scalars(get_parties).all()
+
+    if request.method == 'POST':
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Missing JSON body'}), 400
+
+        party = Party(name = data["party_name"])
+        db.session.add(party)
+        db.session.commit()
+
+        return jsonify({'id': party.id, 'name': party.name}), 201
 
     #Store characters and their details to a list to be used by REACT frontend
     partiesList = [
@@ -140,7 +163,7 @@ def get_parties():
         ]
     return jsonify({'parties': partiesList})  
 
-@app.route('/api/parties/<int:party_id>', methods=['GET', 'POST', 'PATCH'])
+@app.route('/api/parties/<int:party_id>', methods=['GET', 'POST', 'PATCH', 'DELETE'])
 def get_party_details(party_id):
     party = db.session.get(Party, party_id)
     if not party:
@@ -167,6 +190,14 @@ def get_party_details(party_id):
                                                                                                                                                                                                                                                                                                                         
         db.session.commit()
 
+    if request.method == 'DELETE':
+        party = Party.query.filter_by(id = party_id).first()
+        if not party:
+            return jsonify({"error": "Character not found"}), 404
+        else: 
+            handle_delete_button(Party, party.id)
+            return '', 204
+
     return jsonify(party_data)
 
 @app.route('/api/classes', methods=['GET'])
@@ -184,7 +215,7 @@ def get_classes():
 
     return jsonify(class_data)
 
-@app.route('/api/class/<int:class_id>', methods=['GET'])
+@app.route('/api/classes/<int:class_id>', methods=['GET'])
 def get_class_details(class_id):
     perks = db.session.scalars(sa.select(Class_Perk).where(Class_Perk.class_id == class_id).order_by(Class_Perk.perk_id)).all()
 
@@ -198,6 +229,15 @@ def get_class_details(class_id):
     ]
 
     return jsonify(class_data)
+
+'''
+API Code ↑
+
+========================================================================================================================================================================
+========================================================================================================================================================================
+
+OLD Code ↓
+'''
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])

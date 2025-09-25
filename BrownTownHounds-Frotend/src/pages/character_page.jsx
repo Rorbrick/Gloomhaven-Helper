@@ -46,7 +46,7 @@ function CharacterDetails () {
           }
 
         setSelectedPerks(init)
-        return fetch(`http://127.0.0.1:5000/api/class/${data.class_id}`); //Because we are doing an arrow function with multiple statments (using curly braces), we have to explicitely return something.
+        return fetch(`http://127.0.0.1:5000/api/classes/${data.class_id}`); //Because we are doing an arrow function with multiple statments (using curly braces), we have to explicitely return something.
       }) 
       .then(res => res.json())
       .then(classData => {
