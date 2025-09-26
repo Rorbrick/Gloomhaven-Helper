@@ -158,10 +158,42 @@ def get_parties():
             'reputation': party.reputation,
             'location': party.location
         }
-        for party in parties
-        
-        ]
+        for party in parties]
+    
     return jsonify({'parties': partiesList})  
+
+@app.route('/api/parties/<int:party_id>/notes', methods=['GET', 'POST', 'PATCH'])
+def party_notes(party_id):
+    partyNotes = PartyNotes.query.filter_by(party_id=party_id).all()
+
+    if request.method == 'POST':
+        data = request.get_json()
+
+        new_note = PartyNotes(party_id=party_id,text=data["text"])       
+
+        db.session.add(new_note)
+        db.session.commit()
+
+        partyNotes = PartyNotes.query.filter_by(party_id=party_id).all()
+
+    partyNotesList = [
+    {
+        'id': note.id,
+        'text': note.text,
+        'timestamp': note.timestamp
+    }
+    for note in partyNotes] 
+
+    return jsonify(partyNotesList)
+
+@app.route('/api/parties/<int:party_id>/notes/<int:note_id>', methods=['DELETE'])
+def delete_party_note(party_id, note_id):
+    note =  PartyNotes.query.filter_by(id=note_id, party_id=party_id).first()
+    if not note:
+        return jsonify({"error": "Note not found"}), 404
+    else:
+        handle_delete_button(PartyNotes,note.id)
+        return '', 204
 
 @app.route('/api/parties/<int:party_id>', methods=['GET', 'POST', 'PATCH', 'DELETE'])
 def get_party_details(party_id):

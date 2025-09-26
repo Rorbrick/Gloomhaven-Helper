@@ -3,7 +3,7 @@ import MenuBar from '../components/MenuBar';
 import CreateCharacter from './create_character';
 import CreateParty from './create_party';
 import CharacterDetails from '../pages/character_page';
-import PartyDetails from '../components/party_page';
+import PartyDetails from '../pages/party_page';
 import Home from './home'
 import { Routes, Route } from "react-router-dom";
 import React from 'react';

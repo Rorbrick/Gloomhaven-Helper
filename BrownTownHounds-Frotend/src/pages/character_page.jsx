@@ -222,7 +222,7 @@ function CharacterDetails () {
         {/** just handling creation of notes here. */}
         <h2>Notes</h2>
         <form onSubmit={e => handleSubmitNotes(e)}>
-          <input className="inputNum" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
+          <input className="inputText" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
           <button type="submit">Save</button> 
         </form><br/>
 
