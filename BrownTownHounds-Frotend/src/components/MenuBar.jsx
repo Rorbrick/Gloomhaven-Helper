@@ -11,7 +11,7 @@ const MenuBar = () => {
         <ul className="nav-links">
           <li><NavLink to="/create-character">Create Character</NavLink></li>
           <li><NavLink to="/create-party">Create Party</NavLink></li>
-          <li><NavLink to="/">Retired Characters</NavLink></li>
+          <li><NavLink to="/retired-characters">Retired Characters</NavLink></li>
         </ul>
       </nav>
     </header>

@@ -51,6 +51,8 @@ def get_character_details(char_id):
         if not char:
             return jsonify({"error": "Character not found"}), 404
         else:
+            retireCharacter = RetiredCharacter(name=char.name,level=char.level,gold=char.gold,class_id=char.class_id)
+            db.session.add(retireCharacter)
             handle_delete_button(Character, char.id)
             return '', 204
 
@@ -101,6 +103,21 @@ def get_character_details(char_id):
         }
 
     return jsonify(character_data)
+
+
+@app.route('/api/retiredcharacters', methods=['GET'])
+def retired_characters():
+    get_retiredChars = sa.select(RetiredCharacter)
+    retired_chars = db.session.scalars(get_retiredChars).all()
+
+    char_list=[{
+        'name': char.name,
+        'level': char.level,
+        'gold': char.gold,
+        'class': char.class_name.name
+    }for char in retired_chars]
+
+    return jsonify(char_list)
 
 
 @app.route('/api/characters/<int:char_id>/notes', methods=['GET','POST','PATCH'])
