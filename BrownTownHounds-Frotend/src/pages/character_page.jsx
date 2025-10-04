@@ -1,5 +1,6 @@
 import { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom';
+import '../styles/character.css';
 import React from 'react';
 
 function CharacterDetails () {
@@ -41,7 +42,7 @@ function CharacterDetails () {
           { 
           for (let i = p.times_unlocked; i > 0; i--) //now we need to loop down for number of times unlocked. for example, if something has been unlocked twice, add two entries.
             { 
-              init.push({ perk_id: p.perk_id, checkbox_id: i }); //then append the perk ID and checkbox id to the init list. checkbox id should be equal I. 
+              init.push({ perk_id: p.perk_id, checkbox_id: i }); //then append the perk ID and checkbox id to the init list. checkbox id should be equal to i. 
             }
           }
 
@@ -107,16 +108,16 @@ function CharacterDetails () {
     .catch(err => console.error("Error saving:", err));
   };
 
-  {/** When a perk is changed (checked or unchecked), update the selectedPerks varaible. */}
+  /** When a perk is changed (checked or unchecked), update the selectedPerks varaible. */
   const handleCheckboxChange = (perk_id,checkbox_id,e) =>
   {
-    {/** if the perk already exists, remove it. Otherwise, add the new perk */}
+    /** if the perk already exists, remove it. Otherwise, add the new perk */
     setSelectedPerks((prev) => prev.some(p => p.perk_id === perk_id && p.checkbox_id === checkbox_id) 
     ? prev.filter(perk => !(perk.perk_id === perk_id && perk.checkbox_id === checkbox_id)) 
     : [...prev, {perk_id,checkbox_id}]);
 
-    {/** if we just checked a box, increase times_unlocked, otherwise, if a box was unchecked, reduce times_unlocked by 1. Set the patch data
-      then send to backend */}
+    /** if we just checked a box, increase times_unlocked, otherwise, if a box was unchecked, reduce times_unlocked by 1. Set the patch data
+      then send to backend */
     let t_unlocked = e.target.checked ? checkbox_id : checkbox_id - 1;
     const patch_data = {perk_id,times_unlocked: t_unlocked};
     
@@ -134,7 +135,7 @@ function CharacterDetails () {
     .catch(err => console.error("Error saving:", err));
   }
 
-  {/** if a perk point was checked, either add or remove the quantity of perkPontsUnlocked, then PATCH to backend. */}
+  /** if a perk point was checked, either add or remove the quantity of perkPontsUnlocked, then PATCH to backend. */
   const handleCheckboxChangePP = (perkPointsUnlocked) => {
     const patch_data = perkPointsUnlocked > character.perk_points ? {perk_points:perkPointsUnlocked} : {perk_points:(perkPointsUnlocked-1)}
 
@@ -152,7 +153,7 @@ function CharacterDetails () {
     .catch(err => console.error("Error saving:", err));
   }
 
-    {/** Delete specific note if X was clicked */}
+  /** Delete specific note if X was clicked */
   const handleDeleteNote = (note_id) => {
     fetch(`http://localhost:5000/api/characters/${id}/notes/${note_id}`, 
     {
@@ -169,70 +170,83 @@ function CharacterDetails () {
   if (!character) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className='mainCharWrapper'>
         {/** Display character name and class from the set character details fetched previously. */}
-        <h2>{character.name} - {character.class_name}</h2>
-        <p>Level: {character.level}</p>
-
+        <h1 className='partyName'>{character.name} - {character.class_name}</h1>
+      <div className='secondaryCharWrapper'>
         {/** Adjust XP and/or gold */}
-        <form onSubmit={handleSubmit}>
-          <label>
-            XP 
-            <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
-          </label><br />
-
-          <label>
-            Gold 
-            <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
-          </label><br />
-
-          <button type="submit">Save</button>
-        </form>
-
-        {/** Here's your list of perks and checkboxes for unlocking*/}
-        <h2>Perks</h2>
-        <ul className="plain-list">
-          {/** getting into some JSX looping madness here to display the perk checkboxs*/}
-          {classDetails.map((perk) => ( //use .map to loop through list of perk dictionaries.
-            <li key={perk.perk_id}>
-              {Array.from({ length: perk.times_unlockable }).map((_, i) => ( //if a perk can be unlocked more than once, we want to create more than one checkbox. we use array.from to loop.
-                <input type="checkbox" 
-                checked={selectedPerks.some(p => p.perk_id === perk.perk_id && p.checkbox_id == i+1)} //if the perk and checkbox IDs exist in selectedPerks, set the box as checked
-                key={i+1} //adding +1 here so that the keys start at 1 instead of 0.
-                onChange={(e) => handleCheckboxChange(perk.perk_id,i+1,e)} //when we either ckeck or uncheck a box, handle the change
-                disabled={i===1 && !selectedPerks.some(p => p.perk_id === perk.perk_id && p.checkbox_id === 1)}/> //disabling second checkbox if the first one has not been unlocked 
-              ))}                                                                                               
-            {perk.perk_name}</li>
-          ))}
-        </ul>
-
-        <h2>Perk Points</h2>
-        {Array.from({ length: 18 }).map((_,i) => //generate 18 checkboxes for perk points
-        <React.Fragment key={i + 1}>
-          <input type="checkbox" 
-          checked={i < character.perk_points} //check any box id that is one less than characters perk points (checkbox id starts at 0, so if 1 perk point is unlocked, 0 should be checked)
-          onChange={(e) => handleCheckboxChangePP(i+1)} //if a box is checked or unchecked, handle change
-          disabled={(i+1) != 1 && i > character.perk_points} //checkbox 0 should never be disabled. also, disable checkbox two away from number of perk points character has
-          />
+        <div className ='charInfoDiv'>
           
-          {(i + 1) % 3 === 0 && <>✓ </>}
-        </React.Fragment> // have to use fragment here because we are returning two things in the array
-        )}
+          <form onSubmit={handleSubmit}>
+            Level: {character.level} <br/>
+            <label>
+              XP 
+              <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
+            </label><br />
+
+            <label>
+              Gold 
+              <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
+            </label><br />
+
+            <button type="submit">Save</button>
+          </form>          
+        </div>
+
+        {/** Here's your list of perks*/}
+        <div className='perksDiv'>
+            <ul className="perk-list">
+              <h2 className='charName'>Perks</h2>
+              {/** getting into some JSX looping madness here to display the perk checkboxs*/}
+              {classDetails.map((perk) => ( //use .map to loop through list of perk dictionaries.
+                <li key={perk.perk_id}>
+                  {Array.from({ length: perk.times_unlockable }).map((_, i) => ( //if a perk can be unlocked more than once, we want to create more than one checkbox. we use array.from to loop.
+                    <input type="checkbox" 
+                    checked={selectedPerks.some(p => p.perk_id === perk.perk_id && p.checkbox_id == i+1)} //if the perk and checkbox IDs exist in selectedPerks, set the box as checked
+                    key={i+1} //adding +1 here so that the keys start at 1 instead of 0.
+                    onChange={(e) => handleCheckboxChange(perk.perk_id,i+1,e)} //when we either ckeck or uncheck a box, handle the change
+                    disabled={i===1 && !selectedPerks.some(p => p.perk_id === perk.perk_id && p.checkbox_id === 1)}/> //disabling second checkbox if the first one has not been unlocked 
+                  ))}                                                                                               
+                {perk.perk_name}</li>
+              ))}
+            </ul>
+        </div>
+      </div>
+
+        {/** Here's your list of perk points*/}
+        <div>
+          <h2>Perk Points</h2>
+          {Array.from({ length: 18 }).map((_,i) => //generate 18 checkboxes for perk points
+          <React.Fragment key={i + 1}>
+            <input type="checkbox" 
+            checked={i < character.perk_points} //check any box id that is one less than characters perk points (checkbox id starts at 0, so if 1 perk point is unlocked, 0 should be checked)
+            onChange={(e) => handleCheckboxChangePP(i+1)} //if a box is checked or unchecked, handle change
+            disabled={(i+1) != 1 && i > character.perk_points} //checkbox 0 should never be disabled. also, disable checkbox two away from number of perk points character has
+            />
+            
+            {(i + 1) % 3 === 0 && <>✓ </>}
+          </React.Fragment> // have to use fragment here because we are returning two things in the array
+          )}
+        </div>
 
         {/** just handling creation of notes here. */}
-        <h2>Notes</h2>
-        <form onSubmit={e => handleSubmitNotes(e)}>
-          <input className="inputText" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
-          <button type="submit">Save</button> 
-        </form><br/>
+        <div>
+          <h2>Notes</h2>
+          <form onSubmit={e => handleSubmitNotes(e)}>
+            <input className="inputText" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
+            <button type="submit">Save</button> 
+          </form><br/>
+        </div>
 
         {/** displaying notes and allowing user to delete */}
-        {characterNotes.map(note => (
-          <div key={note.id}>
-            {note.text} <button onClick={() => handleDeleteNote(note.id)}>X</button><br/>
-            <span className="timestamp">{note.timestamp}</span><br/><br/>
-          </div>
+        <div>
+          {characterNotes.map(note => (
+            <div key={note.id}>
+              {note.text} <button onClick={() => handleDeleteNote(note.id)}>X</button><br/>
+              <span className="timestamp">{note.timestamp}</span><br/><br/>
+            </div>
           ))}
+        </div>
     </div>
   )
 }

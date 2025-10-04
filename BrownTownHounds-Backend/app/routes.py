@@ -236,6 +236,7 @@ def get_party_details(party_id):
             party.reputation = data['reputation']
         if 'location' in data:
             party.location = data['location']
+            party_data['location'] = data['location']
                                                                                                                                                                                                                                                                                                                         
         db.session.commit()
 

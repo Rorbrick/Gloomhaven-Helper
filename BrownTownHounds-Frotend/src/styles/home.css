@@ -50,9 +50,218 @@
 
 input {
     font-size: 1rem;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #343333;
+    background-color: #807878;
+    
 }
 
 .timestamp {
     font-size: 0.6rem;
     color:#cfcbc163
+}
+
+.locationH3{
+    margin: 0px;
+}
+
+.mainWrapper{
+    color: rgb(196, 191, 191);
+    margin-top: 50px;
+    display: flex;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);  
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.11);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    width: 80rem;
+}
+
+.partyName{
+    display: flex;
+    position: relative;
+    margin-top: 0px;
+}
+
+.mainWrapperContainer{
+    position: relative;
+    width: 75%;
+    padding: 1rem;
+}
+
+.locationContainer, .notesDiv {
+    background-color: rgba(95, 95, 89, 0.252);
+    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+    border-radius: 10px;
+}
+
+.locationContainer{
+    display: flex;
+    position: relative;
+    height: 150px;
+    padding: 10px;
+    width: 20rem;
+    left: 50%;
+    transform: translateX(-50%);  
+}
+
+button{
+    border-radius: 5px;
+    border-style: none;
+    height: 20px;
+    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+}
+
+button:hover{
+    background-color: #c1cfc51a;
+    color: #ccccccd4;
+}
+
+.partyDiv{
+    text-align: center;
+    padding-bottom: 50px;
+}
+.notesDiv{
+    height: 550px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.notesDiv > .notes{
+    position: relative;
+    box-shadow: 0 4px 15px rgba(12, 12, 12, 0.609);
+    margin-top: .5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    align-items: center;
+    
+}
+
+.notes:hover{
+    background-color: rgba(255, 0, 0, 0.083);
+}
+
+.deleteButton{
+    position: absolute;
+    font-size: 12px;
+    background-color: none;
+    background: none;
+    border-style: none;
+    right: 0.5rem;
+    box-shadow: none;
+    color: #ccccccb5;
+    border-radius: 1rem;
+    width: 2rem;
+    cursor: pointer;
+}
+
+.sliderWrapper{
+    position: absolute;
+    display: flex;
+    width: 200px;
+    justify-content: center;
+    align-items: center;
+    height:50rem;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.imageWrapper{
+    background-color: rgba(95, 95, 89, 0.407);
+    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+}
+
+.imageWrapper:hover{
+    box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
+}
+
+.imageWrapper img {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+.locationSpan{
+    font-size: 30px;
+    position: absolute;
+    bottom: 40%;
+    left: 50%;
+    bottom: 33%;
+    transform: translateX(-50%);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.inputTextLocation, .inputTextNotesDiv{
+    position: absolute;
+    bottom: 30px;
+}
+
+.inputTextNotesDiv {
+    right: 1;
+    width: 94%;
+}
+
+.inputTextLocation{
+    bottom: 10px;
+}
+
+.inputTextNotes{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    overflow-wrap: break-word;
+}
+
+input[type="range"] {
+  -webkit-appearance: none; /* For WebKit browsers (Chrome, Safari) */
+  -moz-appearance: none;    /* For Mozilla Firefox */
+  appearance: none;         /* Standard property */
+  background: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+/* For WebKit browsers */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Reset thumb appearance */
+  background: #5e666e; /* Blue thumb */
+  width: 15px;
+  height: 15px;
+  background-image: url('/textures/x.png'); /* Your image path */
+  background-color: transparent;
+  background-size: contain; /* Ensure image fits within thumb area */
+  background-repeat: no-repeat;
+}
+
+/* For Mozilla Firefox */
+input[type="range"]::-moz-range-thumb {
+  background: #5e666e;
+  width: 15px;
+  height: 15px;
+  background-image: url('/textures/x.png'); /* Your image path */
+  background-color: transparent;
+  background-size: contain; /* Ensure image fits within thumb area */
+  background-repeat: no-repeat;
+}
+
+.slider {
+    position: absolute;
+    display: flex;
+    writing-mode: vertical-lr;
+    height: 702px;
+    direction: rtl;
+    margin-top:28px;
+    left: 20px;
+}
+
+.slider:hover + .imageWrapper {
+    box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
 }

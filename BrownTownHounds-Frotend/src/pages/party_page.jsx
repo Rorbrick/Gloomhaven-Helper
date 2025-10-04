@@ -5,17 +5,18 @@ function PartyDetails() {
     const [party,setParty] = useState(null);
     const [partyNotes,setPartyNotes] = useState([]);
     const { id } = useParams();
-    const [formData,setFormData] = useState({
-        reputation: '',
-        location: ''
-    })
+    const [formData,setFormData] = useState("")
     const [noteText,setNoteText] = useState("");
+    const [slideValue,setSlideValue] = useState(0);
 
 //Get party details from backend and store here
 useEffect(() => {
     fetch(`http://127.0.0.1:5000/api/parties/${id}`)
         .then(res => res.json())
-        .then(data => setParty(data))
+        .then(data => {
+            setParty(data)
+            setSlideValue(data["reputation"])
+        })
         .catch(err => console.error(err));
         }, [id]);
 
@@ -27,96 +28,148 @@ useEffect(() => {
         .catch(err => console.error(err));
         }, [id]);
         
-//Update form data using party details
+/**Update form data using party details
 useEffect(() => {
     if (party) {
         setFormData({
-            reputation: party.reputation,
             location: party.location
         })
     }
-}, [party])
+}, [party])*/
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-            setFormData(prevFormData => ({...prevFormData,[name]: value}));
-        
-    };
+const handleSubmitLocation = (e) => {
+    e.preventDefault();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const payload = {location: formData}
 
-        const formName = e.currentTarget.dataset.form
-        const payload = (formName === "note") 
-        ? {url: `http://127.0.0.1:5000/api/parties/${id}/notes`, data: { text:noteText }, method:"POST"} 
-        : {url:`http://127.0.0.1:5000/api/parties/${id}`, data:formData, method:"PATCH"};
+    console.log("Submitting:", payload);
 
-        console.log("Submitting:", payload.data);
-        fetch(payload.url, 
-        {
-            method: payload.method,
-            headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload.data)
-        })
-        .then(res => res.json())
-        .then(data => {
-        console.log("Saved:", data);
-        setPartyNotes(data)
-        formName === 'note' && setNoteText('');
-        })
-        .catch(err => console.error("Error saving:", err));
-    };
+    fetch(`http://127.0.0.1:5000/api/parties/${id}`, 
+    {
+        method: "PATCH",
+        headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+    setParty(data);
+    setFormData("");
+    console.log("Saved:", data);
+    })
+    .catch(err => console.error("Error saving:", err));
+};
 
-    const handleDeleteNote = (note_id) => {
-        fetch(`http://127.0.0.1:5000/api/parties/${id}/notes/${note_id}`, 
-        {
-            method: 'DELETE',
-        })
-        .then((res) => {
-            if (!res.ok) throw new Error("Failed to delete");
-            // Optionally refetch or update state manually
-            setPartyNotes(prev => prev.filter(note => note.id !== note_id));
-        })
-        .catch(err => console.error("Delete error:", err));
-    }
+const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formName = e.currentTarget.dataset.form
+    const payload = (formName === "note") 
+    ? {url: `http://127.0.0.1:5000/api/parties/${id}/notes`, data: { text:noteText }, method:"POST"} 
+    : {url:`http://127.0.0.1:5000/api/parties/${id}`, data:formData, method:"PATCH"};
+
+    console.log("Submitting:", payload.data);
+    fetch(payload.url, 
+    {
+        method: payload.method,
+        headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload.data)
+    })
+    .then(res => res.json())
+    .then(data => {
+    console.log("Saved:", data);
+    setPartyNotes(data);
+    setNoteText('');
+    })
+    .catch(err => console.error("Error saving:", err));
+};
+
+const handleDeleteNote = (note_id) => {
+    fetch(`http://127.0.0.1:5000/api/parties/${id}/notes/${note_id}`, 
+    {
+        method: 'DELETE',
+    })
+    .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete");
+        // Optionally refetch or update state manually
+        setPartyNotes(prev => prev.filter(note => note.id !== note_id));
+    })
+    .catch(err => console.error("Delete error:", err));
+}
+
+const onChangeSlider = (value) => {
+    setSlideValue(value)
+
+    const payload = { reputation:Number(value) }
+
+    fetch(`http://127.0.0.1:5000/api/parties/${id}`, 
+    {
+        method: 'PATCH',
+        headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+    console.log("Saved:", data);
+    })
+    .catch(err => console.error("Error saving:", err));
+}
 
     if (!party) return <p>Loading...</p>;
 
     return (
-        <div>
-            <h2>{party.name}</h2>
-            <form onSubmit={handleSubmit}>
-                
-                <label>
-                    Location
-                    <input className="inputText" type="text" name="location" value={formData.location} onChange={handleChange} /><br />
-                </label>
-                
-                <label>
-                    Reputation
-                    <input className="inputNum" type="number" name="reputation" value={formData.reputation} onChange={handleChange} /><br />
-                </label>
-                
-                <button type='submit'>Save</button>
-            </form>
-
-            <h2>Notes</h2>
-            <form onSubmit={handleSubmit} data-form="note">
-                <label>
-                    <input className="inputText" type="text" name="note" value={noteText} onChange={(e) => setNoteText(e.target.value)}/>
-                </label>
-                <button type='submit'>Save</button><br/><br/>
-            </form>
-
-            {partyNotes.map(note => (
-                <div key={note.id}>
-                    {note.text} <button onClick={() => handleDeleteNote(note.id)}>X</button><br/>
-                    <span className="timestamp">{note.timestamp}</span><br/><br/>
+        <div className='mainWrapper'>
+            <div className='mainWrapperContainer'>
+                <h1 className='partyName'>{party.name}</h1>
+                <div className='partyDiv'>
+                    <div className='locationContainer'>
+                        <h3 className='locationH3'>Current Location</h3>
+                        <div className='locationSpan'>{party.location}</div>
+                        <div className="inputTextLocation">
+                            <form onSubmit={handleSubmitLocation}>
+                            <input type="text" name="location" value={formData} onChange={(e) => setFormData(e.target.value)}/> <button type='submit'>Update</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            ))}
+
+                <div className='notesDiv'>
+                    <h3 className='locationH3'>Notes</h3>
+                        {partyNotes.map(note => (
+                            <div className='notes' key={note.id}>
+                                {note.text} <button className='deleteButton' onClick={() => handleDeleteNote(note.id)}>X</button> <br/>
+                                <span className="timestamp">{note.timestamp}</span><br/>
+                            </div>
+                        ))}
+                    <div className="inputTextNotesDiv">
+                        <form onSubmit={handleSubmit} data-form="note">
+                            <input className="inputTextNotes" type="text" name="note" value={noteText} onChange={(e) => setNoteText(e.target.value)}/> <button type='submit'>Post</button><br/>
+                        </form>
+                    </div>
+                </div>
+
+                </div>
+                <div className='sliderWrapper'>
+                    <input type="range" 
+                    className='slider'
+                    min="-20" 
+                    max="20"
+                    onChange={(e) => onChangeSlider(e.target.value)} 
+                    value={slideValue}
+                    />
+
+                    <div className="imageWrapper">
+                        <img src="/textures/Party-Sheet.png" alt="Party Sheet" />
+                    </div>
+
+            </div>
         </div>
+        
     )
 }
 

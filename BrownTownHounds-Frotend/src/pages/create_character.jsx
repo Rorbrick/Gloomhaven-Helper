@@ -1,6 +1,5 @@
 // Create Character Menu
 import React from 'react';
-import '../styles/create_character.css';
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 
