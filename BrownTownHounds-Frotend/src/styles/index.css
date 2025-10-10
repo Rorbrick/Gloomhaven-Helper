@@ -5,7 +5,18 @@
   
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
-    background-image: url('textures/bgTexture.png');
+    background:
+      radial-gradient(circle at center, 
+        rgba(255, 255, 255, 0.12) 0%,     /* light center */
+        rgba(142, 142, 142, 0.08) 20%,    /* gentle fade */
+        rgba(0, 0, 0, 0.85) 100%          /* dark outer */),
+      url('textures/bgTexture.png');
+    /* per-layer controls (1st = gradient, 2nd = texture) */
+    background-repeat: no-repeat, repeat;
+    background-size: cover, auto;          /* or: cover, 256px 256px */
+    background-position: center, top left;
+    background-attachment: fixed, fixed;   /* optional */
+    /* no blend mode needed because gradient is already semi-transparent */
   
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -20,3 +31,20 @@ footer {
     height:50px;
     width:100%;
  }
+
+button, input[type="checkbox"] {
+  transition: all 0.15s ease-in-out;
+}
+button:hover {
+  background-color: rgba(255,255,255,0.1);
+  transform: translateY(-1px);
+  cursor: pointer;
+}
+
+h2, h3 {
+  color: #dadada;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}

@@ -9,6 +9,9 @@ function CharacterDetails () {
   const [selectedPerks, setSelectedPerks] = useState([]);
   const [characterNotes, setCharacterNotes] = useState([]);
   const [noteText, setNoteText] = useState("");
+  const [charPlaymat, setCharPlaymat] = useState(null);
+  const [charNameplate, setCharNameplate] = useState(null);
+  const [charPortrait, setCharPortrait] = useState(null);
   const { id } = useParams();
   const [formData,setFormData] = useState ({
     gold: "",
@@ -29,12 +32,15 @@ function CharacterDetails () {
   }, [id]);
 
   {/** Fetching character Details (gold, xp, perks unlocked and perk points) and setting variable */}
-  useEffect(() => {
+  useEffect(() => { 
     fetch(`http://127.0.0.1:5000/api/characters/${id}`)
       .then(res => res.json())
       .then(data => {
         setCharacter(data);
         setFormData({ gold: data.gold, xp: data.xp });
+        setCharPlaymat('/public/images/gh-' + data.class_name + '.png');
+        setCharNameplate('/public/images/' + data.class_name + '-nameplate.png');
+        setCharPortrait('/public/images/' + data.class_name + '-portrait.png');
 
         // Ok this one might be a bit funky. 
         const init = []; //We initialize an empty list first
@@ -172,25 +178,30 @@ function CharacterDetails () {
   return (
     <div className='mainCharWrapper'>
         {/** Display character name and class from the set character details fetched previously. */}
-        <h1 className='partyName'>{character.name} - {character.class_name}</h1>
+        <h1 className='partyName'>{character.name}<br/> </h1>
+        
       <div className='secondaryCharWrapper'>
         {/** Adjust XP and/or gold */}
         <div className ='charInfoDiv'>
-          
-          <form onSubmit={handleSubmit}>
-            Level: {character.level} <br/>
-            <label>
-              XP 
-              <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
-            </label><br />
+          <div className="nameplateDiv"><img className="nameplate" src={charNameplate} alt={charNameplate} /></div>
+          <div className="charInnerWrapper">
+            <div className="nameplateDiv"><img className="nameplate" src={charPortrait} alt={charPortrait} /></div>
+            <div className="charInputDiv">
+              <form onSubmit={handleSubmit}>
+                Level: {character.level} <br/>
+                <label>
+                  XP 
+                  <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
+                </label><br />
 
-            <label>
-              Gold 
-              <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
-            </label><br />
-
-            <button type="submit">Save</button>
-          </form>          
+                <label>
+                  Gold 
+                  <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
+                </label><br />
+                <button type="submit">Save</button>
+              </form>  
+            </div>
+          </div>
         </div>
 
         {/** Here's your list of perks*/}
@@ -210,12 +221,8 @@ function CharacterDetails () {
                 {perk.perk_name}</li>
               ))}
             </ul>
-        </div>
-      </div>
-
-        {/** Here's your list of perk points*/}
-        <div>
-          <h2>Perk Points</h2>
+        <div className="perkPointsDiv">
+              <h2 className='charName'>Perk Points</h2>
           {Array.from({ length: 18 }).map((_,i) => //generate 18 checkboxes for perk points
           <React.Fragment key={i + 1}>
             <input type="checkbox" 
@@ -228,24 +235,29 @@ function CharacterDetails () {
           </React.Fragment> // have to use fragment here because we are returning two things in the array
           )}
         </div>
+        </div>
+      </div>
+
+        {/** Here's your list of perk points*/}
+
 
         {/** just handling creation of notes here. */}
-        <div>
-          <h2>Notes</h2>
-          <form onSubmit={e => handleSubmitNotes(e)}>
-            <input className="inputText" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
-            <button type="submit">Save</button> 
-          </form><br/>
-        </div>
-
+        <div className="notesDiv">
+          <h3 className="locationH3">Notes</h3>
         {/** displaying notes and allowing user to delete */}
-        <div>
           {characterNotes.map(note => (
-            <div key={note.id}>
-              {note.text} <button onClick={() => handleDeleteNote(note.id)}>X</button><br/>
-              <span className="timestamp">{note.timestamp}</span><br/><br/>
+            <div className="notes"key={note.id}>
+              {note.text} <button className='deleteButton' onClick={() => handleDeleteNote(note.id)}>X</button>
+              <br/><span className="timestamp">{note.timestamp}</span>
             </div>
           ))}
+
+        <div className="inputTextNotesDiv">
+          <form onSubmit={e => handleSubmitNotes(e)}>
+            <input className="inputTextNotes" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
+            <button type="submit">Save</button> 
+          </form>       
+        </div>
         </div>
     </div>
   )

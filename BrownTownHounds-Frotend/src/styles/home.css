@@ -87,6 +87,7 @@ input {
     display: flex;
     position: relative;
     margin-top: 0px;
+    align-self: center;
 }
 
 .mainWrapperContainer{
@@ -97,7 +98,6 @@ input {
 
 .locationContainer, .notesDiv {
     background-color: rgba(95, 95, 89, 0.252);
-    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
     border-radius: 10px;
 }
 
@@ -128,19 +128,19 @@ button:hover{
     padding-bottom: 50px;
 }
 .notesDiv{
-    height: 550px;
+    height: 520px;
     padding: 10px;
     overflow-y: auto;
 }
 
 .notesDiv > .notes{
     position: relative;
-    box-shadow: 0 4px 15px rgba(12, 12, 12, 0.609);
+    border-color: #5e666e57;
+    border-style: solid;
     margin-top: .5rem;
     padding: 0.5rem;
     border-radius: 5px;
     align-items: center;
-    
 }
 
 .notes:hover{
@@ -175,6 +175,7 @@ button:hover{
 
 .imageWrapper{
     background-color: rgba(95, 95, 89, 0.407);
+    border-radius: 5px;
     box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
 }
 
@@ -264,4 +265,8 @@ input[type="range"]::-moz-range-thumb {
 
 .slider:hover + .imageWrapper {
     box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
+}
+
+.rep{
+    border-radius: 10px;
 }

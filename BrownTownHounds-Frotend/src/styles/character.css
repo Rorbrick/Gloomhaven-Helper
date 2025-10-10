@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     color: rgb(196, 191, 191);
-    margin-top: 50px;
+    margin-top: 2rem;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);  
@@ -13,33 +13,69 @@
     backdrop-filter: blur(1px);
     -webkit-backdrop-filter: blur(1px);
     border: 1px solid rgba(0, 0, 0, 0.3);
-    width: 80rem;
+    width: 70rem;
 }
 
 .secondaryCharWrapper{
     display: flex;
     position: relative;
+    width: fit-content;
+    align-self: center;
 }
 
-.charInfoDiv, .perksDiv {
-    background-color: rgba(95, 95, 89, 0.252);
-    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+.charInnerWrapper{
+    display: flex;
+    position: relative;
+}
+
+.perksDiv, .charNotesDiv, .charInputDiv {
+    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    align-self: center;
+}
+
+.perksDiv:hover, .charInputDiv:hover{
+    filter: brightness(1.1)
+}
+
+.perkPointsDiv {
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: 0.8rem;
+}
+
+.nameplate{
     border-radius: 10px;
+}
+
+.nameplateDiv{
+    align-self: center;
+}
+
+.charImageDiv{
+    padding: 1rem;
+
 }
 
 .charInfoDiv{
     display: flex;
     position: relative;
-    padding: 1rem;
+    flex-direction: column;
     height: 6rem;
-    margin-right: 5rem;
+    margin-right: 3rem;
     left: 2rem;
+    height: fit-content;
 }
 
 .perksDiv{
     display: flex;
-    position: relative;
-    padding: 1rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0.8rem 1rem;
+    gap: 1.5rem;
 }
 
 .perk-list {
@@ -54,4 +90,44 @@
     position: relative;
     margin-top: 0px;
     margin-bottom: 1rem;
+}
+
+.perkPointsDiv{
+    padding: 1rem;
+    width: 10rem;
+}
+
+.charNotesDiv{
+    width: 80%;
+    margin: 0 auto;
+    padding: 0.8rem 1rem;
+}
+
+.charInputDiv{
+    display: flex;
+    position: relative;
+    align-self: flex-start;
+    margin: 0.5rem;
+    height: fit-content;
+    width: fit-content;
+    padding: 0.5rem;
+    top: 0%;
+}
+
+@media (max-width: 1000px) {
+  .perksDiv {
+    flex-direction: column;
+    align-items: center;
+  }
+  .perkPointsDiv {
+    align-self: center;
+    margin-top: 0.5rem;
+  }
+}
+
+textarea {
+  height: 4rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
 }

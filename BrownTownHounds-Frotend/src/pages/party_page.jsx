@@ -164,7 +164,7 @@ const onChangeSlider = (value) => {
                     />
 
                     <div className="imageWrapper">
-                        <img src="/textures/Party-Sheet.png" alt="Party Sheet" />
+                        <img className="rep" src="/textures/Party-Sheet.png" alt="Party Sheet" />
                     </div>
 
             </div>
