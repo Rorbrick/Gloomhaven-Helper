@@ -2,11 +2,14 @@
 import React from 'react';
 import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/create_character.css';
 
 function CreateCharacter (){
     const [classes,setClasses] = useState([]); 
     const [selectedClass,setSelectedClass] = useState(""); 
     const [formData,setFormData] = useState("");
+    const [charCard,setCharCard] = useState(null);
+    const [charCardBack,setCharCardBack] = useState(null);
     const navigate = useNavigate();
 
 useEffect(() => {
@@ -15,6 +18,8 @@ useEffect(() => {
     .then(data => {
         setClasses(data);
         setSelectedClass(data[0].id)
+        setCharCard('/public/images/gh-' + data[0].class_name + '.png');
+        setCharCardBack('/public/images/gh-' + data[0].class_name + '-back.png');
     })
     .catch(err => {
         console.error(err);
@@ -31,10 +36,12 @@ const handleChange = (e) =>   {
     }));
   } else {
     setSelectedClass(value);
+    setCharCard('/public/images/gh-' + classes[value-1].class_name + '.png');
+    setCharCardBack('/public/images/gh-' + classes[value-1].class_name + '-back.png');
   }
 };
 
-const handleSubmit = (e) => 
+const handleSubmit = (e,className) => 
   {
     e.preventDefault();
 
@@ -61,22 +68,31 @@ const handleSubmit = (e) =>
   };
 
 return (
-    <div>
-    <h1>Create Character</h1>
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name
-          <input className="inputText" type="text" name="character_name" value={formData.location} onChange={handleChange} /><br />
-      </label><br />
-
-      <label>
-      Classes
-      <select name="Class" value={selectedClass} onChange={handleChange}>
-          {classes.map((cls) => (<option key={cls.id} value={cls.id}>{cls.class_name}</option>))}
-      </select>
-      </label><br />
-    <button type="submit">Create</button>
-    </form>
+    <div className="createCharMainWrapper">
+    <h1 className="partyName">Create Character</h1>
+      <div className="createCharInnerWrapper">
+        <div className="createCharInputDiv">
+          <form onSubmit={handleSubmit}>
+            <>Name &nbsp;</> 
+            <input className="inputText" type="text" name="character_name" value={formData.location} onChange={handleChange} /><br />
+            <label>
+            <>Classes &nbsp;</>
+            <select name="Class" value={selectedClass} onChange={handleChange}>
+                {classes.map((cls) => (<option key={cls.id} value={cls.id}>{cls.class_name}</option>))}
+            </select>
+            </label><br />
+          <button className="saveButton" type="submit">Create</button>
+          </form>
+        </div>
+      </div>
+      <div className='charCardWrapper'>
+        <div className="charCardDiv">
+          <img className="nameplate" src={charCard} alt={charCard} />
+        </div>
+        <div className="charCardDiv">
+          <img className="nameplate" src={charCardBack} alt={charCardBack} />
+        </div> 
+      </div>
     </div>
 )
 }
