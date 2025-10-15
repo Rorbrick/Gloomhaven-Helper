@@ -6,14 +6,14 @@ import PartyList from '../components/get_parties';
 
 const Home = () => {
   return (
-        <main className = 'main-class'>
-          <section className='characters'>
+        <div className = 'main-class'>
+          <div className='characters'>
             <CharacterList />
-          </section>
-          <section className='parties'>
+          </div>
+          <div className='parties'>
             <PartyList />
-          </section>
-        </main>
+          </div>
+        </div>
   );
 };
 

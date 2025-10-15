@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import '../styles/party.css';
 
 function PartyDetails() {
     const [party,setParty] = useState(null);

@@ -49,3 +49,31 @@ h2, h3 {
   margin-bottom: 0.5rem;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
+
+.mainCharWrapper, .createCharMainWrapper{
+  display: flex;
+  position: absolute;
+  margin-top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  flex-direction: column;
+
+  /*Main Wrapper Box*/
+  background: rgba(0, 0, 0, 0.11);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.mainCharWrapper{
+  color: rgb(196, 191, 191);
+  width: 70rem;
+}
+
+.createCharMainWrapper{
+  width: fit-content;
+  align-items: center;
+}

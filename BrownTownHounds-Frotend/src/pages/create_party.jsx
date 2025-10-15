@@ -35,15 +35,17 @@ const handleSubmit = (e) =>
   };
     
     return (
-        <div>
-            <h1>Create Party</h1>
-            <form onSubmit={handleSubmit}>
-            <label>
-                Party Name
-                <input className="inputText" type="text" name="party_name" value={formData.location} onChange={handleChange} /><br />
-            </label><br />
-            <button type="submit">Create</button>
-            </form>
+        <div className="createCharMainWrapper">
+            <h1 className="partyName">Create Party</h1>
+            <div className="createCharInnerWrapper">
+            <div className="createCharInputDiv">
+              <form onSubmit={handleSubmit}>
+                  Party Name &nbsp;
+                  <input className="inputText" type="text" name="party_name" value={formData.location} onChange={handleChange} /><br />
+              <button className="saveButton" type="submit">Create</button>
+              </form>
+            </div>
+            </div>
         </div>
     )
 
