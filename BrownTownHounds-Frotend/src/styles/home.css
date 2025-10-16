@@ -44,7 +44,7 @@
     transition: color 0.3s, background-color 0.3s;
     text-decoration: none;
 
-    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
+    background: linear-gradient(180deg, rgba(124, 116, 116, 0.45), rgba(30, 30, 30, 0.598));
     border: 1px solid rgba(255,255,255,0.05);
     border-radius: 12px;
     margin-bottom: 0.1rem;
@@ -75,11 +75,4 @@ input {
 .timestamp {
     font-size: 0.6rem;
     color:#cfcbc163
-}
-
-.homeSelect{
-    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    border-radius: 10px;
 }

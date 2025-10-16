@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../styles/character.css';
 import React from 'react';
-import BasicDialogue from '../components/basic_dialogue';
+import BasicDialog from '../components/basic_dialog';
 
 function CharacterDetails () {
   const navigate = useNavigate();
@@ -219,8 +219,7 @@ function CharacterDetails () {
                 </form>  
               </div>
               <div className="retireCharDiv">
-                {/**<button className='retireButton' onClick={() => handleDeleteChar(character.id)}>Retire<br/>Character</button>*/}
-                <BasicDialogue button="Retire Character" title="Retire Character" description="This will retire/delete your character." content="Are you sure you want to retire this character?" />
+                <BasicDialog button="Retire Character" title="Retire Character" content="Are you sure you want to retire this character?" onConfirm={() => handleDeleteChar(character.id)} />
               </div>
             </div>
 

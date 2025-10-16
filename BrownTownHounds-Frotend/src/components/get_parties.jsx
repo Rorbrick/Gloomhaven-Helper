@@ -39,7 +39,7 @@ function PartyList() {
         {parties.map((party) => (
           <li key={party.id}>
             {/*<button className='deleteButton' onClick={() => handleDeleteParty(party.id)}>X</button>*/}
-            <Link className="homeSelect" to={`/parties/${party.id}`}>
+            <Link to={`/parties/${party.id}`}>
               {party.name}
             </Link>
           </li>
