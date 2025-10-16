@@ -93,12 +93,10 @@ class Cards(db.Model):
 
 class RetiredCharacter(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    name: so.Mapped[str] = so.mapped_column(sa.String(64), index=True,
-                                                unique=True)
+    name: so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
     level: so.Mapped[int] = so.mapped_column(sa.Integer, index=True, default=1)
     gold: so.Mapped[int] = so.mapped_column(sa.Integer, index=True, default=0)
-    class_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Class.id),
-                                               index=True)
+    class_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Class.id),index=True)
     
     class_name: so.Mapped[Class] = so.relationship(back_populates='retired_characters')
 

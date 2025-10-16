@@ -50,14 +50,13 @@ h2, h3 {
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-.mainCharWrapper, .createCharMainWrapper{
+.mainCharWrapper, .createCharMainWrapper, .homePageMainWrapper, .retiredCharactersMainWrapper{
   display: flex;
   position: absolute;
   margin-top: 2rem;
   left: 50%;
   transform: translateX(-50%);
   padding: 0.5rem 1rem;
-  flex-direction: column;
 
   /*Main Wrapper Box*/
   background: rgba(0, 0, 0, 0.11);
@@ -68,12 +67,13 @@ h2, h3 {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.mainCharWrapper{
-  color: rgb(196, 191, 191);
-  width: 70rem;
-}
-
-.createCharMainWrapper{
-  width: fit-content;
+form .saveButton{
+  display: flex;
+  justify-content: center;
   align-items: center;
+  margin: 1rem auto;
+  padding: 2rem;
+  align-items: center;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.677);
 }

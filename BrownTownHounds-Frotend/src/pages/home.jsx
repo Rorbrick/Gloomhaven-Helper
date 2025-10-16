@@ -6,11 +6,11 @@ import PartyList from '../components/get_parties';
 
 const Home = () => {
   return (
-        <div className = 'main-class'>
-          <div className='characters'>
+        <div className = 'homePageMainWrapper'>
+          <div className='charactersDiv'>
             <CharacterList />
           </div>
-          <div className='parties'>
+          <div className='partiesDiv'>
             <PartyList />
           </div>
         </div>

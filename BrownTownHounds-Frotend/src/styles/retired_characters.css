@@ -1,0 +1,43 @@
+.retiredCharactersMainWrapper{
+    flex-direction: column;
+    width: auto;
+}
+
+.retiredCharactersDiv{
+    display: grid;
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    align-self: center;
+    gap: 0.5rem;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.retiredCharList{
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-color: #5e666e57;
+    border-style: solid;
+    white-space: nowrap;
+    align-items: flex-start;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    margin: 0;
+    gap: 0.4rem;
+    justify-content: center;
+    font-weight: normal;
+    letter-spacing: 0.03em;
+}
+
+.retiredCharName{
+    display: flex;
+    position: relative;
+    margin: 0px;
+    align-self: center;
+    justify-self: flex-start;
+    margin-bottom: 0.2rem;
+}

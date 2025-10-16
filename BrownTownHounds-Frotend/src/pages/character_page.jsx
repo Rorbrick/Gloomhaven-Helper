@@ -1,9 +1,12 @@
 import { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import '../styles/character.css';
 import React from 'react';
+import BasicDialogue from '../components/basic_dialogue';
 
 function CharacterDetails () {
+  const navigate = useNavigate();
   const [character, setCharacter] = useState([]);
   const [classDetails, setClassDetails] = useState([]);
   const [selectedPerks, setSelectedPerks] = useState([]);
@@ -173,6 +176,19 @@ function CharacterDetails () {
     .catch(err => console.error("Delete error:", err));
   }
 
+  const handleDeleteChar = (char_id) =>
+  {
+    fetch(`http://127.0.0.1:5000/api/characters/${char_id}`, 
+    {
+      method: 'DELETE',
+    })
+    .then((res) => {
+    navigate("/");
+      if (!res.ok) throw new Error("Failed to delete");
+    })
+    .catch(err => console.error("Delete error:", err));
+  }
+
   if (!character) return <p>Loading...</p>;
 
   return (
@@ -186,21 +202,28 @@ function CharacterDetails () {
           <div className="nameplateDiv"><img className="nameplate" src={charNameplate} alt={charNameplate} /></div>
           <div className="charInnerWrapper">
             <div className="nameplateDiv"><img className="nameplate" src={charPortrait} alt={charPortrait} /></div>
-            <div className="charInputDiv">
-              <form onSubmit={handleSubmit}>
-                Level: {character.level} <br/>
-                <label>
-                  XP 
-                  <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
-                </label><br />
+            <div className="charInputWrapper">
+              <div className="charInputDiv">
+                <form onSubmit={handleSubmit}>
+                  Level: {character.level} <br/>
+                  <label>
+                    XP 
+                    <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
+                  </label><br />
 
-                <label>
-                  Gold 
-                  <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
-                </label><br />
-                <button type="submit">Save</button>
-              </form>  
+                  <label>
+                    Gold 
+                    <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
+                  </label><br />
+                  <button type="submit">Save</button>
+                </form>  
+              </div>
+              <div className="retireCharDiv">
+                {/**<button className='retireButton' onClick={() => handleDeleteChar(character.id)}>Retire<br/>Character</button>*/}
+                <BasicDialogue button="Retire Character" title="Retire Character" description="This will retire/delete your character." content="Are you sure you want to retire this character?" />
+              </div>
             </div>
+
           </div>
         </div>
 
@@ -246,7 +269,7 @@ function CharacterDetails () {
           <h3 className="locationH3">Notes</h3>
         {/** displaying notes and allowing user to delete */}
           {characterNotes.map(note => (
-            <div className="notes"key={note.id}>
+            <div className="notes" key={note.id}>
               {note.text} <button className='deleteButton' onClick={() => handleDeleteNote(note.id)}>X</button>
               <br/><span className="timestamp">{note.timestamp}</span>
             </div>

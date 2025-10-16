@@ -1,3 +1,9 @@
+.createCharMainWrapper{
+  width: fit-content;
+  align-items: center;
+  flex-direction: column;  
+}
+
 .charCardWrapper{
     display: flex;
     margin: 0.2rem;
@@ -34,15 +40,4 @@
 .charCardDiv{
     align-self: center;
     margin: 0.2rem;
-}
-
-form .saveButton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1rem auto;
-    padding: 2rem;
-    align-items: center;
-    font-size: 1rem;
-    color: rgba(0, 0, 0, 0.677);
 }

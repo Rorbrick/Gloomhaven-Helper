@@ -18,28 +18,16 @@ function CharacterList() {
       });
   }, []);
 
-  const handleDeleteChar = (char_id) =>
-  {
-    fetch(`http://127.0.0.1:5000/api/characters/${char_id}`, 
-    {
-      method: 'DELETE',
-    })
-    .then((res) => {
-      setCharacters(prev => prev.filter(char => char.id !== char_id));
-      if (!res.ok) throw new Error("Failed to delete");
-    })
-    .catch(err => console.error("Delete error:", err));
-  }
-
   if (loading) return <p>Loading...</p>;
 
   return (
     <section>
-      <h2>Characters</h2>
+      <h2 className="partyName">Characters</h2>
       <ul className='link-list'>
         {characters.map((char) => (
           <li key={char.id}>
-            <button onClick={() => handleDeleteChar(char.id)}>X</button> <Link to={`/characters/${char.id}`}> {char.name} (Level {char.level}) </Link> <br/>
+            {/*<button className='deleteButton' onClick={() => handleDeleteChar(char.id)}>X</button>*/}
+            <Link className="homeSelect" to={`/characters/${char.id}`}> {char.name} (Level {char.level}) </Link>
           </li>
         ))}
       </ul>

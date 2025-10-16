@@ -34,12 +34,12 @@ function PartyList() {
 
   return (
     <section>
-      <h2>Parties</h2>
+      <h2 className="partyName">Parties</h2>
       <ul className='link-list'>
         {parties.map((party) => (
           <li key={party.id}>
-            <button onClick={() => handleDeleteParty(party.id)}>X</button>
-            <Link to={`/parties/${party.id}`}>
+            {/*<button className='deleteButton' onClick={() => handleDeleteParty(party.id)}>X</button>*/}
+            <Link className="homeSelect" to={`/parties/${party.id}`}>
               {party.name}
             </Link>
           </li>

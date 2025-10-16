@@ -6,9 +6,11 @@ function PartyDetails() {
     const [party,setParty] = useState(null);
     const [partyNotes,setPartyNotes] = useState([]);
     const { id } = useParams();
-    const [formData,setFormData] = useState("")
+    const [formData,setFormData] = useState("");
+    const [achievementText,setAchievementText] = useState("");
     const [noteText,setNoteText] = useState("");
     const [slideValue,setSlideValue] = useState(0);
+    const [partyAchievements,setPartyAchievements] = useState([]);
 
 //Get party details from backend and store here
 useEffect(() => {
@@ -28,15 +30,14 @@ useEffect(() => {
         .then(data => setPartyNotes(data))
         .catch(err => console.error(err));
         }, [id]);
-        
-/**Update form data using party details
+
+//Get achievements from backend and store here
 useEffect(() => {
-    if (party) {
-        setFormData({
-            location: party.location
-        })
-    }
-}, [party])*/
+    fetch(`http://127.0.0.1:5000/api/parties/${id}/achievements`)
+        .then(res => res.json())
+        .then(data => setPartyAchievements(data))
+        .catch(err => console.error(err));
+        }, [id]);
 
 const handleSubmitLocation = (e) => {
     e.preventDefault();
@@ -57,6 +58,28 @@ const handleSubmitLocation = (e) => {
     .then(data => {
     setParty(data);
     setFormData("");
+    console.log("Saved:", data);
+    })
+    .catch(err => console.error("Error saving:", err));
+};
+
+const handleSubmitAchievement = (e) => {
+    e.preventDefault();
+
+    const payload = { text: achievementText }
+
+    fetch(`http:///127.0.0.1:5000/api/parties/${id}/achievements`,
+    {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+    setAchievementText("");
+    setPartyAchievements(data);
     console.log("Saved:", data);
     })
     .catch(err => console.error("Error saving:", err));
@@ -137,37 +160,52 @@ const onChangeSlider = (value) => {
                             </form>
                         </div>
                     </div>
+                    <div className="achievementDiv">
+                        <h3 className='locationH3'>Achievements</h3>
+                        <div className="achievementsListDiv">
+                            <ul className="achievementsList">
+                            {partyAchievements.map(achievement => (
+                                <li key={achievement.id}>{achievement.text}</li>
+                            ))}
+                            </ul>
+                        </div>
+
+                        <div className="inputTextAchievement">
+                            <form onSubmit={handleSubmitAchievement}>
+                            <input type="text" name="achievement" value={achievementText} onChange={(e) => setAchievementText(e.target.value)}/> <button type='submit'>Add</button>
+                            </form>                            
+                        </div>                        
+                    </div>
+
                 </div>
 
                 <div className='notesDiv'>
                     <h3 className='locationH3'>Notes</h3>
-                        {partyNotes.map(note => (
-                            <div className='notes' key={note.id}>
-                                {note.text} <button className='deleteButton' onClick={() => handleDeleteNote(note.id)}>X</button> <br/>
-                                <span className="timestamp">{note.timestamp}</span><br/>
-                            </div>
-                        ))}
+                    {partyNotes.map(note => (
+                        <div className='notes' key={note.id}>
+                            {note.text} <button className='deleteButton' onClick={() => handleDeleteNote(note.id)}>X</button> <br/>
+                            <span className="timestamp">{note.timestamp}</span><br/>
+                        </div>
+                    ))}
                     <div className="inputTextNotesDiv">
                         <form onSubmit={handleSubmit} data-form="note">
                             <input className="inputTextNotes" type="text" name="note" value={noteText} onChange={(e) => setNoteText(e.target.value)}/> <button type='submit'>Post</button><br/>
                         </form>
                     </div>
                 </div>
+            </div>
+            <div className='sliderWrapper'>
+                <input type="range" 
+                className='slider'
+                min="-20" 
+                max="20"
+                onChange={(e) => onChangeSlider(e.target.value)} 
+                value={slideValue}
+                />
 
+                <div className="imageWrapper">
+                    <img className="rep" src="/textures/Party-Sheet.png" alt="Party Sheet" />
                 </div>
-                <div className='sliderWrapper'>
-                    <input type="range" 
-                    className='slider'
-                    min="-20" 
-                    max="20"
-                    onChange={(e) => onChangeSlider(e.target.value)} 
-                    value={slideValue}
-                    />
-
-                    <div className="imageWrapper">
-                        <img className="rep" src="/textures/Party-Sheet.png" alt="Party Sheet" />
-                    </div>
-
             </div>
         </div>
         

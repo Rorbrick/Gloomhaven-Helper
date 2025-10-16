@@ -203,6 +203,30 @@ def party_notes(party_id):
 
     return jsonify(partyNotesList)
 
+@app.route('/api/parties/<int:party_id>/achievements', methods=['GET', 'POST', 'PATCH'])
+def party_achievements(party_id):
+    partyAchievements = PartyAchievements.query.filter_by(party_id=party_id).all()
+
+    if request.method == 'POST':
+        data = request.get_json()
+
+        new_achievement = PartyAchievements(party_id=party_id,text=data["text"])
+
+        db.session.add(new_achievement)
+        db.session.commit()
+
+        partyAchievements = PartyAchievements.query.filter_by(party_id=party_id).all()
+
+    partyAchievementsList = [
+        {
+        'id': achievement.id,
+        'text': achievement.text,
+        'timestamp': achievement.timestamp,        
+        } 
+    for achievement in partyAchievements]
+
+    return jsonify(partyAchievementsList)
+
 @app.route('/api/parties/<int:party_id>/notes/<int:note_id>', methods=['DELETE'])
 def delete_party_note(party_id, note_id):
     note =  PartyNotes.query.filter_by(id=note_id, party_id=party_id).first()

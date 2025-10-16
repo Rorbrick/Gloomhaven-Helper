@@ -1,6 +1,7 @@
 import { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom';
 import React from 'react';
+import '../styles/retired_characters.css';
 
 function RetiredCharacters (){
     const [retiredCharacters,setRetiredCharacters] = useState([]);
@@ -22,16 +23,18 @@ function RetiredCharacters (){
     if (loading) return <p>Loading...</p>;
 
     return (
-        <div>
-            <h1>Retired Characters</h1>
-            {retiredCharacters.map(retiredChar => (
-                <ul>
-                    <li>Name: {retiredChar.name}</li>
-                    <li>Class: {retiredChar.class}</li>
-                    <li>Level: {retiredChar.level}</li>
-                    <li>Gold: {retiredChar.gold}</li><br />
-                </ul>
-            ))}
+        <div className="retiredCharactersMainWrapper">
+            <h1 className='partyName'>Retired Characters</h1>
+            <div className ="retiredCharactersDiv">
+                {retiredCharacters.map(retiredChar => (
+                        <ul className="retiredCharList">
+                            <h2 className="retiredCharName">{retiredChar.name}</h2>
+                            <li>Class: {retiredChar.class}</li>
+                            <li>Level: {retiredChar.level}</li>
+                            <li>Gold: {retiredChar.gold}</li>
+                        </ul>
+                ))}
+            </div>
         </div>
     )   
 }
