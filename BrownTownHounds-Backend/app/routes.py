@@ -41,7 +41,7 @@ def get_characters():
         
         ]
 
-    return jsonify(charactersList)
+    return jsonify({'characters': charactersList})
 
 
 @app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH','DELETE'])
