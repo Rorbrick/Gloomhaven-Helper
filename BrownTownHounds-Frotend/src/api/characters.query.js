@@ -21,7 +21,7 @@ export function useCharacters() {
 export function useCharacter(id, enabled = true){
     return useQuery({
         queryKey: qk.character(id),
-        queryFn: api.listCharacter,
+        queryFn: () => api.getCharacter(id),
         enabled: !!id && enabled,
         staleTime: 1000 * 30,
     })

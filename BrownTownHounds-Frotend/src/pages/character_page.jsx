@@ -5,8 +5,26 @@ import '../styles/character.css';
 import React from 'react';
 import BasicDialog from '../components/basic_dialog';
 import { useCharacters, useCharacter } from '../api/characters.query.js';
+import { useClasses, useClass } from '../api/classes.query.js';
 
 function CharacterDetails () {
+  const { id } = useParams();
+
+  //TanStack API fetching/parsing
+  //Character
+  const { data: characters, isLoading: isCharactersLoading, error: charactersError } = useCharacters();
+  const { data: testCharacter, isLoading: isCharacterLoading, error: characterError } = useCharacter(id);
+
+  //Classes
+  const classId = testCharacter?.class_id;
+  const { data: classes, isLoading: isClassesLoading, error: classesError } = useClasses();
+  const { data: charClass, isLoading: isClassLoading, error: classError } = useClass(classId, !!classId);
+
+  //Checkers - loading and errors
+  const isLoading = isCharactersLoading || isCharacterLoading;// || isClassesLoading || isClassLoading;
+  const error = charactersError || characterError;// || classesError || classError;
+
+  //To be cleaned
   const navigate = useNavigate();
   const [character, setCharacter] = useState([]);
   const [classDetails, setClassDetails] = useState([]);
@@ -16,24 +34,10 @@ function CharacterDetails () {
   const [charPlaymat, setCharPlaymat] = useState(null);
   const [charNameplate, setCharNameplate] = useState(null);
   const [charPortrait, setCharPortrait] = useState(null);
-  const { id } = useParams();
   const [formData,setFormData] = useState ({
     gold: "",
     xp: ""
   })
-
-  {/** Fetching character Notes and setting variable */}
-  useEffect(() => {
-    fetch(`http://127.0.0.1:5000/api/characters/${id}/notes`)
-    .then(res => res.json())
-    .then(notes => {
-      setCharacterNotes(notes);
-      console.log(notes);
-    })
-    .catch(err => {
-      console.error(err);
-    })
-  }, [id]);
 
   {/** Fetching character Details (gold, xp, perks unlocked and perk points) and setting variable */}
   useEffect(() => { 
@@ -66,6 +70,19 @@ function CharacterDetails () {
       .catch(err => {
         console.error(err);
       });
+  }, [id]);
+
+  {/** Fetching character Notes and setting variable */}
+  useEffect(() => {
+    fetch(`http://127.0.0.1:5000/api/characters/${id}/notes`)
+    .then(res => res.json())
+    .then(notes => {
+      setCharacterNotes(notes);
+      console.log(notes);
+    })
+    .catch(err => {
+      console.error(err);
+    })
   }, [id]);
 
   {/** handle change of character xp and gold fields. Update form data with new values */}
@@ -190,7 +207,8 @@ function CharacterDetails () {
     .catch(err => console.error("Delete error:", err));
   }
 
-  if (!character) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Oops: {String(error.message || error)}</p>;
 
   return (
     <div className='mainCharWrapper'>

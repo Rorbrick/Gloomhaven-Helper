@@ -5,7 +5,6 @@ import { useCharacters } from '../api/characters.query.js';
 function CharacterList() {
   const { data: characters, isLoading, error } = useCharacters();
 
-  console.log(characters)
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Oops: {String(error.message || error)}</p>;
 
