@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import '../styles/character.css';
 import React from 'react';
 import BasicDialog from '../components/basic_dialog';
-import { useCharacters, useCharacter } from '../src/characters.query.js';
+import { useCharacters, useCharacter } from '../api/characters.query.js';
 
 function CharacterDetails () {
   const navigate = useNavigate();

@@ -1,30 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCharacters } from '../api/characters.query.js';
 
 function CharacterList() {
-  const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: characters, isLoading, error } = useCharacters();
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/characters')
-      .then(res => res.json())
-      .then(data => {
-        setCharacters(data.characters);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
+  console.log(characters)
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Oops: {String(error.message || error)}</p>;
 
   return (
     <section>
       <h2 className="partyName">Characters</h2>
       <ul className='link-list'>
-        {characters.map((char) => (
+        {characters?.map((char) => (
           <li key={char.id}>
             {/*<button className='deleteButton' onClick={() => handleDeleteChar(char.id)}>X</button>*/}
             <Link className="homeSelect" to={`/characters/${char.id}`}> {char.name} (Level {char.level}) </Link>
