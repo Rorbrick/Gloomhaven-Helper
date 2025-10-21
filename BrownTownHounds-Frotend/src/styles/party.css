@@ -78,11 +78,13 @@
     overflow-y: auto;
     border-style: solid;
     border-color: #504d4d4d;
+    margin-bottom: 2rem;
 }
 
 .inputTextAchievement{
+    position: absolute;
+    bottom: 10px;
     display: flex;
-    position: relative;
     width: 80%;
     align-items: center;
     justify-content: center;

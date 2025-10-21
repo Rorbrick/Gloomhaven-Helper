@@ -12,6 +12,7 @@ import React from 'react';
 const App = () => {
   return (
       <>
+
         <MenuBar />
         <main style={{ paddingTop: '60px' }}>
           <Routes>
