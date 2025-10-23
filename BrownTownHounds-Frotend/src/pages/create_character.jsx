@@ -3,10 +3,18 @@ import { useEffect,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../styles/create_character.css';
 import { useClasses } from '../api/classes.query.js';
+import { useCreateCharacter } from "../api/characters.query.js";
 
 function CreateCharacter (){
   //Api hook for classes
-  const { data: classes, isLoading, error, isSuccess } = useClasses();
+  const { data: classes, isLoading: classIsLoading, error: classError, isSuccess: classIsSuccess } = useClasses();
+
+  //api hook to create character
+  const { isLoading: createCharacterIsLoading, isError, error: createCharacterError, isSuccess: createCharacterIsSuccess, mutate } = useCreateCharacter();
+
+  const isLoading = classIsLoading ||  createCharacterIsLoading;
+  const error = classError || createCharacterError;
+  const isSuccess = classIsSuccess || createCharacterIsSuccess;
 
   //misc
   const [selectedClass,setSelectedClass] = useState(""); 
@@ -37,38 +45,15 @@ function CreateCharacter (){
     }
   };
 
-  //Create new character - send data to backend. Will clean this up with an optimistic update once it is built
-  const handleSubmit = (e) => {
-      e.preventDefault();
-
-      const character = {
-        character_name: formData.character_name,
-        class_id: selectedClass
-      };
-
-      console.log("Submitting:", character);
-
-      fetch(`http://127.0.0.1:5000/api/characters`, 
-      {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(character)
-      })
-
-      .then(res => res.json())
-      .then(data => {
-        console.log("Saved:", data);
-        navigate("/");
-      })
-      .catch(err => console.error("Error saving:", err));
-    };
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Oops: {String(error.message || error)}</p>;
 
 return (
     <div className="createCharMainWrapper">
     <h1 className="partyName">Create Character</h1>
       <div className="createCharInnerWrapper">
         <div className="createCharInputDiv">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={() => mutate({ character_name: formData.character_name, class_id: selectedClass })}>
             <>Name &nbsp;</> 
             <input className="inputText" type="text" name="character_name" value={formData.location} onChange={handleChange} /><br />
             <label>

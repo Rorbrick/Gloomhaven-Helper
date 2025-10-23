@@ -26,3 +26,33 @@ export function useCharacter(id, enabled = true){
         staleTime: 1000 * 30,
     })
 }
+
+export function useCreateCharacter(){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: api.createCharacter,
+
+        onMutate: async (newCharacter) => {
+            //cancel in flight refetches
+            await queryClient.cancelQueries({ queryKey: qk.characters() })
+
+            //snapshot of previous character list
+            const previousCharacters = queryClient.getQueryData(qk.characters())
+
+            queryClient.setQueryData(qk.characters(), (old) => [
+            ...old,
+            { id: `temp-${Date.now()}`, ...newCharacter, _optimistic: true },
+            ]);
+
+            return { previousCharacters }
+        },
+        // If the mutation fails, use previous context stored for rollback
+        onError: (err, newCharacter, context) => {
+            queryClient.setQueryData([qk.characters(), context.previousCharacters])
+        },
+        // Always refetch after error or success:
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: qk.characters })
+        }
+    })
+}
