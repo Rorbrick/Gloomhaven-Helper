@@ -39,7 +39,7 @@ class Character(db.Model):
     
     char_perk: so.Mapped[list["Character_Perk"]] = so.relationship(back_populates='character', cascade="all, delete")
     class_name: so.Mapped[Class] = so.relationship(back_populates='characters')
-    notes: so.WriteOnlyMapped["Notes"] = so.relationship(back_populates='character', cascade="all, delete", passive_deletes=True)
+    notes: so.WriteOnlyMapped['Notes'] = so.relationship(back_populates='character', cascade="all, delete", passive_deletes=True)
 
     def __repr__(self):
         return f"<Character name={self.name}, class_name={self.class_name}, class_id={self.class_id}, level={self.level}, xp={self.xp}, gold={self.gold}, perk_points={self.perk_points}, unlocked_perks={self.char_perk}>"
