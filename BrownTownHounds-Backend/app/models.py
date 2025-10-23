@@ -70,7 +70,8 @@ class Character_Perk(db.Model):
     
 class Notes(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    character_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Character.id), index=True)
+    character_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Character.id), 
+                                                index=True)
     text: so.Mapped[str] = so.mapped_column(sa.String(256))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))
