@@ -37,9 +37,9 @@ class Character(db.Model):
     class_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Class.id),
                                                index=True)
     
-    char_perk: so.Mapped[list["Character_Perk"]] = so.relationship(back_populates='character', cascade="all, delete")
+    char_perk: so.Mapped[list["Character_Perk"]] = so.relationship(back_populates='character', cascade="all, delete-orphan")
     class_name: so.Mapped[Class] = so.relationship(back_populates='characters')
-    notes: so.WriteOnlyMapped['Notes'] = so.relationship(back_populates='character', cascade="all, delete", passive_deletes=True)
+    notes: so.Mapped[list['Notes']] = so.relationship(back_populates='character', cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<Character name={self.name}, class_name={self.class_name}, class_id={self.class_id}, level={self.level}, xp={self.xp}, gold={self.gold}, perk_points={self.perk_points}, unlocked_perks={self.char_perk}>"
