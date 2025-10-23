@@ -7,14 +7,13 @@ import { useCreateCharacter } from "../api/characters.query.js";
 
 function CreateCharacter (){
   //Api hook for classes
-  const { data: classes, isLoading: classIsLoading, error: classError, isSuccess: classIsSuccess } = useClasses();
+  const { data: classes, isLoading: classIsLoading, error: classError, isSuccess } = useClasses();
 
   //api hook to create character
-  const { isLoading: createCharacterIsLoading, isError, error: createCharacterError, isSuccess: createCharacterIsSuccess, mutate } = useCreateCharacter();
+  const { isLoading: createCharacterIsLoading, isError, error: createCharacterError, mutate, mutateAsync } = useCreateCharacter();
 
   const isLoading = classIsLoading ||  createCharacterIsLoading;
   const error = classError || createCharacterError;
-  const isSuccess = classIsSuccess || createCharacterIsSuccess;
 
   //misc
   const [selectedClass,setSelectedClass] = useState(""); 
@@ -26,11 +25,11 @@ function CreateCharacter (){
   //On page load, if classes data is loaded, set default values - selected class, and card images
   useEffect(() => {
     if (isSuccess && classes) {
-      setSelectedClass(classes[0]);
+      setSelectedClass(classes[0].id);
       setCharCard('/public/images/gh-' + classes[0].class_name + '.png');
       setCharCardBack('/public/images/gh-' + classes[0].class_name + '-back.png');
     }
-  }, [isSuccess, classes]);
+  }, [isSuccess], [classes]);
 
   //Any time we change data, such as character name or selected class, update values
   const handleChange = (e) =>   {
@@ -42,8 +41,20 @@ function CreateCharacter (){
       setSelectedClass(value);
       setCharCard('/public/images/gh-' + classes[value-1].class_name + '.png');
       setCharCardBack('/public/images/gh-' + classes[value-1].class_name + '-back.png');
-    }
+
+      console.log(selectedClass);
+    };
   };
+
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+
+    const newCharList = await mutateAsync({ name: formData.character_name, class_id: selectedClass, level: 1 });
+    const newCharInList = newCharList.find(c => c.name === formData.character_name);
+
+    navigate(`/characters/${newCharInList.id}`);
+  };
+
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Oops: {String(error.message || error)}</p>;
@@ -53,7 +64,7 @@ return (
     <h1 className="partyName">Create Character</h1>
       <div className="createCharInnerWrapper">
         <div className="createCharInputDiv">
-          <form onSubmit={() => mutate({ character_name: formData.character_name, class_id: selectedClass })}>
+          <form onSubmit={handleSubmit}>
             <>Name &nbsp;</> 
             <input className="inputText" type="text" name="character_name" value={formData.location} onChange={handleChange} /><br />
             <label>

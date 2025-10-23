@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import '../styles/character.css';
 import React from 'react';
 import BasicDialog from '../components/basic_dialog';
-import { useCharacters, useCharacter } from '../api/characters.query.js';
+import { useCharacters, useCharacter, useCharacterNotes, useCreateCharacterNote } from '../api/characters.query.js';
 import { useClasses, useClass } from '../api/classes.query.js';
 
 function CharacterDetails () {
@@ -12,8 +12,10 @@ function CharacterDetails () {
 
   //TanStack API fetching/parsing
   //Character
-  const { data: characters, isLoading: isCharactersLoading, error: charactersError } = useCharacters();
+  const { data: characters, isLoading: isCharactersLoading, error: charactersError, isSuccess } = useCharacters();
   const { data: testCharacter, isLoading: isCharacterLoading, error: characterError } = useCharacter(id);
+  const { data: characterNotes, isLoading: isCharacterNotesLoading, error: characterNotesError } = useCharacterNotes(id);
+  const { isLoading: createCharacterNoteIsLoading, isError, error: createCharacterNoteError, mutate, mutateAsync } = useCreateCharacterNote();
 
   //Classes
   const classId = testCharacter?.class_id;
@@ -21,15 +23,13 @@ function CharacterDetails () {
   const { data: charClass, isLoading: isClassLoading, error: classError } = useClass(classId, !!classId);
 
   //Checkers - loading and errors
-  const isLoading = isCharactersLoading || isCharacterLoading;// || isClassesLoading || isClassLoading;
-  const error = charactersError || characterError;// || classesError || classError;
+  const isLoading = isCharactersLoading || isCharacterLoading || isCharacterNotesLoading || createCharacterNoteIsLoading;
+  const error = charactersError || characterError || characterNotesError || createCharacterNoteError;
 
   //To be cleaned
   const navigate = useNavigate();
-  const [character, setCharacter] = useState([]);
-  const [classDetails, setClassDetails] = useState([]);
   const [selectedPerks, setSelectedPerks] = useState([]);
-  const [characterNotes, setCharacterNotes] = useState([]);
+  const [characterNoteOld, setCharacterNotes] = useState([]);
   const [noteText, setNoteText] = useState("");
   const [charPlaymat, setCharPlaymat] = useState(null);
   const [charNameplate, setCharNameplate] = useState(null);
@@ -39,51 +39,27 @@ function CharacterDetails () {
     xp: ""
   })
 
-  {/** Fetching character Details (gold, xp, perks unlocked and perk points) and setting variable */}
+  {/** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */}
   useEffect(() => { 
-    fetch(`http://127.0.0.1:5000/api/characters/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        setCharacter(data);
-        setFormData({ gold: data.gold, xp: data.xp });
-        setCharPlaymat('/public/images/gh-' + data.class_name + '.png');
-        setCharNameplate('/public/images/' + data.class_name + '-nameplate.png');
-        setCharPortrait('/public/images/' + data.class_name + '-portrait.png');
+  if (isSuccess && testCharacter){
+    setFormData({ gold: testCharacter.gold, xp: testCharacter.xp });
+    setCharPlaymat('/public/images/gh-' + testCharacter.class_name + '.png');
+    setCharNameplate('/public/images/' + testCharacter.class_name + '-nameplate.png');
+    setCharPortrait('/public/images/' + testCharacter.class_name + '-portrait.png');
 
-        // Ok this one might be a bit funky. 
-        const init = []; //We initialize an empty list first
-        for (const p of data.perks ?? []) //then we loop through our list of perks (and their details). return empty if data.perks has no content
-          { 
-          for (let i = p.times_unlocked; i > 0; i--) //now we need to loop down for number of times unlocked. for example, if something has been unlocked twice, add two entries.
-            { 
-              init.push({ perk_id: p.perk_id, checkbox_id: i }); //then append the perk ID and checkbox id to the init list. checkbox id should be equal to i. 
-            }
-          }
+  // Ok this one might be a bit funky. 
+  const init = []; //We initialize an empty list first
+  for (const p of testCharacter.perks ?? []) //then we loop through our list of perks (and their details). return empty if data.perks has no content
+    { 
+    for (let i = p.times_unlocked; i > 0; i--) //now we need to loop down for number of times unlocked. for example, if something has been unlocked twice, add two entries.
+      { 
+        init.push({ perk_id: p.perk_id, checkbox_id: i }); //then append the perk ID and checkbox id to the init list. checkbox id should be equal to i. 
+      }
+    }
+  setSelectedPerks(init)
 
-        setSelectedPerks(init)
-        return fetch(`http://127.0.0.1:5000/api/classes/${data.class_id}`); //Because we are doing an arrow function with multiple statments (using curly braces), we have to explicitely return something.
-      }) 
-      .then(res => res.json())
-      .then(classData => {
-        setClassDetails(classData);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }, [id]);
-
-  {/** Fetching character Notes and setting variable */}
-  useEffect(() => {
-    fetch(`http://127.0.0.1:5000/api/characters/${id}/notes`)
-    .then(res => res.json())
-    .then(notes => {
-      setCharacterNotes(notes);
-      console.log(notes);
-    })
-    .catch(err => {
-      console.error(err);
-    })
-  }, [id]);
+  }
+  }, [testCharacter], [isSuccess]);
 
   {/** handle change of character xp and gold fields. Update form data with new values */}
   const handleChange = (e) => 
@@ -109,28 +85,6 @@ function CharacterDetails () {
     .then(data => {
       console.log("Saved:", data);
       setCharacter(data);
-    })
-    .catch(err => console.error("Error saving:", err));
-  };
-
-  {/** Submit a new note and API post it to the backend server */}
-  const handleSubmitNotes = (e) => 
-  {
-    e.preventDefault()
-    const new_note = { text: noteText};
-    console.log("Submitting:", new_note);
-
-    fetch(`http://127.0.0.1:5000/api/characters/${id}/notes`, 
-    {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(new_note)
-    })
-    .then(res => res.json())
-    .then(data => {
-      setCharacterNotes(data)
-      setNoteText("")
-      console.log("Saved:", data);
     })
     .catch(err => console.error("Error saving:", err));
   };
@@ -213,7 +167,7 @@ function CharacterDetails () {
   return (
     <div className='mainCharWrapper'>
         {/** Display character name and class from the set character details fetched previously. */}
-        <h1 className='partyName'>{character.name}<br/> </h1>
+        <h1 className='partyName'>{testCharacter.name}<br/> </h1>
         
       <div className='secondaryCharWrapper'>
         {/** Adjust XP and/or gold */}
@@ -224,7 +178,7 @@ function CharacterDetails () {
             <div className="charInputWrapper">
               <div className="charInputDiv">
                 <form onSubmit={handleSubmit}>
-                  Level: {character.level} <br/>
+                  Level: {testCharacter.level} <br/>
                   <label>
                     XP 
                     <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
@@ -238,7 +192,7 @@ function CharacterDetails () {
                 </form>  
               </div>
               <div className="retireCharDiv">
-                <BasicDialog button="Retire Character" title="Retire Character" content="Are you sure you want to retire this character?" onConfirm={() => handleDeleteChar(character.id)} />
+                <BasicDialog button="Retire Character" title="Retire Character" content="Are you sure you want to retire this character?" onConfirm={() => handleDeleteChar(testCharacter.id)} />
               </div>
             </div>
 
@@ -250,7 +204,7 @@ function CharacterDetails () {
             <ul className="perk-list">
               <h2 className='charName'>Perks</h2>
               {/** getting into some JSX looping madness here to display the perk checkboxs*/}
-              {classDetails.map((perk) => ( //use .map to loop through list of perk dictionaries.
+              {charClass.map((perk) => ( //use .map to loop through list of perk dictionaries.
                 <li key={perk.perk_id}>
                   {Array.from({ length: perk.times_unlockable }).map((_, i) => ( //if a perk can be unlocked more than once, we want to create more than one checkbox. we use array.from to loop.
                     <input type="checkbox" 
@@ -267,9 +221,9 @@ function CharacterDetails () {
           {Array.from({ length: 18 }).map((_,i) => //generate 18 checkboxes for perk points
           <React.Fragment key={i + 1}>
             <input type="checkbox" 
-            checked={i < character.perk_points} //check any box id that is one less than characters perk points (checkbox id starts at 0, so if 1 perk point is unlocked, 0 should be checked)
+            checked={i < testCharacter.perk_points} //check any box id that is one less than characters perk points (checkbox id starts at 0, so if 1 perk point is unlocked, 0 should be checked)
             onChange={(e) => handleCheckboxChangePP(i+1)} //if a box is checked or unchecked, handle change
-            disabled={(i+1) != 1 && i > character.perk_points} //checkbox 0 should never be disabled. also, disable checkbox two away from number of perk points character has
+            disabled={(i+1) != 1 && i > testCharacter.perk_points} //checkbox 0 should never be disabled. also, disable checkbox two away from number of perk points character has
             />
             
             {(i + 1) % 3 === 0 && <>✓ </>}
@@ -294,7 +248,7 @@ function CharacterDetails () {
           ))}
 
         <div className="inputTextNotesDiv">
-          <form onSubmit={e => handleSubmitNotes(e)}>
+          <form onSubmit={() => {useCreateCharacterNote.mutate({ id: testCharacter.id, text: noteText  }); setNoteText("");}}>
             <input className="inputTextNotes" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
             <button type="submit">Save</button> 
           </form>       

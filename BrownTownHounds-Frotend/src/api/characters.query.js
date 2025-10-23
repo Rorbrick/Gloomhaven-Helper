@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from './client';
+import { queryKey } from './parties.query';
 
 export const qk = {
     characters: () => ['characters'],
@@ -13,7 +14,7 @@ export function useCharacters() {
     return useQuery({
         queryKey: qk.characters(),
         queryFn: api.listCharacters,
-        staleTime: 1000 * 30,
+        refetchOnMount: 'always',
     });
 }
 
@@ -27,11 +28,18 @@ export function useCharacter(id, enabled = true){
     })
 }
 
+export function useCharacterNotes(id, enabled = true){
+    return useQuery({
+        queryKey: qk.characterNotes(),
+        queryFn: () => api.listCharacterNotes(id),
+        enabled: !!id && enabled,
+    })
+}
+
 export function useCreateCharacter(){
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: api.createCharacter,
-
         onMutate: async (newCharacter) => {
             //cancel in flight refetches
             await queryClient.cancelQueries({ queryKey: qk.characters() })
@@ -53,6 +61,31 @@ export function useCreateCharacter(){
         // Always refetch after error or success:
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.characters })
+        }
+    })
+}
+
+export function useCreateCharacterNote(){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newNote) => api.createCharacterNote(newNote),
+        onMutate: async (newNote) => {
+            await queryClient.cancelQueries({ queryKey: qk.characterNotes() })
+
+            const previousCharacterNotes = queryClient.getQueriesData( qk.characterNotes())
+
+            queryClient.setQueryData(qk.characterNotes(), (old) => [
+            ...old,
+            { note_id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
+            ]);
+
+            return { previousCharacterNotes }
+        },
+        onError: (err, newCharacterNote, context) => {
+            queryClient.setQueryData([qk.characterNotes(), context.previousCharacterNotes]);
+        },
+        onSettled: () => {
+            queryClient.setQueriesData({ queryKey: qk.characterNotes });
         }
     })
 }

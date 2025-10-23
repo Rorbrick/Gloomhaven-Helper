@@ -14,7 +14,6 @@ function CharacterList() {
       <ul className='link-list'>
         {characters?.map((char) => (
           <li key={char.id}>
-            {/*<button className='deleteButton' onClick={() => handleDeleteChar(char.id)}>X</button>*/}
             <Link className="homeSelect" to={`/characters/${char.id}`}> {char.name} (Level {char.level}) </Link>
           </li>
         ))}

@@ -15,7 +15,7 @@ def get_characters():
             return jsonify({'error': 'Missing JSON body'}), 400
         
         with db.session.begin(): #this allows flush to work. will commit on success, and rollback on failure.
-            char = Character(name=data["character_name"], class_id=data["class_id"])
+            char = Character(name=data["name"], class_id=data["class_id"])
             perks = db.session.scalars(sa.select(Class_Perk).where(Class_Perk.class_id == data["class_id"]).order_by(Class_Perk.perk_id)).all()
 
             db.session.add(char) 
