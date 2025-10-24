@@ -66,8 +66,8 @@ return (
 
                     <div className="inputTextAchievement">
                         <form onSubmit={(e) => {e.preventDefault();
-                                              createAchievementMutate({ text: achievementText });
-                                              setAchievementText("");}}>
+                                                createAchievementMutate({ text: achievementText });
+                                                setAchievementText("");}}>
                         <input type="text" name="achievement" value={achievementText} onChange={(e) => setAchievementText(e.target.value)}/> <button type='submit'>Add</button>
                         </form>                            
                     </div>                        
