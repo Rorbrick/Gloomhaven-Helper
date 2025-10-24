@@ -1,6 +1,6 @@
 import json
 from app import create_app, db
-from app.models import Class, Perk
+from app.models import Class, Perk, Class_Perk
 import sqlalchemy as sa
 
 app = create_app()
@@ -28,7 +28,8 @@ with app.app_context():
         class_obj = Class.query.filter_by(name=cp["class_name"]).first()
         perk_obj = Perk.query.filter_by(name=cp["perk_name"]).first()
 
-        if class_obj and perk_obj and perk_obj not in class_obj.perks:
-            class_obj.perks.append(perk_obj)
-
+        if class_obj and perk_obj:
+            link = Class_Perk(class_=class_obj, perk=perk_obj, times_unlockable=1)
+        db.session.add(link)
+        
     db.session.commit()

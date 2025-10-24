@@ -15,7 +15,7 @@ def get_characters():
             return jsonify({'error': 'Missing JSON body'}), 400
         
         with db.session.begin(): #this allows flush to work. will commit on success, and rollback on failure.
-            char = Character(name=data["character_name"], class_id=data["class_id"])
+            char = Character(name=data["name"], class_id=data["class_id"])
             perks = db.session.scalars(sa.select(Class_Perk).where(Class_Perk.class_id == data["class_id"]).order_by(Class_Perk.perk_id)).all()
 
             db.session.add(char) 
@@ -41,7 +41,7 @@ def get_characters():
         
         ]
 
-    return jsonify({'characters': charactersList})
+    return jsonify(charactersList)
 
 
 @app.route('/api/characters/<int:char_id>', methods=['GET','POST','PATCH','DELETE'])
@@ -177,7 +177,7 @@ def get_parties():
         }
         for party in parties]
     
-    return jsonify({'parties': partiesList})  
+    return jsonify(partiesList)  
 
 @app.route('/api/parties/<int:party_id>/notes', methods=['GET', 'POST', 'PATCH'])
 def party_notes(party_id):

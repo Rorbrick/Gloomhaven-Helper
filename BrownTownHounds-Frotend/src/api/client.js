@@ -15,27 +15,30 @@ async function request(url, options) {
 export const api = {
     //Characters
     listCharacters: () => request(`/characters`),
-    listCharacter: (id) => request(`/characters/${id}`),
+    getCharacter: (id) => request(`/characters/${id}`),
     createCharacter: (data) => request('/characters', { method: 'POST', body: JSON.stringify(data) }),
     updateCharacter: (id,data) => request(`/characters/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     deleteCharacter: (id) => request(`/characters/${id}`, { method: 'DELETE' }),
-    listCharacterNote: (id) => request(`/characters/${id}/notes`),
+    listCharacterNotes: (id) => request(`/characters/${id}/notes`),
     createCharacterNote: (id,data) => request(`/characters/${id}/notes`, { method: 'POST', body: JSON.stringify(data)} ),
     deleteCharacterNote: (id,note_id) => request(`/characters/${id}/notes/${note_id}`, { method: 'DELETE' }),
 
     //Parties
     listParties: () => request(`/parties`),
-    listParty: (id) => request(`/parties/${id}`),
+    getParty: (id) => request(`/parties/${id}`),
     createParty: (data) => request(`/parties`, { method: 'POST', body: JSON.stringify(data) }),
     updateParty: (id,data) => request(`/parties/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     deleteParty: (id) => request(`/parties/${id}`, { method: 'DELETE' }),
+    listPartyNotes: (id) => request(`/parties/${id}/notes`),
     createPartyNote: (id,data) => request(`/parties/${id}/notes`, { method: 'POST', body: JSON.stringify(data) }),
     deletePartyNote: (id,note_id) => request(`/parties/${id}/notes/${note_id}`, { method: 'DELETE' }),
+    createPartyAchievement: (id,data) => request(`/parties/${id}/achievements`, { method: 'POST', body: JSON.stringify(data) }),
+    listPartyAchievements: (id) => request(`/parties/${id}/achievements`),
 
     //Retired Characters
     listRetiredCharacters: () => request(`/retiredcharacters`),
 
     //Classes
     listClasses: () => request(`/classes`),
-    listClass: (id) => request(`/classes/${id}`)
+    getClass: (id) => request(`/classes/${id}`)
 };
