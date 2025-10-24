@@ -40,6 +40,17 @@ export function usePartyNotes(id, enabled = true){
 }
 
 
+//read: Get party achievements
+export function usePartyAchievements(id, enabled = true){
+    return useQuery({
+        queryKey: qk.partyAchievements(),
+        queryFn: () => api.listPartyAchievements(id),
+        enabled: !!id && enabled,
+    })
+}
+
+
+
 //write: create a new party
 export function useCreateParty(){
     const queryClient = useQueryClient();
@@ -49,7 +60,7 @@ export function useCreateParty(){
             //cancel in flight refetches
             await queryClient.cancelQueries({ queryKey: qk.parties() })
 
-            //snapshot of previous character list
+            //snapshot of previous party list
             const previousParties = queryClient.getQueryData(qk.parties())
 
             queryClient.setQueryData(qk.parties(), (old = []) => [
@@ -75,19 +86,17 @@ export function useCreateParty(){
 export function useUpdateParty(partyId){
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (partyData) => api.updateCharacter(partyId, partyData),
+        mutationFn: (partyData) => api.updateParty(partyId, partyData),
         onMutate: async (partyData) => {
             await queryClient.cancelQueries({ queryKey: qk.party(partyId) })
 
             const previousPartyData = queryClient.getQueryData( qk.party(partyId) )
 
-            //Update cached data for the individual key
             queryClient.setQueryData(qk.party(partyId), (old = {}) => ({
                 ...old,
                 ...partyData,
             }));
 
-            //Update cached data for the list
             queryClient.setQueryData(qk.parties(), (old = []) => 
                 old.map(o => (o.id === partyId ? {...o, ...partyData} : o))
             );           
@@ -105,7 +114,7 @@ export function useUpdateParty(partyId){
 }
 
 
-//write: delete character
+//write: delete party
 export function useDeleteParty(partyId){
     const queryClient = useQueryClient();
     return useMutation({
@@ -131,7 +140,7 @@ export function useDeleteParty(partyId){
 }
 
 
-//write: delete character note
+//write: delete party note
 export function useDeletePartyNote(partyId){
     const queryClient = useQueryClient();
     return useMutation({
@@ -168,7 +177,7 @@ export function useCreatePartyNote(partyId){
 
             queryClient.setQueryData(qk.partyNotes(), (old = []) => [
             ...old,
-            { id: partyId, note_id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
+            { party_id: partyId, id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
             ]);
 
             return { previousPartyNotes }
@@ -187,7 +196,7 @@ export function useCreatePartyNote(partyId){
 export function useCreatePartyAchievement(partyId){
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newAchievement) => api.createPartyAchievement(pardyId, newAchievement),
+        mutationFn: (newAchievement) => api.createPartyAchievement(partyId, newAchievement),
         onMutate: async (newAchievement) => {
             await queryClient.cancelQueries({ queryKey: qk.partyAchievements() });
 

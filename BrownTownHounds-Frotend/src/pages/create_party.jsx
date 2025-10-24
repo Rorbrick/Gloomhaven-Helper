@@ -5,14 +5,14 @@ import { useCreateParty } from '../api/parties.query';
 
 function CreateParty (){
   //Parties
-  const { isLoading, error, mutate, data: parties } = useCreateParty();
+  const { isLoading, error, mutate } = useCreateParty();
 
   const [formData,setFormData] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) =>
       {
-          const { name, value, type } = e.target;
+          const { name, value } = e.target;
           setFormData((prevFormData) => ({...prevFormData,[name]: value}));
       };
 
@@ -20,6 +20,7 @@ function CreateParty (){
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Oops: {String(error.message || error)}</p>;
 
+  
 return (
     <div className="createCharMainWrapper">
         <h1 className="partyName">Create Party</h1>
