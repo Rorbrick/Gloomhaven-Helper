@@ -1,44 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDeleteParty, useParties }  from '../api/parties.query';
 
 function PartyList() {
-  const [parties, setParties] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //Parties
+  const { isLoading: isPartiesLoading, error: partiesError, data: parties } = useParties();
+  const { isLoading: isDeletePartyLoading, error: deletePartiesError } = useDeleteParty();
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/parties')
-      .then(res => res.json())
-      .then(data => {
-        setParties(data.parties);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
+  const isLoading = isPartiesLoading || isDeletePartyLoading;
+  const error = partiesError || deletePartiesError;
 
-  const handleDeleteParty = (party_id) =>
-  {
-    fetch(`http://127.0.0.1:5000/api/parties/${party_id}`,
-      {method: 'DELETE',})
-      .then((res) => {
-      if (!res.ok) throw new Error("Failed to delete");
-      // Optionally refetch or update state manually
-      setParties(prev => prev.filter(party => party.id !== party_id));
-    })
-    .catch(err => console.error("Delete error:", err));
-  }
-
-  if (loading) return <p>Loading...</p>;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Oops: {String(error.message || error)}</p>;
 
   return (
     <section>
       <h2 className="partyName">Parties</h2>
       <ul className='link-list'>
-        {parties.map((party) => (
+        {parties?.map((party) => (
           <li key={party.id}>
-            {/*<button className='deleteButton' onClick={() => handleDeleteParty(party.id)}>X</button>*/}
             <Link to={`/parties/${party.id}`}>
               {party.name}
             </Link>

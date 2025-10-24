@@ -1,54 +1,42 @@
 import React from 'react';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCreateParty } from '../api/parties.query';
 
 function CreateParty (){
-    const [formData,setFormData] = useState("");
-    const navigate = useNavigate();
+  //Parties
+  const { isLoading, error, mutate, data: parties } = useCreateParty();
 
-const handleChange = (e) =>
-    {
-        const { name, value, type } = e.target;
-        setFormData((prevFormData) => ({...prevFormData,[name]: value}));
-    };
+  const [formData,setFormData] = useState("");
+  const navigate = useNavigate();
 
-const handleSubmit = (e) => 
-  {
-    e.preventDefault();
+  const handleChange = (e) =>
+      {
+          const { name, value, type } = e.target;
+          setFormData((prevFormData) => ({...prevFormData,[name]: value}));
+      };
 
-    const party = {party_name: formData.party_name};
-
-    console.log("Submitting:", party);
-
-    fetch(`http://127.0.0.1:5000/api/parties`, 
-    {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(party)
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Saved:", data);
-      navigate("/");
-    })
-    .catch(err => console.error("Error saving:", err));
-  };
     
-    return (
-        <div className="createCharMainWrapper">
-            <h1 className="partyName">Create Party</h1>
-            <div className="createCharInnerWrapper">
-            <div className="createCharInputDiv">
-              <form onSubmit={handleSubmit}>
-                  Party Name &nbsp;
-                  <input className="inputText" type="text" name="party_name" value={formData.location} onChange={handleChange} /><br />
-              <button className="saveButton" type="submit">Create</button>
-              </form>
-            </div>
-            </div>
-        </div>
-    )
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Oops: {String(error.message || error)}</p>;
 
+return (
+    <div className="createCharMainWrapper">
+        <h1 className="partyName">Create Party</h1>
+        <div className="createCharInnerWrapper">
+        <div className="createCharInputDiv">
+          <form onSubmit={(e) => {e.preventDefault();
+                                  mutate({ party_name: formData.party_name });
+                                  navigate("/");
+                                  }}>
+              Party Name &nbsp;
+              <input className="inputText" type="text" name="party_name" value={formData.location} onChange={handleChange} /><br />
+          <button className="saveButton" type="submit">Create</button>
+          </form>
+        </div>
+        </div>
+    </div>
+)
 }
 
 export default CreateParty;

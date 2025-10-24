@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from './client';
-import { queryKey } from './parties.query';
 
 export const qk = {
     characters: () => ['characters'],
@@ -9,14 +8,15 @@ export const qk = {
     characterNote: (id,note_id) => ['characters', id, 'notes', note_id],
 };
 
+
 //Read: Get list of characters
 export function useCharacters() {
     return useQuery({
         queryKey: qk.characters(),
         queryFn: api.listCharacters,
-        refetchOnMount: 'always',
     });
 }
+
 
 //read: Get single character
 export function useCharacter(id, enabled = true){
@@ -28,6 +28,8 @@ export function useCharacter(id, enabled = true){
     })
 }
 
+
+//read: Get a characters notes
 export function useCharacterNotes(id, enabled = true){
     return useQuery({
         queryKey: qk.characterNotes(),
@@ -36,6 +38,8 @@ export function useCharacterNotes(id, enabled = true){
     })
 }
 
+
+//write: create a new character
 export function useCreateCharacter(){
     const queryClient = useQueryClient();
     return useMutation({
@@ -47,7 +51,7 @@ export function useCreateCharacter(){
             //snapshot of previous character list
             const previousCharacters = queryClient.getQueryData(qk.characters())
 
-            queryClient.setQueryData(qk.characters(), (old) => [
+            queryClient.setQueryData(qk.characters(), (old = []) => [
             ...old,
             { id: `temp-${Date.now()}`, ...newCharacter, _optimistic: true },
             ]);
@@ -60,32 +64,119 @@ export function useCreateCharacter(){
         },
         // Always refetch after error or success:
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: qk.characters })
+            queryClient.invalidateQueries({ queryKey: qk.characters() })
         }
     })
 }
 
-export function useCreateCharacterNote(){
+
+//write: update character data
+export function useUpdateCharacter(characterId){
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newNote) => api.createCharacterNote(newNote),
+        mutationFn: (charData) => api.updateCharacter(characterId, charData),
+        onMutate: async (charData) => {
+            await queryClient.cancelQueries({ queryKey: qk.character(characterId) })
+
+            const previousCharacterData = queryClient.getQueryData( qk.character(characterId) )
+
+            //Update cached data for the individual key
+            queryClient.setQueryData(qk.character(characterId), (old = {}) => ({
+                ...old,
+                ...charData,
+            }));
+
+            //Update cached data for the list
+            queryClient.setQueryData(qk.characters(), (old = []) => 
+                old.map(o => (o.id === characterId ? {...o, ...charData} : o))
+            );           
+
+            return (previousCharacterData)
+        },
+        onError: (err, newCharData, context) => {
+            queryClient.setQueryData({ queryKey: context.previousCharacterData })
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: qk.character(characterId) })
+            queryClient.invalidateQueries({ queryKey: qk.characters() })
+        }
+    })
+}
+
+
+//write: delete character
+export function useDeleteCharacter(characterId){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: () => api.deleteCharacter(characterId),
+        onMutate: async () => {
+            await queryClient.cancelQueries({ queryKey: qk.characters() });
+
+            const previousCharacters = queryClient.getQueryData({ queryKey: qk.characters() })
+
+            queryClient.setQueryData(qk.characters, (old = []) => {
+                old?.filter(o => o.id !== characterId)
+            });
+
+            return(previousCharacters)
+        },
+        onError: (err, newCharacterList, context) => {
+            queryClient.setQueryData({ queryKey: context.previousCharacters })
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: qk.characters() })
+        }
+    })
+}
+
+
+//write: delete character note
+export function useDeleteCharacterNote(characterId){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (note_id) => api.deleteCharacterNote(characterId, note_id),
+        onMutate: async (note_id) => {
+            await queryClient.cancelQueries({ queryKey: qk.characterNotes() });
+
+            const previousCharacterNotes = queryClient.getQueryData({ querykey: qk.characterNotes() });
+
+            queryClient.setQueryData(qk.characterNotes, (old = []) => {
+                old?.filter(o => o.id !== note_id)
+            });
+
+            return(previousCharacterNotes)
+        },
+        onError: (err, newCharacterNotes, context) => {
+            queryClient.setQueryData({ queryKey: context.previousCharacterNotes });
+        },
+        onSettled: () =>{
+            queryClient.invalidateQueries({ queryKey: qk.characterNotes() });
+        }
+    })
+}
+
+//write: create a new character note
+export function useCreateCharacterNote(characterId){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newNote) => api.createCharacterNote(characterId, newNote),
         onMutate: async (newNote) => {
             await queryClient.cancelQueries({ queryKey: qk.characterNotes() })
 
-            const previousCharacterNotes = queryClient.getQueriesData( qk.characterNotes())
+            const previousCharacterNotes = queryClient.getQueryData( qk.characterNotes())
 
-            queryClient.setQueryData(qk.characterNotes(), (old) => [
+            queryClient.setQueryData(qk.characterNotes(), (old = []) => [
             ...old,
-            { note_id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
+            { id: characterId, note_id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
             ]);
 
             return { previousCharacterNotes }
         },
         onError: (err, newCharacterNote, context) => {
-            queryClient.setQueryData([qk.characterNotes(), context.previousCharacterNotes]);
-        },
+            queryClient.setQueryData(qk.characterNotes(), context.previousCharacterNotes);
+        },       
         onSettled: () => {
-            queryClient.setQueriesData({ queryKey: qk.characterNotes });
-        }
+            queryClient.invalidateQueries({ queryKey: qk.characterNotes() });
+        },
     })
 }

@@ -22,6 +22,7 @@ function CreateCharacter (){
   const [charCardBack,setCharCardBack] = useState(null);
   const navigate = useNavigate();
 
+
   //On page load, if classes data is loaded, set default values - selected class, and card images
   useEffect(() => {
     if (isSuccess && classes) {
@@ -30,6 +31,7 @@ function CreateCharacter (){
       setCharCardBack('/public/images/gh-' + classes[0].class_name + '-back.png');
     }
   }, [isSuccess], [classes]);
+
 
   //Any time we change data, such as character name or selected class, update values
   const handleChange = (e) =>   {
@@ -46,6 +48,7 @@ function CreateCharacter (){
     };
   };
 
+  
   const handleSubmit = async (e) =>{
     e.preventDefault();
 

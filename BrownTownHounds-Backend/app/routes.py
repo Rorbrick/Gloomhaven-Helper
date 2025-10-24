@@ -177,7 +177,7 @@ def get_parties():
         }
         for party in parties]
     
-    return jsonify({'parties': partiesList})  
+    return jsonify(partiesList)  
 
 @app.route('/api/parties/<int:party_id>/notes', methods=['GET', 'POST', 'PATCH'])
 def party_notes(party_id):

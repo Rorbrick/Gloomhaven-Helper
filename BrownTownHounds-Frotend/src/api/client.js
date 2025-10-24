@@ -29,6 +29,7 @@ export const api = {
     createParty: (data) => request(`/parties`, { method: 'POST', body: JSON.stringify(data) }),
     updateParty: (id,data) => request(`/parties/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     deleteParty: (id) => request(`/parties/${id}`, { method: 'DELETE' }),
+    listPartyNotes: (id) => request(`/parties/${id}/notes`, { method: GET }),
     createPartyNote: (id,data) => request(`/parties/${id}/notes`, { method: 'POST', body: JSON.stringify(data) }),
     deletePartyNote: (id,note_id) => request(`/parties/${id}/notes/${note_id}`, { method: 'DELETE' }),
 
