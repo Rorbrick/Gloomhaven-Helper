@@ -1,7 +1,8 @@
 .createCharMainWrapper{
-  width: fit-content;
-  align-items: center;
-  flex-direction: column;  
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    flex-direction: column;  
 }
 
 .charCardWrapper{

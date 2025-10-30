@@ -1,6 +1,14 @@
 .homePageMainWrapper{
+    display: flex;
     justify-content: center;
     align-items: flex-start;
+    position: relative;
+    width: 100%;
+    max-width: 100rem;
+    gap: 1rem;
+    min-width: 0;
+    margin-top: 1em;
+    height: auto;
 }
 
 .charactersDiv, .partiesDiv{
@@ -10,21 +18,19 @@
     border: 1px solid rgba(255,255,255,0.05);
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     border-radius: 12px;
-    margin: 0.2rem;
-    width: fit-content;
-    height: fit-content;
-    padding: 1rem;
+    height: 100%;
+    width: 100%;
+    padding: 1em;
     align-items: flex-start;
     justify-content: flex-start;
-    line-height: 2.5rem;
-    font-size: 1.2rem;
-    min-width: 25rem;
+    line-height: 2.5em;
+    font-size: 1.2em;
 }
 
 .link-list {
     list-style: none;
     display: flex;
-    gap: 1.5rem;
+    gap: 1.2em;
     flex-direction: column;
     margin: 0;
     padding: 0;
@@ -33,38 +39,42 @@
 .plain-list {
     list-style: none;
 }
-
+.link-list li {
+    padding:0; 
+    display:flex; 
+    justify-content:center;
+}
 .link-list li a {
-    display: flex; 
-    padding: 0.75rem 10rem;
-    font-size: 2rem;
-    width: 300px;
+    display: flex;
+    position: relative;
+    padding: 0.5em 8em;
+    font-size: 1.5em;
+    width: 100%;
+    max-width: 10em;
     text-align: center;
     justify-content: center;
-    transition: color 0.3s, background-color 0.3s;
     text-decoration: none;
 
-    background: linear-gradient(180deg, rgba(124, 116, 116, 0.45), rgba(30, 30, 30, 0.598));
+    background: linear-gradient(180deg, rgba(124, 116, 116, 0.45), rgba(124, 116, 116, 0.123));
     border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 12px;
-    margin-bottom: 0.1rem;
+    border-radius: 0.4em;
+    margin-bottom: 0.1em;
     align-self: center;
+    color: #ccc;
+    transition: color 0.3s;
+    overflow-y: visible;
 }
 
 .link-list li a:hover {
     filter: brightness(1.1)
 }
 
-.link-list a:visited {
-    color: #ccc;
-}
-
 .inputNum {
-    width: 50px;
+    width: 50em;
 }
 
 input {
-    font-size: 1rem;
+    font-size: 1em;
     border-style: solid;
     border-radius: 5px;
     border-color: #343333;
@@ -73,6 +83,45 @@ input {
 }
 
 .timestamp {
-    font-size: 0.6rem;
+    font-size: 0.6em;
     color:#cfcbc163
+}
+
+@media (max-width: 1600px) {
+    .homePageMainWrapper{
+        flex-direction: column;
+        max-width: 22em;
+        padding: 0;
+        align-items: center;
+        margin-inline: auto;
+        padding: 1rem .2rem;
+    }
+    .charactersDiv, .partiesDiv{
+        align-items: center;
+        max-width: 20em; 
+        margin-inline: auto; 
+        justify-content: center;
+        padding: .8em;
+        max-width: 15em;
+        gap: 0.2em;
+    }
+
+    .link-list {
+        align-items: center;
+        row-gap: 0.2em;
+        justify-content: center;
+    }
+    .link-list li {
+        width: 100%;
+    }
+
+    .link-list li a {
+        margin-inline: auto;
+        font-size: 1em;
+        width: 100%;
+        padding: 0 1.5em;
+    }
+    .partyName{
+        justify-content: center;
+    }
 }

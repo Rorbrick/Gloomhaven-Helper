@@ -12,7 +12,7 @@
     border-radius: 12px;
     align-self: center;
     gap: 0.5rem;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .retiredCharList{

@@ -57,11 +57,10 @@ def get_character_details(char_id):
             return '', 204
 
     char = db.session.get(Character, char_id)
-    char_perks = db.session.scalars(sa.select(Character_Perk).where(Character_Perk.character_id == char_id).order_by(Character_Perk.perk_id)).all()
 
     if not char:
         return jsonify({'error': 'Character not found'}), 404
-    
+
     if request.method == 'PATCH':
         data = request.get_json()
 
@@ -75,9 +74,6 @@ def get_character_details(char_id):
             SetCharacterLevel(int(char.xp),char)
         if 'perk_points' in data:
             char.perk_points = data['perk_points']
-        if "perk_id" in data:
-            perkToUpdate = db.session.get(Character_Perk, (char_id, data["perk_id"]))
-            perkToUpdate.times_unlocked = data["times_unlocked"]
 
         db.session.commit()
         db.session.refresh(char)
@@ -92,18 +88,31 @@ def get_character_details(char_id):
             'perk_points': char.perk_points,
             'class_name': char.class_name.name,
             'class_id': char.class_id,
-            'perks': [
-                {
-                    "perk_id": p.perk_id,
-                    "perk_name": p.perk.name,
-                    "times_unlocked" : p.times_unlocked
-                }
-                for p in char_perks
-            ]
         }
 
     return jsonify(character_data)
 
+@app.route('/api/characters/<int:char_id>/perks', methods=['GET','PATCH'])
+def get_character_perks(char_id):
+    char_perks = db.session.scalars(sa.select(Character_Perk).where(Character_Perk.character_id == char_id).order_by(Character_Perk.perk_id)).all()
+    if request.method == 'PATCH':
+        data = request.get_json()
+
+        perk = db.session.get(Character_Perk, (char_id, data["perk_id"]))
+        perk.times_unlocked = data["times_unlocked"]
+
+        db.session.commit()
+
+    character_perk_data = [
+        {
+            'perk_id': p.perk_id,
+            'perk_name': p.perk.name,
+            'times_unlocked': p.times_unlocked,
+        }
+        for p in char_perks 
+     ]
+    
+    return jsonify(character_perk_data)
 
 @app.route('/api/retiredcharacters', methods=['GET'])
 def retired_characters():

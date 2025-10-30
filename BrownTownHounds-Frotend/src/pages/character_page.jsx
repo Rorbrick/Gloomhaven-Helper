@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import '../styles/character.css';
 import React from 'react';
 import BasicDialog from '../components/basic_dialog';
-import { useCharacter, useCharacterNotes, useCreateCharacterNote, useUpdateCharacter, useDeleteCharacterNote, useDeleteCharacter } from '../api/characters.query.js';
+import { useCharacter, useCharacterNotes, useCreateCharacterNote, useUpdateCharacter, useDeleteCharacterNote, useDeleteCharacter, useUpdateCharacterPerk, useCharacterPerks } from '../api/characters.query.js';
 import { useClasses, useClass } from '../api/classes.query.js';
 
 function CharacterDetails () {
@@ -12,20 +12,24 @@ function CharacterDetails () {
 
   //TanStack API fetching/parsing
   //Character
-  const { data: character, isLoading: isCharacterLoading, error: characterError, isSuccess } = useCharacter(id);
+  const { data: character, isLoading: isCharacterLoading, error: characterError, isSuccess: characterIsSuccess } = useCharacter(id);
   const { isLoading: isCharacterUpdateLoading, error: characterUpdateError, mutate: characterMutate } = useUpdateCharacter(id);
   const { data: characterNotes, isLoading: isCharacterNotesLoading, error: characterNotesError } = useCharacterNotes(id);
   const { isLoading: createCharacterNoteIsLoading, error: createCharacterNoteError, mutate: createNoteMutate } = useCreateCharacterNote(id);
   const { isLoading: deleteCharacterNoteIsLoading, error: deleteCharacterNoteError, mutate: deleteNoteMutate } = useDeleteCharacterNote(id);
   const { isLoading: deleteCharacterIsLoading, error: deleteCharacterError, mutateAsync: deleteCharacterMutate } = useDeleteCharacter(id);
+  const { isLoading: updateCharacterPerksIsLoading, error: updateCharacterPerksError, mutateAsync: characterPerksMutate } =   useUpdateCharacterPerk(id);
+  const { data: characterPerks, isLoading: characterPerksIsLoading, error: characterPerksError, isSuccess: characterPerksIsSuccess } =  useCharacterPerks(id);
 
   //Classes
   const classId = character?.class_id;
   const { data: charClass, isLoading: isClassLoading, error: classError } = useClass(classId, !!classId);
 
   //Checkers - loading and errors
-  const isLoading =  isCharacterLoading || isCharacterNotesLoading || createCharacterNoteIsLoading || isCharacterUpdateLoading || deleteCharacterNoteIsLoading || deleteCharacterIsLoading || isClassLoading;
-  const error =  characterError || characterNotesError || createCharacterNoteError || characterUpdateError || deleteCharacterNoteError || deleteCharacterError || classError;
+  const isLoading =  isCharacterLoading || isCharacterNotesLoading || createCharacterNoteIsLoading || isCharacterUpdateLoading 
+  || deleteCharacterNoteIsLoading || deleteCharacterIsLoading || isClassLoading || characterPerksIsLoading || updateCharacterPerksIsLoading;
+  const error =  characterError || characterNotesError || createCharacterNoteError || characterUpdateError || deleteCharacterNoteError 
+  || deleteCharacterError || classError || characterPerksError || updateCharacterPerksError;
 
   //To be cleaned
   const navigate = useNavigate();
@@ -42,7 +46,7 @@ function CharacterDetails () {
 
   {/** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */}
   useEffect(() => { 
-    if (isSuccess && character){
+    if (characterIsSuccess && character){
       setFormData({ gold: character.gold, xp: character.xp });
       setCharPlaymat('/public/images/gh-' + character.class_name + '.png');
       setCharNameplate('/public/images/' + character.class_name + '-nameplate.png');
@@ -50,7 +54,7 @@ function CharacterDetails () {
 
     // Ok this one might be a bit funky. 
     const init = []; //We initialize an empty list first
-    for (const p of character.perks ?? []) //then we loop through our list of perks (and their details). return empty if data.perks has no content
+    for (const p of characterPerks ?? []) //then we loop through our list of perks (and their details). return empty if data.perks has no content
       { 
       for (let i = p.times_unlocked; i > 0; i--) //now we need to loop down for number of times unlocked. for example, if something has been unlocked twice, add two entries.
         { 
@@ -59,7 +63,21 @@ function CharacterDetails () {
       }
     setSelectedPerks(init)
     }
-  }, [character], [isSuccess]);
+  }, [character], [characterIsSuccess]);
+
+  {/** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */}
+  useEffect(() => {
+    // Ok this one might be a bit funky. 
+    const init = []; //We initialize an empty list first
+    for (const p of characterPerks ?? []) //then we loop through our list of perks (and their details). return empty if data.perks has no content
+      { 
+      for (let i = p.times_unlocked; i > 0; i--) //now we need to loop down for number of times unlocked. for example, if something has been unlocked twice, add two entries.
+        { 
+          init.push({ perk_id: p.perk_id, checkbox_id: i }); //then append the perk ID and checkbox id to the init list. checkbox id should be equal to i. 
+        }
+      }
+    setSelectedPerks(init)
+  }, [characterPerks], [characterPerksIsSuccess]);
 
 
   /** handle change of character xp and gold fields. Update form data with new values */
@@ -71,7 +89,7 @@ function CharacterDetails () {
 
 
   /** When a perk is changed (checked or unchecked), update the selectedPerks varaible. */
-  const handleCheckboxChange = (perk_id,checkbox_id,e) =>
+  const handleCheckboxChange = (perk_id,checkbox_id,isChecked) =>
   {
     /** if the perk already exists, remove it. Otherwise, add the new perk */
     setSelectedPerks((prev) => prev.some(p => p.perk_id === perk_id && p.checkbox_id === checkbox_id) 
@@ -80,12 +98,11 @@ function CharacterDetails () {
 
     /** if we just checked a box, increase times_unlocked, otherwise, if a box was unchecked, reduce times_unlocked by 1. Set the patch data
       then send to backend */
-    let t_unlocked = e.target.checked ? checkbox_id : checkbox_id - 1;
-    const patch_data = {perk_id,times_unlocked: t_unlocked};
+    let t_unlocked = isChecked ? checkbox_id - 1: checkbox_id;
+    const patch_data = { perk_id, times_unlocked: t_unlocked };
     
-    characterMutate(patch_data);
+    characterPerksMutate(patch_data);
   }
-
 
   /** if a perk point was checked, either add or remove the quantity of perkPontsUnlocked, then PATCH to backend using query hook. */
   const handleCheckboxChangePP = (perkPointsUnlocked) => {
@@ -114,17 +131,16 @@ function CharacterDetails () {
               <div className="charInputDiv">
                 <form onSubmit={(e) => {e.preventDefault();
                                         characterMutate(formData)}}>
-                  Level: {character.level} <br/>
-                  <label>
-                    XP 
-                    <input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} />
-                  </label><br />
-
-                  <label>
-                    Gold 
-                    <input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} />
-                  </label><br />
-                  <button type="submit">Save</button>
+                  <div className="levelDiv">Level {character.level}</div>
+                  <div>
+                   <div className="charInputInnerDiv">XP</div>  
+                    <div className="charInputInnerDiv"><input className="inputNum" type="number" name="xp" value={formData.xp} onChange={handleChange} /></div>
+                  </div>
+                  <div>
+                    <div className="charInputInnerDiv">Gold </div>
+                    <div className="charInputInnerDiv"><input className="inputNum" type="number" name="gold" value={formData.gold} onChange={handleChange} /></div>
+                  </div>
+                  <button className="charStatsButton" type="submit">Save</button>
                 </form>  
               </div>
               <div className="retireCharDiv">
@@ -146,13 +162,25 @@ function CharacterDetails () {
               {/** getting into some JSX looping madness here to display the perk checkboxs*/}
               {charClass?.map((perk) => ( //use .map to loop through list of perk dictionaries.
                 <li key={perk.perk_id}>
-                  {Array.from({ length: perk.times_unlockable }).map((_, i) => ( //if a perk can be unlocked more than once, we want to create more than one checkbox. we use array.from to loop.
-                    <input type="checkbox" 
-                    checked={selectedPerks.some(p => p.perk_id === perk.perk_id && p.checkbox_id == i+1)} //if the perk and checkbox IDs exist in selectedPerks, set the box as checked
-                    key={i+1} //adding +1 here so that the keys start at 1 instead of 0.
-                    onChange={(e) => handleCheckboxChange(perk.perk_id,i+1,e)} //when we either ckeck or uncheck a box, handle the change
-                    disabled={i===1 && !selectedPerks.some(p => p.perk_id === perk.perk_id && p.checkbox_id === 1)}/> //disabling second checkbox if the first one has not been unlocked 
-                  ))}                                                                                               
+                  {Array.from({ length: perk.times_unlockable }).map((_, i) => {
+                    const checkboxId = i + 1;
+                    const isChecked = selectedPerks.some(
+                      (p) => p.perk_id === perk.perk_id && p.checkbox_id === checkboxId
+                    );
+                    const firstChecked = selectedPerks.some(
+                      (p) => p.perk_id === perk.perk_id && p.checkbox_id === 1
+                    );
+
+                    return (
+                      <input
+                        type="checkbox"
+                        key={`${perk.perk_id}-${checkboxId}`}
+                        checked={isChecked}
+                        onChange={(e) => handleCheckboxChange(perk.perk_id, checkboxId, isChecked)}
+                        disabled={i === 1 && !firstChecked} // disable 2nd if 1st not unlocked
+                      />
+                    );
+                  })}
                 {perk.perk_name}</li>
               ))}
             </ul>

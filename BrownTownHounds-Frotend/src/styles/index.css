@@ -5,25 +5,43 @@
   
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
-    
-    background:
-      radial-gradient(circle at center, 
-        rgba(255, 255, 255, 0.12) 0%,     /* light center */
-        rgba(142, 142, 142, 0.08) 20%,    /* gentle fade */
-        rgba(0, 0, 0, 0.85) 100%          /* dark outer */),
-      url('textures/bgTexture.png');
-    /* per-layer controls (1st = gradient, 2nd = texture) */
-    background-repeat: no-repeat, repeat;
-    background-size: cover, auto;          /* or: cover, 256px 256px */
-    background-position: center, top left;
-    background-attachment: fixed, fixed;   /* optional */
-    /* no blend mode needed because gradient is already semi-transparent */
+
   
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+html{
+  min-height: 100vh
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  background:
+    radial-gradient(circle at center, 
+      rgba(255, 255, 255, 0.12) 0%,     /* light center */
+      rgba(142, 142, 142, 0.08) 20%,    /* gentle fade */
+      rgba(0, 0, 0, 0.85) 100%          /* dark outer */),
+    url('textures/bgTexture.png');
+  /* per-layer controls (1st = gradient, 2nd = texture) */
+  background-repeat: no-repeat, repeat;
+  background-size: cover, auto;          /* or: cover, 256px 256px */
+  background-position: center, top left;
+  background-attachment: scroll, scroll;
+  /* no blend mode needed because gradient is already semi-transparent */
+
+  min-height: 100dvh;
+}
 
 footer {
     position:fixed;
@@ -52,13 +70,11 @@ h2, h3 {
 
 .mainCharWrapper, .createCharMainWrapper, .homePageMainWrapper, .retiredCharactersMainWrapper{
   display: flex;
-  position: absolute;
   margin-top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  justify-self: center;
+  position: static;   
   padding: 0.5rem 1rem;
 
-  /*Main Wrapper Box*/
   background: rgba(0, 0, 0, 0.11);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -73,7 +89,7 @@ form .saveButton{
   align-items: center;
   margin: 1rem auto;
   padding: 2rem;
-  align-items: center;
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.677);
 }
+

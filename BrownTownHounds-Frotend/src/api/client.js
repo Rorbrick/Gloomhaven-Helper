@@ -1,7 +1,7 @@
 export const API_URL = 'http://127.0.0.1:5000/api';
 
 async function request(url, options) {
-    const response = await fetch(`${API_URL}${url}`,{
+    const response = await fetch(`/api${url}`,{
         headers: {'Content-Type': 'application/json'},
         ...options,
     });
@@ -22,6 +22,8 @@ export const api = {
     listCharacterNotes: (id) => request(`/characters/${id}/notes`),
     createCharacterNote: (id,data) => request(`/characters/${id}/notes`, { method: 'POST', body: JSON.stringify(data)} ),
     deleteCharacterNote: (id,note_id) => request(`/characters/${id}/notes/${note_id}`, { method: 'DELETE' }),
+    listCharacterPerks: (id) => request(`/characters/${id}/perks`),
+    updateCharacterPerk: (id,data) => request(`/characters/${id}/perks`, { method: 'PATCH', body: JSON.stringify(data) }),
 
     //Parties
     listParties: () => request(`/parties`),

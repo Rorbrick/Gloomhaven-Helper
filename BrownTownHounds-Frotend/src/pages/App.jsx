@@ -14,7 +14,7 @@ const App = () => {
       <>
 
         <MenuBar />
-        <main style={{ paddingTop: '60px' }}>
+        <main style={{  }}>
           <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/create-character" element={<CreateCharacter />} />

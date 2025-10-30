@@ -6,6 +6,7 @@ export const qk = {
     character: (id) => ['characters', id],
     characterNotes: (id) => ['characters', id, 'notes'],
     characterNote: (id,note_id) => ['characters', id, 'notes', note_id],
+    characterPerks: (id) => ['characters', id, 'perks'],
 };
 
 
@@ -38,6 +39,13 @@ export function useCharacterNotes(id, enabled = true){
     })
 }
 
+//read: Get character perks
+export function useCharacterPerks(id){
+    return useQuery({
+        queryKey: qk.characterPerks(),
+        queryFn: () => api.listCharacterPerks(id),
+    })
+}
 
 //write: create a new character
 export function useCreateCharacter(){
@@ -60,7 +68,7 @@ export function useCreateCharacter(){
         },
         // If the mutation fails, use previous context stored for rollback
         onError: (err, newCharacter, context) => {
-            queryClient.setQueryData([qk.characters(), context.previousCharacters])
+            queryClient.setQueryData(qk.characters(), context.previousCharacters)
         },
         // Always refetch after error or success:
         onSettled: () => {
@@ -93,12 +101,17 @@ export function useUpdateCharacter(characterId){
 
             return (previousCharacterData)
         },
-        onError: (err, newCharData, context) => {
-            queryClient.setQueryData({ queryKey: context.previousCharacterData })
+        onError: (_err, _newCharData, ctx) => {
+            if (ctx?.previousCharacterData) {
+                queryClient.setQueryData(qk.character(characterId), ctx.previousCharacterData);
+                queryClient.setQueryData(qk.characters(), (old = []) =>
+                old.map(o => (o.id === characterId ? { ...ctx.previousCharacterData } : o))
+                );
+            }
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.character(characterId) })
-            queryClient.invalidateQueries({ queryKey: qk.characters() })
+            //queryClient.invalidateQueries({ queryKey: qk.characters() })
         }
     })
 }
@@ -121,7 +134,7 @@ export function useDeleteCharacter(characterId){
             return(previousCharacters)
         },
         onError: (err, newCharacterList, context) => {
-            queryClient.setQueryData({ queryKey: context.previousCharacters })
+            queryClient.setQueryData(qk.characters(), context.previousCharacters)
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.characters() })
@@ -147,7 +160,7 @@ export function useDeleteCharacterNote(characterId){
             return(previousCharacterNotes)
         },
         onError: (err, newCharacterNotes, context) => {
-            queryClient.setQueryData({ queryKey: context.previousCharacterNotes });
+            queryClient.setQueryData(qk.characterNotes(), context.previousCharacterNotes)
         },
         onSettled: () =>{
             queryClient.invalidateQueries({ queryKey: qk.characterNotes() });
@@ -177,6 +190,31 @@ export function useCreateCharacterNote(characterId){
         },       
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.characterNotes() });
+        },
+    })
+}
+
+//write: update character perk
+export function useUpdateCharacterPerk(characterId){
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (perk) => api.updateCharacterPerk(characterId,perk),
+        onMutate: async (perk) => {
+            await queryClient.cancelQueries({ queryKey: qk.characterPerks(characterId) });
+
+            const previousCharacterPerks = queryClient.getQueryData(qk.characterPerks(characterId));
+
+            queryClient.setQueryData(qk.characterPerks(characterId), (old = []) => [
+                old.map(o => (o.perk_id === perk.perk_id ? { ...o, ...perk } : o))
+            ]);
+
+            return { previousCharacterPerks }
+        },
+        onError: (err, newCharacterPerk, context) => {
+            queryClient.setQueryData(qk.characterPerks(characterId), context.previousCharacterPerks)
+        },
+        onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: qk.characterPerks(characterId) })
         },
     })
 }

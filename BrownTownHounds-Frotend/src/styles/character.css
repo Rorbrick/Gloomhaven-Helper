@@ -102,15 +102,45 @@
     top: 0%;
 }
 
-@media (max-width: 1000px) {
-  .perksDiv {
+.charInputDiv form{
+    display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  .perkPointsDiv {
-    align-self: center;
-    margin-top: 0.5rem;
-  }
+    gap: 0.5rem;
+}
+
+.charInputDiv form div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.charInputDiv div{
+    display: flex;
+    position: relative;
+}
+
+.charInputInnerDiv{
+    display: flex;
+    position: relative;
+}
+
+.charInputInnerDiv input[type="number"]{
+    display: flex;
+    position: relative;
+    width: 60%;
+    text-align: center;
+
+    /* Standard + Firefox */
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+/* Chrome / Safari / Edge: remove spinner arrows */
+.charInputInnerDiv input[type="number"]::-webkit-outer-spin-button,
+.charInputInnerDiv input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 textarea {
@@ -131,15 +161,49 @@ textarea {
     width: fit-content;
     align-items: center;
     margin: 0rem auto;
-    padding: 2rem 0.7rem;
+    padding: 1rem 0.2rem;
     align-items: center;
-    font-size:1rem;
+    font-size:0.7rem;
     color: rgba(0, 0, 0, 0.677);
     background-color: rgba(182, 79, 79, 0.729);
+    font-weight:bold;
 }
 
 .retireButton:hover {
   background-color: rgba(225, 37, 37, 0.653);
   transform: translateY(-1px);
   cursor: pointer;
+}
+
+.charStatsButton{
+    display: flex;
+    padding: 1.2rem 2.2rem;
+    align-items: center;
+    justify-self: center;
+    margin: .5rem;
+    background-color: rgba(66, 200, 66, 0.429);
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.963);
+}
+
+.charStatsButton:hover{
+  background-color: rgba(66, 200, 66, 0.463);
+  transform: translateY(-1px);
+  cursor: pointer;
+  color: white;
+}
+
+@media (max-width: 1000px) {
+  .perksDiv {
+    flex-direction: column;
+    align-items: center;
+  }
+  .perkPointsDiv {
+    align-self: center;
+    margin-top: 0.5rem;
+  }
+}
+
+.levelDiv{
+    font-size: 1.5rem;
 }
