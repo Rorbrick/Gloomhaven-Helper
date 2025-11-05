@@ -204,18 +204,20 @@ function CharacterDetails () {
         <div className="notesDiv">
           <h3 className="locationH3">Notes</h3>
         {/** displaying notes and allowing user to delete */}
+        <div className="notesInnerWrapper">
           {characterNotes.map(note => (
             <div className="notes" key={note.id}>
               {note.text} <button className='deleteButton' onClick={() => deleteNoteMutate(note.id)}>X</button>
               <br/><span className="timestamp">{note.timestamp}</span>
             </div>
           ))}
+        </div>
 
         <div className="inputTextNotesDiv">
           <form onSubmit={(e) => {e.preventDefault();
                                   createNoteMutate({ text: noteText }); 
                                   setNoteText("");}}>
-            <input className="inputTextNotes" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/><br />
+            <input className="inputTextNotes" type="text" name="note_text" value={noteText} onChange={(e) => setNoteText(e.target.value)}/>
             <button type="submit">Save</button> 
           </form>       
         </div>

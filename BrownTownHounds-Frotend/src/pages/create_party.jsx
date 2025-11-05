@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreateParty } from '../api/parties.query';
+import '../styles/create_party.css';
 
 function CreateParty (){
   //Parties
@@ -20,12 +21,11 @@ function CreateParty (){
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Oops: {String(error.message || error)}</p>;
 
-  
 return (
-    <div className="createCharMainWrapper">
-        <h1 className="partyName">Create Party</h1>
+    <div className="createPartyMainWrapper">
+        <h1 className="createPartyName">Create Party</h1>
         <div className="createCharInnerWrapper">
-        <div className="createCharInputDiv">
+        <div className="createPartyInputDiv">
           <form onSubmit={(e) => {e.preventDefault();
                                   mutate({ party_name: formData.party_name });
                                   navigate("/");

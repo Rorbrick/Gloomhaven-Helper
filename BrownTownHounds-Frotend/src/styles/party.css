@@ -118,12 +118,13 @@ button:hover{
     margin-bottom: 1rem;
 }
 .notesDiv{
-    height: 520px;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
     overflow-y: auto;
+    padding: .2em;
 }
 
-.notesDiv > .notes{
+.notesDiv .notes{
     position: relative;
     border-color: #5e666e57;
     border-style: solid;
@@ -186,8 +187,14 @@ button:hover{
 }
 
 .inputTextNotesDiv{
-    position: absolute;
-    bottom: 30px;
+    display: flex;
+    bottom: 1em;
+    width:100%;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: .2em;
 }
 
 .inputTextLocation{
@@ -199,19 +206,16 @@ button:hover{
     padding-top: 1rem;
 }
 
-.inputTextNotesDiv {
-    right: 1;
-    width: 94%;
-}
-
 .inputTextLocation{
     bottom: 10px;
 }
 
 .inputTextNotes{
-    position: relative;
-    width: 100%;
-    height: 50px;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    width: 90%;
+    height: 3em;
     overflow-wrap: break-word;
 }
 

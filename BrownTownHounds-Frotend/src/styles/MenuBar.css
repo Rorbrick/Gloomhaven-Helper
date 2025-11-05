@@ -21,7 +21,7 @@
     display: flex;
     align-items: center;
     height: auto;
-    min-height: 3.5rem; 
+    min-height: 4rem; 
     padding: 0.5rem 1rem;
     justify-content: space-between;
     min-width: 0;
@@ -34,7 +34,7 @@
 .logo { min-width: 0; }
 
 .logo a {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: rgb(196, 191, 191);
     text-decoration: none;
@@ -66,6 +66,7 @@
     z-index: 50;
     display: flex;
     position: relative;
+    font-size: 1.2em;
 }
 
 .nav-links li a:hover, .menuButton:hover {
@@ -80,7 +81,7 @@
     align-self: center;
     color-scheme: light dark;
     color: rgb(196, 191, 191);
-    font-size: 16px;
+    font-size: 1.5em;
     font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
 }
 

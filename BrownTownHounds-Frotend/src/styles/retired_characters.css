@@ -1,14 +1,13 @@
 .retiredCharactersMainWrapper{
     flex-direction: column;
-    width: auto;
+    width: 100%;
+    max-width: 60em;
+    padding-bottom: 1em;
 }
 
 .retiredCharactersDiv{
     display: grid;
     padding: 1rem;
-    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     border-radius: 12px;
     align-self: center;
     gap: 0.5rem;
@@ -31,6 +30,8 @@
     justify-content: center;
     font-weight: normal;
     letter-spacing: 0.03em;
+    white-space: normal;
+    text-align: center;
 }
 
 .retiredCharName{
@@ -40,4 +41,23 @@
     align-self: center;
     justify-self: flex-start;
     margin-bottom: 0.2rem;
+}
+
+@media (max-width: 1600px) {
+    .retiredCharactersMainWrapper{
+        max-width: 23em;
+        padding: 1em 0;
+    }
+
+    .retiredCharList{
+        padding: .5rem .5rem;
+        font-size: 1rem;
+        list-style: none;
+    }
+
+    .retiredCharactersDiv{
+        padding: .2em;
+        width: 95%;
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

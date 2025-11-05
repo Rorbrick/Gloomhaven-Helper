@@ -7,6 +7,7 @@ export const qk = {
     characterNotes: (id) => ['characters', id, 'notes'],
     characterNote: (id,note_id) => ['characters', id, 'notes', note_id],
     characterPerks: (id) => ['characters', id, 'perks'],
+    retiredCharacters: () => ['characters', 'retired']
 };
 
 
@@ -44,6 +45,14 @@ export function useCharacterPerks(id){
     return useQuery({
         queryKey: qk.characterPerks(),
         queryFn: () => api.listCharacterPerks(id),
+    })
+}
+
+//read: Get retired characters
+export function useRetiredCharacters(){
+    return useQuery({
+        queryKey: qk.retiredCharacters(),
+        queryFn: () => api.listRetiredCharacters(),
     })
 }
 

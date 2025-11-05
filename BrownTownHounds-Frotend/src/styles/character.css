@@ -67,6 +67,8 @@
 }
 
 .perk-list {
+    display: flex;
+    flex-direction: column;
     list-style: none;
     padding: 1px;
     border: none;
@@ -86,6 +88,7 @@
 }
 
 .charNotesDiv{
+    display: flex;
     width: 80%;
     margin: 0 auto;
     padding: 0.8rem 1rem;
@@ -193,17 +196,130 @@ textarea {
   color: white;
 }
 
-@media (max-width: 1000px) {
-  .perksDiv {
-    flex-direction: column;
-    align-items: center;
-  }
-  .perkPointsDiv {
-    align-self: center;
-    margin-top: 0.5rem;
-  }
-}
-
 .levelDiv{
     font-size: 1.5rem;
+}
+
+.inputTextNotesDiv form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: .2em;
+    align-items: center;
+    justify-content: center;
+}
+
+.notesDiv{
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    padding: .2em;
+    overflow-y: hidden;
+}
+
+.notesDiv > .notesInnerWrapper{
+    display: flex;
+    flex-direction: column;
+    max-height: 30em;
+    overflow-y: scroll;
+}
+
+@media (max-width: 1600px) {
+    .mainCharWrapper{
+        max-width: 23em;
+        align-items: center;
+        justify-content: center;
+        padding: .2em;
+    }
+
+    .charInfoDiv{
+        align-items: center;
+        justify-content: center;
+        margin-right: 0;
+        width: 100%;
+        left: 0;
+        margin-right: 0;
+    }
+    .perksDiv {
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+    }
+    .perkPointsDiv {
+        align-self: center;
+        margin-top: 0.5rem;
+    }
+    .secondaryCharWrapper{
+        width: 95%;
+        flex-direction: column;
+    }
+
+    .nameplate{
+        width: 100%;
+        max-width: 18em;
+    }
+
+    .charInnerWrapper{
+        justify-content: center;
+        align-items: center;
+        width: 95%;
+    }
+
+    .charInnerWrapper{
+        flex-direction: column;
+    }
+
+    .charInputWrapper{
+        width: 95%;
+    }
+
+    .nameplateDiv{
+        align-self: center;
+    }
+
+    .charInputDiv{
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .charInputInnerDiv .inputNum{
+        width: 80%;
+    }
+
+    .perk-list{
+        padding: 0;
+        margin: 0;
+    }
+
+    .charName{
+        align-self: center;
+        justify-self: center;
+        margin-bottom: 0;
+    }
+
+    .perkPointsDiv{
+        margin: 0;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .notesDiv{
+        width: 90%;
+    }
+
+    .inputTextNotesDiv{
+        width: 90%;
+    }
+
+    .inputTextNotesDiv button{
+        width: 20%;
+        height: 2em;
+        margin-inline: auto;
+    }
+
+    .inputTextNotes{
+        width: 100%;
+    }
 }

@@ -1,66 +1,56 @@
-.createCharMainWrapper{
+.createPartyMainWrapper{
     display: flex;
     position: relative;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
-    max-width: 80rem;
+    max-width: 28em;
     height: auto;
     margin-top: 1em;
     min-width: 0;
+    margin-inline: auto;
+    padding-bottom: 1.5em;
 }
 
-.charCardWrapper{
-    display: flex;
-    margin: 0.2rem;
-    padding: 0.2rem;
-}
-
-.createCharInnerWrapper{
+.createPartyInnerWrapper{
     display: flex;
     background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
     border: 1px solid rgba(255,255,255,0.05);
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     border-radius: 12px;
-    align-self: center;
     width: fit-content;
     height: fit-content;
-    padding: 1rem;
     align-items: center;
     justify-content: center;
 }
 
-.createCharInputDiv{
+.createPartyInputDiv{
     display: flex;
     position: relative;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin-bottom: 2rem;
     margin: 0.2rem;
     line-height: 2.5rem;
     font-size: 1.2rem;
-    width: 100%;
 }
 
-.charCardDiv{
-    align-self: center;
-    margin: 0.2rem;
+.createPartyName{
+    display: flex;
+    position: relative;
+    margin-top: .1rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 @media (max-width: 1600px) {
-    .createCharMainWrapper{
-        max-width: 20em;
+    .createPartyMainWrapper{
+        max-width: 21em;
+        padding: 1em 0;
     }
-    .charCardWrapper{
-        flex-direction: column;
-    }
-    .nameplate{
-        width: 20rem;
-    }
-    .inputText{
-        max-width: 10em;
-    }
-    .createCharInputDiv{
+    .createPartyInputDiv{
         font-size: 1rem;
     }
 }
