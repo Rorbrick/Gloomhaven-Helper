@@ -142,6 +142,11 @@
   outline: none;
 }
 
+.nav-links li.mobileMenu {
+  display: none;
+}
+
+
 @media (max-width: 1600px) {
     .menu-bar {
         align-items: center;
@@ -149,7 +154,43 @@
     .menuButton {
         font-size: small;
     }
-    .nav-links li a {
+    
+    .menuButtonMobile{
+        display: flex;
+        font-size: large;
+        background-color: rgba(0, 0, 0, 0);
+        color-scheme: light dark;
+        color: rgb(196, 191, 191);
+        font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-container{
+        padding: .5em 1em;
+        width: 100%;
+    }
+
+    .logo{
         font-size: small;
+        margin-inline: auto;
+    }
+
+    .nav-links{
+        padding: 0;
+        margin-inline: auto;
+    }
+
+    .nav-links li {
+        display: none;
+    }
+
+    .nav-links li.mobileMenu {
+        display: flex;
+        justify-content: center;
+    }
+
+    .nav-links li.basicMenu{
+        display: flex;
     }
 }

@@ -185,18 +185,20 @@ function CharacterDetails () {
               ))}
             </ul>
         <div className="perkPointsDiv">
-              <h2 className='charName'>Perk Points</h2>
-          {Array.from({ length: 18 }).map((_,i) => //generate 18 checkboxes for perk points
-          <React.Fragment key={i + 1}>
-            <input type="checkbox" 
-            checked={i < character.perk_points} //check any box id that is one less than characters perk points (checkbox id starts at 0, so if 1 perk point is unlocked, 0 should be checked)
-            onChange={(e) => handleCheckboxChangePP(i+1)} //if a box is checked or unchecked, handle change
-            disabled={(i+1) != 1 && i > character.perk_points} //checkbox 0 should never be disabled. also, disable checkbox two away from number of perk points character has
-            />
-            
-            {(i + 1) % 3 === 0 && <>✓ </>}
-          </React.Fragment> // have to use fragment here because we are returning two things in the array
-          )}
+          <h2 className='charName'>Perk Points</h2>
+          <div>
+            {Array.from({ length: 18 }).map((_,i) => //generate 18 checkboxes for perk points
+            <React.Fragment key={i + 1}>
+              <input type="checkbox" 
+              checked={i < character.perk_points} //check any box id that is one less than characters perk points (checkbox id starts at 0, so if 1 perk point is unlocked, 0 should be checked)
+              onChange={(e) => handleCheckboxChangePP(i+1)} //if a box is checked or unchecked, handle change
+              disabled={(i+1) != 1 && i > character.perk_points || i < (character.perk_points - 1)} //checkbox 0 should never be disabled. also, disable checkbox two away from number of perk points character has
+              />
+              
+              {(i + 1) % 3 === 0 && <>✓<br/> </>}
+            </React.Fragment> // have to use fragment here because we are returning two things in the array
+            )}            
+          </div>
         </div>
         </div>
       </div>
@@ -204,7 +206,7 @@ function CharacterDetails () {
         <div className="notesDiv">
           <h3 className="locationH3">Notes</h3>
         {/** displaying notes and allowing user to delete */}
-        <div className="notesInnerWrapper">
+        <div className="innerNotesDive">
           {characterNotes.map(note => (
             <div className="notes" key={note.id}>
               {note.text} <button className='deleteButton' onClick={() => deleteNoteMutate(note.id)}>X</button>

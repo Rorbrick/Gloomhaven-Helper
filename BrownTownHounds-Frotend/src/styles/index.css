@@ -93,3 +93,8 @@ form .saveButton{
   color: rgba(0, 0, 0, 0.677);
 }
 
+input[type="checkbox"] {
+  transform: scale(1.4);
+  accent-color: #b8860b; /* Or whatever matches your theme */
+  margin: .3em;
+}

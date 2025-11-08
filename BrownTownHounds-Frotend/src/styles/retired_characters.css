@@ -47,6 +47,7 @@
     .retiredCharactersMainWrapper{
         max-width: 23em;
         padding: 1em 0;
+        margin-top: 1em;
     }
 
     .retiredCharList{

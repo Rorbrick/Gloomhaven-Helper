@@ -75,18 +75,22 @@ return (
             </div>
 
             <div className='notesDiv'>
+
                 <h3 className='locationH3'>Notes</h3>
-                {partyNotes.map(note => (
-                    <div className='notes' key={note.id}>
-                        {note.text} <button className='deleteButton' onClick={() => deleteNoteMutate(note.id)}>X</button> <br/>
-                        <span className="timestamp">{note.timestamp}</span><br/>
-                    </div>
-                ))}
+                <div className="innerNotesDive">
+                    {partyNotes.map(note => (
+                        <div className='notes' key={note.id}>
+                            {note.text} <button className='deleteButton' onClick={() => deleteNoteMutate(note.id)}>X</button> <br/>
+                            <span className="timestamp">{note.timestamp}</span><br/>
+                        </div>
+                    ))}
+                </div>
+
                 <div className="inputTextNotesDiv">
                     <form onSubmit={(e) => {e.preventDefault();
                                             createNoteMutate({ text:noteText });
                                             setNoteText('');}}>
-                        <input className="inputTextNotes" type="text" name="note" value={noteText} onChange={(e) => setNoteText(e.target.value)}/> <button type='submit'>Post</button><br/>
+                        <input className="inputTextNotes" type="text" name="note" value={noteText} onChange={(e) => setNoteText(e.target.value)}/> <button type='submit'>Post</button>
                     </form>
                 </div>
             </div>

@@ -11,8 +11,6 @@
     margin-top: 50px;
     display: flex;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);  
     padding: 0.5rem 0;
     background: rgba(0, 0, 0, 0.11);
     border-radius: 16px;
@@ -20,8 +18,16 @@
     backdrop-filter: blur(1px);
     -webkit-backdrop-filter: blur(1px);
     border: 1px solid rgba(0, 0, 0, 0.3);
-    width: fit-content;
+    width: 100%;
+    max-width: 80em;
     justify-content: center;
+    margin-inline: auto;
+}
+
+.mainWrapper button{
+    width: 5em;
+    height: 2em;
+    font-size: 0.8em;
 }
 
 .partyName{
@@ -79,6 +85,7 @@
     border-style: solid;
     border-color: #504d4d4d;
     margin-bottom: 2rem;
+    height: 100%;
 }
 
 .inputTextAchievement{
@@ -267,4 +274,41 @@ input[type="range"]::-moz-range-thumb {
 
 .rep{
     border-radius: 10px;
+}
+
+@media (max-width: 1600px) {
+    .mainWrapper{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 22em;
+        gap: 1em;
+        margin-top: 1em;
+    }
+
+    .mainWrapperContainer{
+        width: 100%;
+        max-width: 20em;
+    }
+    .partyDiv{
+        flex-direction: column;
+    }
+    .locationContainer{
+        width: 100%;
+        max-width: 15em;
+        justify-items: center;
+        align-items: center;
+        align-self: unset;
+        margin-bottom: 1em;
+    }
+    .achievementDiv{
+        width: 100%;
+    }
+
+    .notesDiv{
+        align-self: unset;
+        margin-inline: auto;
+        width: 100%;
+    }
 }

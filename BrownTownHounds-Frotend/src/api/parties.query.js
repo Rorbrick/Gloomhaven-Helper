@@ -33,7 +33,7 @@ export function useParty(id, enabled = true){
 //read: Get party notes
 export function usePartyNotes(id, enabled = true){
     return useQuery({
-        queryKey: qk.partyNotes(),
+        queryKey: qk.partyNotes(id),
         queryFn: () => api.listPartyNotes(id),
         enabled: !!id && enabled,
     })
@@ -43,7 +43,7 @@ export function usePartyNotes(id, enabled = true){
 //read: Get party achievements
 export function usePartyAchievements(id, enabled = true){
     return useQuery({
-        queryKey: qk.partyAchievements(),
+        queryKey: qk.partyAchievements(id),
         queryFn: () => api.listPartyAchievements(id),
         enabled: !!id && enabled,
     })
@@ -72,7 +72,7 @@ export function useCreateParty(){
         },
         // If the mutation fails, use previous context stored for rollback
         onError: (err, newParty, context) => {
-            queryClient.setQueryData([qk.parties(), context.previousParties])
+            queryClient.setQueryData(qk.parties(), context.previousParties)
         },
         // Always refetch after error or success:
         onSettled: () => {
@@ -90,7 +90,8 @@ export function useUpdateParty(partyId){
         onMutate: async (partyData) => {
             await queryClient.cancelQueries({ queryKey: qk.party(partyId) })
 
-            const previousPartyData = queryClient.getQueryData( qk.party(partyId) )
+        const previousPartyData = queryClient.getQueryData(qk.party(partyId));
+        const previousParties = queryClient.getQueryData(qk.parties());
 
             queryClient.setQueryData(qk.party(partyId), (old = {}) => ({
                 ...old,
@@ -101,10 +102,15 @@ export function useUpdateParty(partyId){
                 old.map(o => (o.id === partyId ? {...o, ...partyData} : o))
             );           
 
-            return (previousPartyData)
+            return (previousPartyData, previousParties)
         },
         onError: (err, newPartyData, context) => {
-            queryClient.setQueryData({ queryKey: context.previousPartyData })
+            if (context?.previousPartyData) {
+                queryClient.setQueryData(qk.party(partyId), context.previousPartyData);
+            }
+            if (context?.previousParties) {
+                queryClient.setQueryData(qk.parties(), context.previousParties);
+            }
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.party(partyId) })
@@ -122,16 +128,16 @@ export function useDeleteParty(partyId){
         onMutate: async () => {
             await queryClient.cancelQueries({ queryKey: qk.parties() });
 
-            const previousParties = queryClient.getQueryData({ queryKey: qk.parties() })
+            const previousParties = queryClient.getQueryData( qk.parties() )
 
-            queryClient.setQueryData(qk.parties, (old = []) => {
+            queryClient.setQueryData(qk.parties(), (old = []) => {
                 old?.filter(o => o.id !== partyId)
             });
 
-            return(previousParties)
+            return { previousParties };
         },
         onError: (err, newPartyList, context) => {
-            queryClient.setQueryData({ queryKey: context.previousParties })
+            queryClient.setQueryData(qk.parties(), context.previousParties);
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.parties() })
@@ -146,21 +152,21 @@ export function useDeletePartyNote(partyId){
     return useMutation({
         mutationFn: (note_id) => api.deletePartyNote(partyId, note_id),
         onMutate: async (note_id) => {
-            await queryClient.cancelQueries({ queryKey: qk.partyNotes() });
+            await queryClient.cancelQueries({ queryKey: qk.partyNotes(partyId) });
 
-            const previousPartyNotes = queryClient.getQueryData({ querykey: qk.partyNotes() });
+            const previousPartyNotes = queryClient.getQueryData(qk.partyNotes(partyId));
 
             queryClient.setQueryData(qk.partyNotes, (old = []) => {
                 old?.filter(o => o.id !== note_id)
             });
 
-            return(previousPartyNotes)
+            return { previousPartyNotes };
         },
         onError: (err, newPartyNotes, context) => {
-            queryClient.setQueryData({ queryKey: context.previousPartyNotes });
+            queryClient.setQueryData(qk.partyNotes(partyId), context.previousPartyNotes);
         },
         onSettled: () =>{
-            queryClient.invalidateQueries({ queryKey: qk.partyNotes() });
+            queryClient.invalidateQueries({ queryKey: qk.partyNotes(partyId) });
         }
     })
 }
@@ -171,22 +177,22 @@ export function useCreatePartyNote(partyId){
     return useMutation({
         mutationFn: (newNote) => api.createPartyNote(partyId, newNote),
         onMutate: async (newNote) => {
-            await queryClient.cancelQueries({ queryKey: qk.partyNotes() })
+            await queryClient.cancelQueries({ queryKey: qk.partyNotes(partyId) })
 
-            const previousPartyNotes = queryClient.getQueryData( qk.partyNotes())
+            const previousPartyNotes = queryClient.getQueryData( qk.partyNotes(partyId))
 
-            queryClient.setQueryData(qk.partyNotes(), (old = []) => [
+            queryClient.setQueryData(qk.partyNotes(partyId), (old = []) => [
             ...old,
             { party_id: partyId, id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
             ]);
 
-            return { previousPartyNotes }
+           return { previousPartyNotes };
         },
         onError: (err, newPartyNote, context) => {
-            queryClient.setQueryData(qk.partyNotes(), context.previousPartyNotes);
+            queryClient.setQueryData(qk.partyNotes(partyId), context.previousPartyNotes);
         },       
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: qk.partyNotes() });
+            queryClient.invalidateQueries({ queryKey: qk.partyNotes(partyId) });
         },
     })
 }
@@ -198,22 +204,22 @@ export function useCreatePartyAchievement(partyId){
     return useMutation({
         mutationFn: (newAchievement) => api.createPartyAchievement(partyId, newAchievement),
         onMutate: async (newAchievement) => {
-            await queryClient.cancelQueries({ queryKey: qk.partyAchievements() });
+            await queryClient.cancelQueries({ queryKey: qk.partyAchievements(partyId) });
 
-            const previousPartyAchievements = queryClient.getQueryData(qk.partyAchievements() );
+            const previousPartyAchievements = queryClient.getQueryData(qk.partyAchievements(partyId) );
 
-            queryClient.setQueryData(qk.partyAchievements(), (old = []) => [
+            queryClient.setQueryData(qk.partyAchievements(partyId), (old = []) => [
                 ...old,
                 { party_id: partyId, id: `temp-${Date.now()}`, ...newAchievement, _optimistic: true  }
             ]);
             
-            return(previousPartyAchievements)
+            return { previousPartyAchievements };
         },
         onError: (err, newPartyAchievement, context) => {
-            queryClient.setQueryData(qk.partyAchievements, context.previousPartyAchievements);
+            queryClient.setQueryData(qk.partyAchievements(partyId), context.previousPartyAchievements);
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: qk.partyAchievements() })
+            queryClient.invalidateQueries({ queryKey: qk.partyAchievements(partyId) })
         }
     })
 }

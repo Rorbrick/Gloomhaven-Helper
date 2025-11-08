@@ -34,7 +34,7 @@ export function useCharacter(id, enabled = true){
 //read: Get a characters notes
 export function useCharacterNotes(id, enabled = true){
     return useQuery({
-        queryKey: qk.characterNotes(),
+        queryKey: qk.characterNotes(id),
         queryFn: () => api.listCharacterNotes(id),
         enabled: !!id && enabled,
     })
@@ -43,7 +43,7 @@ export function useCharacterNotes(id, enabled = true){
 //read: Get character perks
 export function useCharacterPerks(id){
     return useQuery({
-        queryKey: qk.characterPerks(),
+        queryKey: qk.characterPerks(id),
         queryFn: () => api.listCharacterPerks(id),
     })
 }
@@ -66,22 +66,22 @@ export function useCreateCharacter(){
             await queryClient.cancelQueries({ queryKey: qk.characters() })
 
             //snapshot of previous character list
-            const previousCharacters = queryClient.getQueryData(qk.characters())
+            const previousCharacters = queryClient.getQueryData(qk.characters());
 
             queryClient.setQueryData(qk.characters(), (old = []) => [
             ...old,
             { id: `temp-${Date.now()}`, ...newCharacter, _optimistic: true },
             ]);
 
-            return { previousCharacters }
+            return { previousCharacters };
         },
         // If the mutation fails, use previous context stored for rollback
         onError: (err, newCharacter, context) => {
-            queryClient.setQueryData(qk.characters(), context.previousCharacters)
+            queryClient.setQueryData(qk.characters(), context.previousCharacters);
         },
         // Always refetch after error or success:
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: qk.characters() })
+            queryClient.invalidateQueries({ queryKey: qk.characters() });
         }
     })
 }
@@ -95,7 +95,8 @@ export function useUpdateCharacter(characterId){
         onMutate: async (charData) => {
             await queryClient.cancelQueries({ queryKey: qk.character(characterId) })
 
-            const previousCharacterData = queryClient.getQueryData( qk.character(characterId) )
+            const previousCharacterData = queryClient.getQueryData(qk.character(characterId));
+            const previousCharacters = queryClient.getQueryData(qk.characters());
 
             //Update cached data for the individual key
             queryClient.setQueryData(qk.character(characterId), (old = {}) => ({
@@ -108,19 +109,18 @@ export function useUpdateCharacter(characterId){
                 old.map(o => (o.id === characterId ? {...o, ...charData} : o))
             );           
 
-            return (previousCharacterData)
+            return { previousCharacterData, previousCharacters };
         },
         onError: (_err, _newCharData, ctx) => {
             if (ctx?.previousCharacterData) {
                 queryClient.setQueryData(qk.character(characterId), ctx.previousCharacterData);
-                queryClient.setQueryData(qk.characters(), (old = []) =>
-                old.map(o => (o.id === characterId ? { ...ctx.previousCharacterData } : o))
-                );
+            }
+            if (ctx?.previousCharacters) {
+                queryClient.setQueryData(qk.characters(), ctx.previousCharacters);
             }
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.character(characterId) })
-            //queryClient.invalidateQueries({ queryKey: qk.characters() })
         }
     })
 }
@@ -134,16 +134,16 @@ export function useDeleteCharacter(characterId){
         onMutate: async () => {
             await queryClient.cancelQueries({ queryKey: qk.characters() });
 
-            const previousCharacters = queryClient.getQueryData({ queryKey: qk.characters() })
+            const previousCharacters = queryClient.getQueryData(qk.characters()); 
 
-            queryClient.setQueryData(qk.characters, (old = []) => {
-                old?.filter(o => o.id !== characterId)
-            });
+            queryClient.setQueryData(qk.characters(), (old = []) =>
+                old.filter((o) => o.id !== characterId),
+            );
 
-            return(previousCharacters)
+            return { previousCharacters };
         },
         onError: (err, newCharacterList, context) => {
-            queryClient.setQueryData(qk.characters(), context.previousCharacters)
+            queryClient.setQueryData(qk.characters(), context.previousCharacters);
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: qk.characters() })
@@ -158,21 +158,21 @@ export function useDeleteCharacterNote(characterId){
     return useMutation({
         mutationFn: (note_id) => api.deleteCharacterNote(characterId, note_id),
         onMutate: async (note_id) => {
-            await queryClient.cancelQueries({ queryKey: qk.characterNotes() });
+            await queryClient.cancelQueries({ queryKey: qk.characterNotes(characterId) });
 
-            const previousCharacterNotes = queryClient.getQueryData({ querykey: qk.characterNotes() });
+            const previousCharacterNotes = queryClient.getQueryData(qk.characterNotes(characterId));
 
-            queryClient.setQueryData(qk.characterNotes, (old = []) => {
+            queryClient.setQueryData(qk.characterNotes(characterId) , (old = []) => {
                 old?.filter(o => o.id !== note_id)
             });
 
-            return(previousCharacterNotes)
+            return { previousCharacterNotes };
         },
         onError: (err, newCharacterNotes, context) => {
-            queryClient.setQueryData(qk.characterNotes(), context.previousCharacterNotes)
+            queryClient.setQueryData(qk.characterNotes(characterId), context.previousCharacterNotes);
         },
         onSettled: () =>{
-            queryClient.invalidateQueries({ queryKey: qk.characterNotes() });
+            queryClient.invalidateQueries({ queryKey: qk.characterNotes(characterId) });
         }
     })
 }
@@ -183,22 +183,22 @@ export function useCreateCharacterNote(characterId){
     return useMutation({
         mutationFn: (newNote) => api.createCharacterNote(characterId, newNote),
         onMutate: async (newNote) => {
-            await queryClient.cancelQueries({ queryKey: qk.characterNotes() })
+            await queryClient.cancelQueries({ queryKey: qk.characterNotes(characterId) });
 
-            const previousCharacterNotes = queryClient.getQueryData( qk.characterNotes())
+            const previousCharacterNotes = queryClient.getQueryData(qk.characterNotes(characterId));
 
-            queryClient.setQueryData(qk.characterNotes(), (old = []) => [
+            queryClient.setQueryData(qk.characterNotes(characterId), (old = []) => [
             ...old,
             { id: characterId, note_id:`temp-${Date.now()}`, ...newNote, _optimistic: true }
             ]);
 
-            return { previousCharacterNotes }
+            return { previousCharacterNotes };
         },
         onError: (err, newCharacterNote, context) => {
-            queryClient.setQueryData(qk.characterNotes(), context.previousCharacterNotes);
+            queryClient.setQueryData(qk.characterNotes(characterId), context.previousCharacterNotes);
         },       
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: qk.characterNotes() });
+            queryClient.invalidateQueries({ queryKey: qk.characterNotes(characterId) });
         },
     })
 }
@@ -213,11 +213,11 @@ export function useUpdateCharacterPerk(characterId){
 
             const previousCharacterPerks = queryClient.getQueryData(qk.characterPerks(characterId));
 
-            queryClient.setQueryData(qk.characterPerks(characterId), (old = []) => [
-                old.map(o => (o.perk_id === perk.perk_id ? { ...o, ...perk } : o))
-            ]);
+            queryClient.setQueryData(qk.characterPerks(characterId), (old = []) =>
+                old.map((o) => (o.perk_id === perk.perk_id ? { ...o, ...perk } : o)),
+            );
 
-            return { previousCharacterPerks }
+            return { previousCharacterPerks };
         },
         onError: (err, newCharacterPerk, context) => {
             queryClient.setQueryData(qk.characterPerks(characterId), context.previousCharacterPerks)

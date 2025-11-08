@@ -12,7 +12,7 @@ function RetiredCharacters (){
             <h1 className='partyName'>Retired Characters</h1>
             <div className ="retiredCharactersDiv">
                 {retiredChars.map(retiredChar => (
-                        <ul className="retiredCharList">
+                        <ul className="retiredCharList" key={retiredChar.id}>
                             <h2 className="retiredCharName">{retiredChar.name}</h2>
                             <li>Class: {retiredChar.class}</li>
                             <li>Level: {retiredChar.level}</li>

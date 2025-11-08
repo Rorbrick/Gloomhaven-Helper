@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { useState } from 'react'
 import { Link } from "react-router-dom";
 
 export default function BasicMenu({ data = [], title = 'Menu', api_root }) {
