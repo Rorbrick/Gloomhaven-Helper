@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { use, useEffect,useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../styles/character.css';
@@ -6,6 +6,7 @@ import React from 'react';
 import BasicDialog from '../components/basic_dialog';
 import { useCharacter, useCharacterNotes, useCreateCharacterNote, useUpdateCharacter, useDeleteCharacterNote, useDeleteCharacter, useUpdateCharacterPerk, useCharacterPerks } from '../api/characters.query.js';
 import { useClasses, useClass } from '../api/classes.query.js';
+import { createPortal } from 'react-dom';
 
 function CharacterDetails () {
   const { id } = useParams();
@@ -42,6 +43,9 @@ function CharacterDetails () {
     gold: "",
     xp: ""
   })
+  const [magnifierPos,setMagnifierPos] = useState({x : 0, y:0});
+  const [magnifierState,setMagnifierState] = useState(false);
+  const [magnifierImage,setMagnifierImage] = useState(null);
 
 
   {/** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */}
@@ -64,6 +68,7 @@ function CharacterDetails () {
     setSelectedPerks(init)
     }
   }, [character], [characterIsSuccess]);
+
 
   {/** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */}
   useEffect(() => {
@@ -111,6 +116,39 @@ function CharacterDetails () {
     characterMutate(patch_data);
   }
 
+  const handleMouseMove = (e) => {
+    setMagnifierPos({ x: e.clientX + 15, y: e.clientY + 15 });
+  }
+
+  const handleMagnifierHover = (state,image) => {
+    setMagnifierState(state);
+    setMagnifierImage(image);
+  }
+
+  const findPerkIcons = (perkName) => {
+    /**matching anything inside square brakets (ie [perk_icon]). Then breaking out the perk name into an array with each word as it's own item. Then finding the perk code and replacing
+    it with an image object, referencing the PNG and building that into a new array*/
+    const perkIconPattern = /\[(.*?)\]/;
+    const perkNameArray = perkName.split(" ").map((p,index) => {
+      const match = p.match(perkIconPattern);
+      if (match) {
+        const perkIcon = match[1];
+        return (
+            <img
+              key={index}
+              src={`/cards/${perkIcon}.png`}
+              alt={perkIcon}
+              className="perk-icon"
+              onMouseEnter={() => handleMagnifierHover(true,`/cards/${perkIcon}.png`)}
+              onMouseLeave={() => handleMagnifierHover(false,null)}
+              onMouseMove={handleMouseMove}
+            />
+        );
+      };
+      return p + " ";
+    });
+    return perkNameArray
+  }
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Oops: {String(error.message || error)}</p>;
@@ -120,7 +158,6 @@ function CharacterDetails () {
     <div className='mainCharWrapper'>
         {/** Display character name and class from the set character details fetched previously. */}
         <h1 className='partyName'>{character.name}<br/> </h1>
-        
       <div className='secondaryCharWrapper'>
         {/** Adjust XP and/or gold */}
         <div className ='charInfoDiv'>
@@ -158,10 +195,11 @@ function CharacterDetails () {
         {/** Here's your list of perks*/}
         <div className='perksDiv'>
             <ul className="perk-list">
-              <h2 className='charName'>Perks</h2>
+              <h2 className='perkTitle'>Perks</h2>
               {/** getting into some JSX looping madness here to display the perk checkboxs*/}
               {charClass?.map((perk) => ( //use .map to loop through list of perk dictionaries.
                 <li key={perk.perk_id}>
+                  <div>
                   {Array.from({ length: perk.times_unlockable }).map((_, i) => {
                     const checkboxId = i + 1;
                     const isChecked = selectedPerks.some(
@@ -181,7 +219,21 @@ function CharacterDetails () {
                       />
                     );
                   })}
-                {perk.perk_name}</li>
+                  </div>
+                  
+                  <div>{findPerkIcons(perk.perk_name)}</div>
+                  {magnifierState && createPortal( //Create portal attaches the element to the specifiied part of the doc (in this case, body)
+                    <img 
+                    src={magnifierImage}
+                    className="magnifierImage"
+                    style={{
+                      top: `${magnifierPos.y}px`,
+                      left: `${magnifierPos.x}px`,
+                    }}
+                    />,
+                  document.body
+                  )}
+                  </li>
               ))}
             </ul>
         <div className="perkPointsDiv">

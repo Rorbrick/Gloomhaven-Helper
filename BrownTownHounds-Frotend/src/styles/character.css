@@ -25,7 +25,7 @@
     align-self: center;
 }
 
-.perksDiv:hover, .charInputDiv:hover, .achievementDiv:hover, .locationContainer:hover{
+.charInputDiv:hover, .achievementDiv:hover, .locationContainer:hover{
     filter: brightness(1.1)
 }
 
@@ -68,19 +68,24 @@
 
 .perksDiv{
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0.8rem 1rem;
-    gap: 1.5rem;
+    justify-content:space-evenly;
+    align-items: center;
+    padding: 1em;
+    width: 100%;
+    max-width: 40em;
 }
 
 .perk-list {
     display: flex;
     flex-direction: column;
     list-style: none;
-    padding: 1px;
     border: none;
-    margin: 1rem;
+    padding: 0;
+    margin: 0;
+}
+
+.perk-list div{
+    padding-right: .2em;
 }
 
 .charName{
@@ -90,10 +95,19 @@
     margin-bottom: 1rem;
 }
 
+.perkTitle{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0px;
+    margin-bottom: 1rem;
+}
+
 .perkPointsDiv{
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 0;
     width: 12rem;
     align-items: center;
     justify-content: center;
@@ -246,12 +260,49 @@ textarea {
     font-size: 1em;
 }
 
+.perk-list li{
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    padding-bottom: .3em;
+    border-style: solid;
+    border-radius: 8px;
+    border-color: #4f4d4b8b;
+    border-width: 0.1em;
+    padding: 0.5em;
+    margin: 0.1em 0;
+}
+
+.perk-list li:hover{
+    border-color: #f0a40090;
+}
+
+.perk-icon {
+  width: 5em;
+  height: auto;
+  margin: 0 0.25em;
+  vertical-align: middle;
+}
+
+.magnifierImage{
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    transition: opacity 0.15s ease;
+    width: 12em;
+    height: auto;
+}
+
 @media (max-width: 1600px) {
     .mainCharWrapper{
         max-width: 21.5em;
         align-items: center;
         justify-content: center;
         padding: .2em;
+    }
+
+    .perk-icon {
+    width: 3em;
     }
 
     .charInfoDiv{
@@ -345,5 +396,10 @@ textarea {
 
     .inputTextNotes{
         width: 100%;
+    }
+
+    .magnifierImage{
+        width: 8em;
+        height: auto;
     }
 }

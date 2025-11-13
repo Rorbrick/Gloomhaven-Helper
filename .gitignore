@@ -39,3 +39,6 @@ build/
 .coverage
 htmlcov/
 .pytest_cache/
+
+#etc
+worldhaven/
