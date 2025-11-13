@@ -19,4 +19,14 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Enable Prettier
+          VALIDATE_PRETTIER: true
+
+          # Disable everything else if you just want Prettier
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_JSON: false
+          VALIDATE_MARKDOWN: false
+
+          # Optional: ignore folders
           FILTER_REGEX_EXCLUDE: /migrations/
