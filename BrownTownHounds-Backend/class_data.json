@@ -1,86 +1,122 @@
 {
-    "classes": [
-      { "name": "Tinkerer" },
-      { "name": "Cragheart" },
-      { "name": "Scoundrel" },
-      { "name": "Brute" }
-    ],
-    "perks": [
-      { "name": "Remove 2 [gh-main-minus1]" },
-      { "name": "Replace 1 [gh-main-minus2] with 1 [gh-main-plus0]" },
-      { "name": "Add 2 [gh-main-plus1]" },
-      { "name": "Add one [gh-ti-plus3]" },
-      { "name": "Add 2 [gh-ti-flip-fire]" },
-      { "name": "Add 3 [gh-ti-flip-muddle]" },
-      { "name": "Add 1 [gh-ti-wound-plus1]" },
-      { "name": "Add 1 [gh-ti-immo-plus1]" },
-      { "name": "Add 1 [gh-ti-h2-plus1]" },
-      { "name": "Add 1 [gh-ti-plustarg]" },
-      { "name": "Ignore negative scenario effects" },
-      { "name": "Remove 4 [gh-main-plus0]" },
-      { "name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]" },
-      { "name": "Replace 1 [gh-main-plus0] with 1 [gh-sc-plus2]" },      
-      { "name": "Add 2 [gh-sc-flip-plus1]" },
-      { "name": "Add 2 [gh-sc-flip-pierce3]" }, 
-      { "name": "Add 2 [gh-sc-flip-pois]" },
-      { "name": "Add 2 [gh-sc-flip-muddle]" },
-      { "name": "Add 1 [gh-sc-flip-invis]" },
-      { "name": "Add 1 [gh-ch-minus2] and 2 [gh-ch-minus2]" },
-      { "name": "Add 1 [gh-ch-plus2-muddle]" },
-      { "name": "Add 2 [gh-ch-plus2push]" },
-      { "name": "Add 2 [gh-ch-flip-leaf]" },
-      { "name": "Add 2 [gh-ch-flip-wind]" },
-      { "name": "Ignore negative item effects" },
-      { "name": "Add 3 [gh-br-flip-push1]" },
-      { "name": "Add 1 [gh-br-flip-stun]" },
-      { "name": "Add 1 [gh-br-flip-disarm] and 1 [gh-br-flip-muddle]" },
-      { "name": "Add 1 [gh-br-flip-plsutarg]" },
-      { "name": "Add 1 [gh-br-shield1-plus1]" },
-      { "name": "Ignore negative item effects and add 1 [gh-main-plus1]" }
-    ],
-    "class_perks": [
-      { "class_name": "Tinkerer", "perk_name": "Remove 2 [gh-main-minus1]" },
-      { "class_name": "Tinkerer", "perk_name": "Replace 1 [gh-main-minus2] with 1 [gh-main-plus0]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 2 [gh-main-plus1]" },
-      { "class_name": "Tinkerer", "perk_name": "Add one [gh-ti-plus3]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 2 [gh-ti-flip-fire]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 3 [gh-ti-flip-muddle]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-wound-plus1]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-immo-plus1]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-h2-plus1]" },
-      { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-plustarg]" },
-      { "class_name": "Tinkerer", "perk_name": "Ignore negative scenario effects" },
-      { "class_name": "Scoundrel", "perk_name": "Remove 2 [gh-main-minus1]" },
-      { "class_name": "Scoundrel", "perk_name": "Remove 4 [gh-main-plus0]" },
-      { "class_name": "Scoundrel", "perk_name": "Replace 1 [gh-main-minus2] with 1 [gh-main-plus0]" },
-      { "class_name": "Scoundrel", "perk_name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]" },
-      { "class_name": "Scoundrel", "perk_name": "Replace 1 [gh-main-plus0] with 1 [gh-sc-plus2]" },
-      { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-plus1]" },
-      { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-pierce3]" },
-      { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-pois]" },
-      { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-muddle]" },
-      { "class_name": "Scoundrel", "perk_name": "Add 1 [gh-sc-flip-invis]" },
-      { "class_name": "Scoundrel", "perk_name": "Ignore negative scenario effects" },
-      { "class_name": "Cragheart", "perk_name": "Remove 4 [gh-main-plus0]" },
-      { "class_name": "Cragheart", "perk_name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]" },
-      { "class_name": "Cragheart", "perk_name": "Add 1 [gh-ch-minus2] and 2 [gh-ch-minus2]" },
-      { "class_name": "Cragheart", "perk_name": "Add 1 [gh-ti-immo-plus1]" },
-      { "class_name": "Cragheart", "perk_name": "Add 1 [gh-ch-plus2-muddle]" },
-      { "class_name": "Cragheart", "perk_name": "Add 2 [gh-ch-plus2push]" },
-      { "class_name": "Cragheart", "perk_name": "Add 2 [gh-ch-flip-leaf]" },
-      { "class_name": "Cragheart", "perk_name": "Add 2 [gh-ch-flip-wind]" },
-      { "class_name": "Cragheart", "perk_name": "Ignore negative item effects" },
-      { "class_name": "Cragheart", "perk_name": "Ignore negative scenario effects" },
-      { "class_name": "Brute", "perk_name": "Remove 2 [gh-main-minus1]" },
-      { "class_name": "Brute", "perk_name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]" },
-      { "class_name": "Brute", "perk_name": "Add 2 [gh-main-plus1]" },
-      { "class_name": "Brute", "perk_name": "Add one [gh-ti-plus3]" },
-      { "class_name": "Brute", "perk_name": "Add 3 [gh-br-flip-push1]" },
-      { "class_name": "Brute", "perk_name": "Add 2 [gh-sc-flip-pierce3]" },
-      { "class_name": "Brute", "perk_name": "Add 1 [gh-br-flip-stun]" },
-      { "class_name": "Brute", "perk_name": "Add 1 [ gh-br-flip-disarm] and 1 [gh-br-flip-muddle]" },
-      { "class_name": "Brute", "perk_name": "Add 1 [gh-br-flip-plsutarg]" },
-      { "class_name": "Brute", "perk_name": "Add 1 [gh-br-shield1-plus1]" },
-      { "class_name": "Brute", "perk_name": "Ignore negative item effects and add 1 [gh-main-plus1]" }
-    ]
-  }
+  "classes": [
+    { "name": "Tinkerer" },
+    { "name": "Cragheart" },
+    { "name": "Scoundrel" },
+    { "name": "Brute" }
+  ],
+  "perks": [
+    { "name": "Remove 2 [gh-main-minus1]" },
+    { "name": "Replace 1 [gh-main-minus2] with 1 [gh-main-plus0]" },
+    { "name": "Add 2 [gh-main-plus1]" },
+    { "name": "Add one [gh-ti-plus3]" },
+    { "name": "Add 2 [gh-ti-flip-fire]" },
+    { "name": "Add 3 [gh-ti-flip-muddle]" },
+    { "name": "Add 1 [gh-ti-wound-plus1]" },
+    { "name": "Add 1 [gh-ti-immo-plus1]" },
+    { "name": "Add 1 [gh-ti-h2-plus1]" },
+    { "name": "Add 1 [gh-ti-plustarg]" },
+    { "name": "Ignore negative scenario effects" },
+    { "name": "Remove 4 [gh-main-plus0]" },
+    { "name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]" },
+    { "name": "Replace 1 [gh-main-plus0] with 1 [gh-sc-plus2]" },
+    { "name": "Add 2 [gh-sc-flip-plus1]" },
+    { "name": "Add 2 [gh-sc-flip-pierce3]" },
+    { "name": "Add 2 [gh-sc-flip-pois]" },
+    { "name": "Add 2 [gh-sc-flip-muddle]" },
+    { "name": "Add 1 [gh-sc-flip-invis]" },
+    { "name": "Add 1 [gh-ch-minus2] and 2 [gh-ch-minus2]" },
+    { "name": "Add 1 [gh-ch-plus2-muddle]" },
+    { "name": "Add 2 [gh-ch-plus2push]" },
+    { "name": "Add 2 [gh-ch-flip-leaf]" },
+    { "name": "Add 2 [gh-ch-flip-wind]" },
+    { "name": "Ignore negative item effects" },
+    { "name": "Add 3 [gh-br-flip-push1]" },
+    { "name": "Add 1 [gh-br-flip-stun]" },
+    { "name": "Add 1 [gh-br-flip-disarm] and 1 [gh-br-flip-muddle]" },
+    { "name": "Add 1 [gh-br-flip-plsutarg]" },
+    { "name": "Add 1 [gh-br-shield1-plus1]" },
+    { "name": "Ignore negative item effects and add 1 [gh-main-plus1]" }
+  ],
+  "class_perks": [
+    { "class_name": "Tinkerer", "perk_name": "Remove 2 [gh-main-minus1]" },
+    {
+      "class_name": "Tinkerer",
+      "perk_name": "Replace 1 [gh-main-minus2] with 1 [gh-main-plus0]"
+    },
+    { "class_name": "Tinkerer", "perk_name": "Add 2 [gh-main-plus1]" },
+    { "class_name": "Tinkerer", "perk_name": "Add one [gh-ti-plus3]" },
+    { "class_name": "Tinkerer", "perk_name": "Add 2 [gh-ti-flip-fire]" },
+    { "class_name": "Tinkerer", "perk_name": "Add 3 [gh-ti-flip-muddle]" },
+    { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-wound-plus1]" },
+    { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-immo-plus1]" },
+    { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-h2-plus1]" },
+    { "class_name": "Tinkerer", "perk_name": "Add 1 [gh-ti-plustarg]" },
+    {
+      "class_name": "Tinkerer",
+      "perk_name": "Ignore negative scenario effects"
+    },
+    { "class_name": "Scoundrel", "perk_name": "Remove 2 [gh-main-minus1]" },
+    { "class_name": "Scoundrel", "perk_name": "Remove 4 [gh-main-plus0]" },
+    {
+      "class_name": "Scoundrel",
+      "perk_name": "Replace 1 [gh-main-minus2] with 1 [gh-main-plus0]"
+    },
+    {
+      "class_name": "Scoundrel",
+      "perk_name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]"
+    },
+    {
+      "class_name": "Scoundrel",
+      "perk_name": "Replace 1 [gh-main-plus0] with 1 [gh-sc-plus2]"
+    },
+    { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-plus1]" },
+    { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-pierce3]" },
+    { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-pois]" },
+    { "class_name": "Scoundrel", "perk_name": "Add 2 [gh-sc-flip-muddle]" },
+    { "class_name": "Scoundrel", "perk_name": "Add 1 [gh-sc-flip-invis]" },
+    {
+      "class_name": "Scoundrel",
+      "perk_name": "Ignore negative scenario effects"
+    },
+    { "class_name": "Cragheart", "perk_name": "Remove 4 [gh-main-plus0]" },
+    {
+      "class_name": "Cragheart",
+      "perk_name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]"
+    },
+    {
+      "class_name": "Cragheart",
+      "perk_name": "Add 1 [gh-ch-minus2] and 2 [gh-ch-minus2]"
+    },
+    { "class_name": "Cragheart", "perk_name": "Add 1 [gh-ti-immo-plus1]" },
+    { "class_name": "Cragheart", "perk_name": "Add 1 [gh-ch-plus2-muddle]" },
+    { "class_name": "Cragheart", "perk_name": "Add 2 [gh-ch-plus2push]" },
+    { "class_name": "Cragheart", "perk_name": "Add 2 [gh-ch-flip-leaf]" },
+    { "class_name": "Cragheart", "perk_name": "Add 2 [gh-ch-flip-wind]" },
+    { "class_name": "Cragheart", "perk_name": "Ignore negative item effects" },
+    {
+      "class_name": "Cragheart",
+      "perk_name": "Ignore negative scenario effects"
+    },
+    { "class_name": "Brute", "perk_name": "Remove 2 [gh-main-minus1]" },
+    {
+      "class_name": "Brute",
+      "perk_name": "Replace 1 [gh-main-minus1] with 1 [gh-main-plus1]"
+    },
+    { "class_name": "Brute", "perk_name": "Add 2 [gh-main-plus1]" },
+    { "class_name": "Brute", "perk_name": "Add one [gh-ti-plus3]" },
+    { "class_name": "Brute", "perk_name": "Add 3 [gh-br-flip-push1]" },
+    { "class_name": "Brute", "perk_name": "Add 2 [gh-sc-flip-pierce3]" },
+    { "class_name": "Brute", "perk_name": "Add 1 [gh-br-flip-stun]" },
+    {
+      "class_name": "Brute",
+      "perk_name": "Add 1 [ gh-br-flip-disarm] and 1 [gh-br-flip-muddle]"
+    },
+    { "class_name": "Brute", "perk_name": "Add 1 [gh-br-flip-plsutarg]" },
+    { "class_name": "Brute", "perk_name": "Add 1 [gh-br-shield1-plus1]" },
+    {
+      "class_name": "Brute",
+      "perk_name": "Ignore negative item effects and add 1 [gh-main-plus1]"
+    }
+  ]
+}

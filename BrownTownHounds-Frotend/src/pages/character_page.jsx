@@ -99,7 +99,6 @@ function CharacterDetails() {
   const navigate = useNavigate();
   const [selectedPerks, setSelectedPerks] = useState([]);
   const [noteText, setNoteText] = useState("");
-  const [charPlaymat, setCharPlaymat] = useState(null);
   const [charNameplate, setCharNameplate] = useState(null);
   const [charPortrait, setCharPortrait] = useState(null);
   const [formData, setFormData] = useState({
@@ -110,14 +109,11 @@ function CharacterDetails() {
   const [magnifierState, setMagnifierState] = useState(false);
   const [magnifierImage, setMagnifierImage] = useState(null);
 
-  {
-    /** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */
-  }
+  /** Fetching character Details using query hook (gold, xp, perks unlocked and perk points) and setting variable */
   useEffect(
     () => {
       if (characterIsSuccess && character) {
         setFormData({ gold: character.gold, xp: character.xp });
-        setCharPlaymat("/public/images/gh-" + character.class_name + ".png");
         setCharNameplate(
           "/public/images/" + character.class_name + "-nameplate.png",
         );

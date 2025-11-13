@@ -1,22 +1,20 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <h1>Register a new character</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name(size=32) }}<br>
-            {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.class_.label }} {{ form.class_() }}<br>
-            {% for error in form.class_.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+{% extends "base.html" %} {% block content %}
+<h1>Register a new character</h1>
+<form action="" method="post">
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.name.label }}<br />
+    {{ form.name(size=32) }}<br />
+    {% for error in form.name.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>
+    {{ form.class_.label }} {{ form.class_() }}<br />
+    {% for error in form.class_.errors %}
+    <span style="color: red">[{{ error }}]</span>
+    {% endfor %}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
 {% endblock %}
