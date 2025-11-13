@@ -318,3 +318,15 @@ def handle_delete_button(model_class,id):
         if id_to_delete:
             db.session.delete(id_to_delete)
             db.session.commit()
+
+def SetCharacterLevel(xp,char):
+    """
+    Calculate level based on XP
+    """
+    level_thresholds = [(500, 9), (420, 8), (345, 7), (275, 6), (210, 5), (150, 4), (95, 3), (45, 2)]
+    for threshold, level in level_thresholds:
+        if xp >= threshold:
+            char.level = level
+            break
+    else:
+        char.level = 1 

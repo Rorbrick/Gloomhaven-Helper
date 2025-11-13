@@ -1,32 +1,40 @@
-.mainCharWrapper{
-    color: rgb(196, 191, 191);
-    width: 70rem;
-    flex-direction: column;
+.mainCharWrapper {
+  color: rgb(196, 191, 191);
+  width: 70rem;
+  flex-direction: column;
 }
 
-.secondaryCharWrapper{
-    display: flex;
-    position: relative;
-    width: fit-content;
-    align-self: center;
+.secondaryCharWrapper {
+  display: flex;
+  position: relative;
+  width: fit-content;
+  align-self: center;
 }
 
-.charInnerWrapper{
-    display: flex;
-    position: relative;
+.charInnerWrapper {
+  display: flex;
+  position: relative;
 }
 
-.perksDiv, .charNotesDiv, .charInputDiv{
-    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    align-self: center;
+.perksDiv,
+.charNotesDiv,
+.charInputDiv {
+  background: linear-gradient(
+    180deg,
+    rgba(64, 63, 63, 0.45),
+    rgba(30, 30, 30, 0.598)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  align-self: center;
 }
 
-.charInputDiv:hover, .achievementDiv:hover, .locationContainer:hover{
-    filter: brightness(1.1)
+.charInputDiv:hover,
+.achievementDiv:hover,
+.locationContainer:hover {
+  filter: brightness(1.1);
 }
 
 .perkPointsDiv {
@@ -35,167 +43,167 @@
   padding: 0.8rem;
 }
 
-.nameplate{
-    border-radius: 10px;
+.nameplate {
+  border-radius: 10px;
 }
 
-.nameplateDiv{
-    align-self: flex-start;
+.nameplateDiv {
+  align-self: flex-start;
 }
 
-.charImageDiv{
-    padding: 1rem;
-
+.charImageDiv {
+  padding: 1rem;
 }
 
-.innerNotesDive{
-    height: 20em;
-    max-height: 20em;
-    margin-bottom: 1em;
-    overflow-y: scroll;
-    padding: 0;
+.innerNotesDive {
+  height: 20em;
+  max-height: 20em;
+  margin-bottom: 1em;
+  overflow-y: scroll;
+  padding: 0;
 }
 
-.charInfoDiv{
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    height: 6rem;
-    margin-right: 3rem;
-    left: 2rem;
-    height: fit-content;
+.charInfoDiv {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 6rem;
+  margin-right: 3rem;
+  left: 2rem;
+  height: fit-content;
 }
 
-.perksDiv{
-    display: flex;
-    justify-content:space-evenly;
-    align-items: center;
-    padding: 1em;
-    width: 100%;
-    max-width: 40em;
+.perksDiv {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1em;
+  width: 100%;
+  max-width: 40em;
 }
 
 .perk-list {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    border: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-.perk-list div{
-    padding-right: .2em;
+.perk-list div {
+  padding-right: 0.2em;
 }
 
-.charName{
-    display: flex;
-    position: relative;
-    margin-top: 0px;
-    margin-bottom: 1rem;
+.charName {
+  display: flex;
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: 1rem;
 }
 
-.perkTitle{
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px;
-    margin-bottom: 1rem;
+.perkTitle {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0px;
+  margin-bottom: 1rem;
 }
 
-.perkPointsDiv{
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    width: 12rem;
-    align-items: center;
-    justify-content: center;
+.perkPointsDiv {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 12rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.charNotesDiv{
-    display: flex;
-    width: 80%;
-    margin: 0 auto;
-    padding: 0.8rem 1rem;
+.charNotesDiv {
+  display: flex;
+  width: 80%;
+  margin: 0 auto;
+  padding: 0.8rem 1rem;
 }
 
-.charInputDiv, .retireCharDiv{
-    display: flex;
-    position: relative;
-    align-self: center;
-    margin: 0.5rem;
-    height: fit-content;
-    width: fit-content;
-    padding: 0.5rem;
-    top: 0%;
+.charInputDiv,
+.retireCharDiv {
+  display: flex;
+  position: relative;
+  align-self: center;
+  margin: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  padding: 0.5rem;
+  top: 0%;
 }
 
-.charInputDiv form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+.charInputDiv form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.charInputDiv form div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.charInputDiv form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.charInputDiv div{
-    display: flex;
-    position: relative;
+.charInputDiv div {
+  display: flex;
+  position: relative;
 }
 
-.charInputInnerDiv{
-    display: flex;
-    position: relative;
+.charInputInnerDiv {
+  display: flex;
+  position: relative;
 }
 
-.charInputInnerDiv input[type="number"]{
-    display: flex;
-    position: relative;
-    width: 60%;
-    text-align: center;
+.charInputInnerDiv input[type="number"] {
+  display: flex;
+  position: relative;
+  width: 60%;
+  text-align: center;
 
-    /* Standard + Firefox */
-    appearance: none;
-    -moz-appearance: textfield;
+  /* Standard + Firefox */
+  appearance: none;
+  -moz-appearance: textfield;
 }
 
 /* Chrome / Safari / Edge: remove spinner arrows */
 .charInputInnerDiv input[type="number"]::-webkit-outer-spin-button,
 .charInputInnerDiv input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 textarea {
   height: 4rem;
   border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.charInputWrapper{
-    display: flex;
-    flex-direction: column;
+.charInputWrapper {
+  display: flex;
+  flex-direction: column;
 }
 
-.retireButton{
-    display: flex;
-    justify-content: center;
-    width: fit-content;
-    align-items: center;
-    margin: 0rem auto;
-    padding: 1rem 0.2rem;
-    align-items: center;
-    font-size:0.7rem;
-    color: rgba(0, 0, 0, 0.677);
-    background-color: rgba(182, 79, 79, 0.729);
-    font-weight:bold;
+.retireButton {
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  align-items: center;
+  margin: 0rem auto;
+  padding: 1rem 0.2rem;
+  align-items: center;
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.677);
+  background-color: rgba(182, 79, 79, 0.729);
+  font-weight: bold;
 }
 
 .retireButton:hover {
@@ -204,77 +212,77 @@ textarea {
   cursor: pointer;
 }
 
-.charStatsButton{
-    display: flex;
-    padding: 1.2rem 2.2rem;
-    align-items: center;
-    justify-self: center;
-    margin: .5rem;
-    background-color: rgba(66, 200, 66, 0.429);
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.963);
+.charStatsButton {
+  display: flex;
+  padding: 1.2rem 2.2rem;
+  align-items: center;
+  justify-self: center;
+  margin: 0.5rem;
+  background-color: rgba(66, 200, 66, 0.429);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.963);
 }
 
-.charStatsButton:hover{
+.charStatsButton:hover {
   background-color: rgba(66, 200, 66, 0.463);
   transform: translateY(-1px);
   cursor: pointer;
   color: white;
 }
 
-.levelDiv{
-    font-size: 1.5rem;
+.levelDiv {
+  font-size: 1.5rem;
 }
 
-.inputTextNotesDiv form{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: .2em;
-    align-items: center;
-    justify-content: center;
+.inputTextNotesDiv form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.2em;
+  align-items: center;
+  justify-content: center;
 }
 
-.notesDiv{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    max-height: 30em;
-    padding: .2em;
-    overflow-y: hidden;
+.notesDiv {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 30em;
+  padding: 0.2em;
+  overflow-y: hidden;
 }
 
-.notesDiv > .notesInnerWrapper{
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    height: 100%;
+.notesDiv > .notesInnerWrapper {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100%;
 }
 
-.inputTextNotesDiv button{
-    width: 10%;
-    height: 3em;
-    margin-inline: auto;
-    margin-bottom: .5em;
-    margin-top: .2em;
-    font-size: 1em;
+.inputTextNotesDiv button {
+  width: 10%;
+  height: 3em;
+  margin-inline: auto;
+  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  font-size: 1em;
 }
 
-.perk-list li{
-    display: flex;
-    align-items: center;
-    justify-content:flex-start;
-    padding-bottom: .3em;
-    border-style: solid;
-    border-radius: 8px;
-    border-color: #4f4d4b8b;
-    border-width: 0.1em;
-    padding: 0.5em;
-    margin: 0.1em 0;
+.perk-list li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 0.3em;
+  border-style: solid;
+  border-radius: 8px;
+  border-color: #4f4d4b8b;
+  border-width: 0.1em;
+  padding: 0.5em;
+  margin: 0.1em 0;
 }
 
-.perk-list li:hover{
-    border-color: #f0a40090;
+.perk-list li:hover {
+  border-color: #f0a40090;
 }
 
 .perk-icon {
@@ -284,122 +292,122 @@ textarea {
   vertical-align: middle;
 }
 
-.magnifierImage{
-    position: fixed;
-    pointer-events: none;
-    z-index: 1000;
-    transition: opacity 0.15s ease;
-    width: 12em;
-    height: auto;
+.magnifierImage {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.15s ease;
+  width: 12em;
+  height: auto;
 }
 
 @media (max-width: 1600px) {
-    .mainCharWrapper{
-        max-width: 21.5em;
-        align-items: center;
-        justify-content: center;
-        padding: .2em;
-    }
+  .mainCharWrapper {
+    max-width: 21.5em;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2em;
+  }
 
-    .perk-icon {
+  .perk-icon {
     width: 3em;
-    }
+  }
 
-    .charInfoDiv{
-        align-items: center;
-        justify-content: center;
-        margin-right: 0;
-        width: 100%;
-        left: 0;
-        margin-right: 0;
-    }
-    .perksDiv {
-        width: 90%;
-        flex-direction: column;
-        align-items: center;
-    }
-    .perkPointsDiv {
-        align-self: center;
-        margin-top: 0.5rem;
-    }
-    .secondaryCharWrapper{
-        width: 95%;
-        flex-direction: column;
-    }
+  .charInfoDiv {
+    align-items: center;
+    justify-content: center;
+    margin-right: 0;
+    width: 100%;
+    left: 0;
+    margin-right: 0;
+  }
+  .perksDiv {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .perkPointsDiv {
+    align-self: center;
+    margin-top: 0.5rem;
+  }
+  .secondaryCharWrapper {
+    width: 95%;
+    flex-direction: column;
+  }
 
-    .nameplate{
-        width: 100%;
-        max-width: 18em;
-    }
+  .nameplate {
+    width: 100%;
+    max-width: 18em;
+  }
 
-    .charInnerWrapper{
-        justify-content: center;
-        align-items: center;
-        width: 95%;
-    }
+  .charInnerWrapper {
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+  }
 
-    .charInnerWrapper{
-        flex-direction: column;
-    }
+  .charInnerWrapper {
+    flex-direction: column;
+  }
 
-    .charInputWrapper{
-        width: 95%;
-    }
+  .charInputWrapper {
+    width: 95%;
+  }
 
-    .nameplateDiv{
-        align-self: center;
-    }
+  .nameplateDiv {
+    align-self: center;
+  }
 
-    .charInputDiv{
-        width: 80%;
-        align-items: center;
-        justify-content: center;
-    }
+  .charInputDiv {
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .charInputInnerDiv .inputNum{
-        width: 80%;
-    }
+  .charInputInnerDiv .inputNum {
+    width: 80%;
+  }
 
-    .perk-list{
-        padding: 0;
-        margin: 0;
-    }
+  .perk-list {
+    padding: 0;
+    margin: 0;
+  }
 
-    .charName{
-        align-self: center;
-        justify-self: center;
-        margin-bottom: 0;
-    }
+  .charName {
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 0;
+  }
 
-    .perkPointsDiv{
-        margin: 0;
-        padding: 0;
-        align-items: center;
-        justify-content: center;
-    }
+  .perkPointsDiv {
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .notesDiv{
-        width: 100%;
-        max-width: 20em;
-        height: 25em;
-    }
+  .notesDiv {
+    width: 100%;
+    max-width: 20em;
+    height: 25em;
+  }
 
-    .inputTextNotesDiv{
-        width: 80%;
-    }
+  .inputTextNotesDiv {
+    width: 80%;
+  }
 
-    .inputTextNotesDiv button{
-        width: 20%;
-        height: 2em;
-        margin-inline: auto;
-    }
+  .inputTextNotesDiv button {
+    width: 20%;
+    height: 2em;
+    margin-inline: auto;
+  }
 
-    .inputTextNotes{
-        width: 100%;
-    }
+  .inputTextNotes {
+    width: 100%;
+  }
 
-    .magnifierImage{
-        width: 8em;
-        height: auto;
-    }
+  .magnifierImage {
+    width: 8em;
+    height: auto;
+  }
 }

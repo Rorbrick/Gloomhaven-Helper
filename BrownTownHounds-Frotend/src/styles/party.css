@@ -1,235 +1,242 @@
-.locationH3{
-    display: flex;
-    position: relative;
-    align-items: flex-start;
-    margin: 0px;
-    height: fit-content;
+.locationH3 {
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  margin: 0px;
+  height: fit-content;
 }
 
-.mainWrapper{
-    color: rgb(196, 191, 191);
-    margin-top: 50px;
-    display: flex;
-    position: relative;
-    padding: 0.5rem 0;
-    background: rgba(0, 0, 0, 0.11);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 80em;
-    justify-content: center;
-    margin-inline: auto;
+.mainWrapper {
+  color: rgb(196, 191, 191);
+  margin-top: 50px;
+  display: flex;
+  position: relative;
+  padding: 0.5rem 0;
+  background: rgba(0, 0, 0, 0.11);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 80em;
+  justify-content: center;
+  margin-inline: auto;
 }
 
-.mainWrapper button{
-    width: 5em;
-    height: 2em;
-    font-size: 0.8em;
+.mainWrapper button {
+  width: 5em;
+  height: 2em;
+  font-size: 0.8em;
 }
 
-.partyName{
-    display: flex;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: .1rem;
-    margin-bottom: 1rem;
-    text-align: center;
+.partyName {
+  display: flex;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.mainWrapperContainer{
-    display: flex;
-    position: relative;
-    width: 75%;
-    flex-direction: column;
+.mainWrapperContainer {
+  display: flex;
+  position: relative;
+  width: 75%;
+  flex-direction: column;
 }
 
-.locationContainer, .achievementDiv{
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: flex-start;
-    margin: 0 1rem;
-    gap: 0.8rem;
-    padding: .9rem;
+.locationContainer,
+.achievementDiv {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0 1rem;
+  gap: 0.8rem;
+  padding: 0.9rem;
 }
 
-.locationContainer{
-    align-self: flex-start;
-    flex-direction: column;
-    width: 30rem;
+.locationContainer {
+  align-self: flex-start;
+  flex-direction: column;
+  width: 30rem;
 }
 
-.achievementsList{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-top: 0.4rem;
+.achievementsList {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-top: 0.4rem;
 }
 
-.achievementDiv{
-    flex-direction: column;
-    width: 30rem;
-    height: 20rem;
+.achievementDiv {
+  flex-direction: column;
+  width: 30rem;
+  height: 20rem;
 }
 
-.achievementsListDiv{
-    position: relative;
-    display: flex;
-    align-self: flex-start;
-    width: 100%;
-    overflow-y: auto;
-    border-style: solid;
-    border-color: #504d4d4d;
-    margin-bottom: 2rem;
-    height: 100%;
+.achievementsListDiv {
+  position: relative;
+  display: flex;
+  align-self: flex-start;
+  width: 100%;
+  overflow-y: auto;
+  border-style: solid;
+  border-color: #504d4d4d;
+  margin-bottom: 2rem;
+  height: 100%;
 }
 
-.inputTextAchievement{
-    position: absolute;
-    bottom: 10px;
-    display: flex;
-    width: 80%;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.9rem;
+.inputTextAchievement {
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.9rem;
 }
 
-.locationContainer, .notesDiv, .achievementDiv {
-    background: linear-gradient(180deg, rgba(64, 63, 63, 0.45), rgba(30, 30, 30, 0.598));
-    border: 1px solid rgba(255,255,255,0.05);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    border-radius: 10px;
+.locationContainer,
+.notesDiv,
+.achievementDiv {
+  background: linear-gradient(
+    180deg,
+    rgba(64, 63, 63, 0.45),
+    rgba(30, 30, 30, 0.598)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
-button{
-    border-radius: 5px;
-    border-style: none;
-    height: 20px;
-    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+button {
+  border-radius: 5px;
+  border-style: none;
+  height: 20px;
+  box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
 }
 
-button:hover{
-    background-color: #c1cfc51a;
-    color: #ccccccd4;
+button:hover {
+  background-color: #c1cfc51a;
+  color: #ccccccd4;
 }
 
-.partyDiv{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 1rem;
+.partyDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 1rem;
 }
-.notesDiv{
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    padding: .2em;
-}
-
-.notesDiv .notes{
-    position: relative;
-    border-color: #5e666e57;
-    border-style: solid;
-    margin-top: .5rem;
-    padding: 0.5rem;
-    border-radius: 5px;
-    align-items: center;
+.notesDiv {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0.2em;
 }
 
-.notes:hover{
-    filter: brightness(1.1)
+.notesDiv .notes {
+  position: relative;
+  border-color: #5e666e57;
+  border-style: solid;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  align-items: center;
 }
 
-.deleteButton{
-    position: absolute;
-    font-size: 12px;
-    background-color: none;
-    background: none;
-    border-style: none;
-    right: 0.5rem;
-    box-shadow: none;
-    color: #ccccccb5;
-    border-radius: 1rem;
-    width: 2rem;
-    cursor: pointer;
+.notes:hover {
+  filter: brightness(1.1);
 }
 
-.sliderWrapper{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 1rem;
+.deleteButton {
+  position: absolute;
+  font-size: 12px;
+  background-color: none;
+  background: none;
+  border-style: none;
+  right: 0.5rem;
+  box-shadow: none;
+  color: #ccccccb5;
+  border-radius: 1rem;
+  width: 2rem;
+  cursor: pointer;
 }
 
-.imageWrapper{
-    background-color: rgba(95, 95, 89, 0.407);
-    border-radius: 5px;
-    box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+.sliderWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
 }
 
-.imageWrapper:hover{
-    box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
+.imageWrapper {
+  background-color: rgba(95, 95, 89, 0.407);
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(12, 12, 12, 0.609);
+}
+
+.imageWrapper:hover {
+  box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
 }
 
 .imageWrapper img {
-    display: block;
-    width: auto;
-    height: auto;
+  display: block;
+  width: auto;
+  height: auto;
 }
 
-.locationSpan{
-    display: flex;
-    font-size: 30px;
-    position: relative;
-    border-radius: 10px;
-    border-style: dotted;
-    border-color: #504d4d;
-    padding: 0.4rem;
+.locationSpan {
+  display: flex;
+  font-size: 30px;
+  position: relative;
+  border-radius: 10px;
+  border-style: dotted;
+  border-color: #504d4d;
+  padding: 0.4rem;
 }
 
-.inputTextNotesDiv{
-    display: flex;
-    bottom: 1em;
-    width:100%;
-    align-self: center;
-    justify-self: center;
-    align-items: center;
-    justify-content: center;
-    padding-top: .2em;
+.inputTextNotesDiv {
+  display: flex;
+  bottom: 1em;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0.2em;
 }
 
-.inputTextLocation{
-    display: flex;
-    position: relative;
-    width: 80%;
-    justify-content: center;
-    align-items: center;
-    padding-top: 1rem;
+.inputTextLocation {
+  display: flex;
+  position: relative;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
 }
 
-.inputTextLocation{
-    bottom: 10px;
+.inputTextLocation {
+  bottom: 10px;
 }
 
-.inputTextNotes{
-    display: flex;
-    align-self: center;
-    justify-self: center;
-    width: 90%;
-    height: 3em;
-    overflow-wrap: break-word;
+.inputTextNotes {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  width: 90%;
+  height: 3em;
+  overflow-wrap: break-word;
 }
 
 input[type="range"] {
   -webkit-appearance: none; /* For WebKit browsers (Chrome, Safari) */
-  -moz-appearance: none;    /* For Mozilla Firefox */
-  appearance: none;         /* Standard property */
+  -moz-appearance: none; /* For Mozilla Firefox */
+  appearance: none; /* Standard property */
   background: transparent;
   cursor: pointer;
   border: none;
@@ -241,7 +248,7 @@ input[type="range"]::-webkit-slider-thumb {
   background: #5e666e; /* Blue thumb */
   width: 15px;
   height: 15px;
-  background-image: url('/textures/x.png'); /* Your image path */
+  background-image: url("/textures/x.png"); /* Your image path */
   background-color: transparent;
   background-size: contain; /* Ensure image fits within thumb area */
   background-repeat: no-repeat;
@@ -252,63 +259,63 @@ input[type="range"]::-moz-range-thumb {
   background: #5e666e;
   width: 15px;
   height: 15px;
-  background-image: url('/textures/x.png'); /* Your image path */
+  background-image: url("/textures/x.png"); /* Your image path */
   background-color: transparent;
   background-size: contain; /* Ensure image fits within thumb area */
   background-repeat: no-repeat;
 }
 
 .slider {
-    position: absolute;
-    display: flex;
-    writing-mode: vertical-lr;
-    height: 702px;
-    direction: rtl;
-    margin-top:28px;
-    left: 20px;
+  position: absolute;
+  display: flex;
+  writing-mode: vertical-lr;
+  height: 702px;
+  direction: rtl;
+  margin-top: 28px;
+  left: 20px;
 }
 
 .slider:hover + .imageWrapper {
-    box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
+  box-shadow: 0 4px 30px rgba(166, 201, 195, 0.141);
 }
 
-.rep{
-    border-radius: 10px;
+.rep {
+  border-radius: 10px;
 }
 
 @media (max-width: 1600px) {
-    .mainWrapper{
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 22em;
-        gap: 1em;
-        margin-top: 1em;
-    }
+  .mainWrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 22em;
+    gap: 1em;
+    margin-top: 1em;
+  }
 
-    .mainWrapperContainer{
-        width: 100%;
-        max-width: 20em;
-    }
-    .partyDiv{
-        flex-direction: column;
-    }
-    .locationContainer{
-        width: 100%;
-        max-width: 15em;
-        justify-items: center;
-        align-items: center;
-        align-self: unset;
-        margin-bottom: 1em;
-    }
-    .achievementDiv{
-        width: 100%;
-    }
+  .mainWrapperContainer {
+    width: 100%;
+    max-width: 20em;
+  }
+  .partyDiv {
+    flex-direction: column;
+  }
+  .locationContainer {
+    width: 100%;
+    max-width: 15em;
+    justify-items: center;
+    align-items: center;
+    align-self: unset;
+    margin-bottom: 1em;
+  }
+  .achievementDiv {
+    width: 100%;
+  }
 
-    .notesDiv{
-        align-self: unset;
-        margin-inline: auto;
-        width: 100%;
-    }
+  .notesDiv {
+    align-self: unset;
+    margin-inline: auto;
+    width: 100%;
+  }
 }
