@@ -70,7 +70,7 @@ h2, h3 {
 
 .mainCharWrapper, .createCharMainWrapper, .homePageMainWrapper, .retiredCharactersMainWrapper, .createPartyMainWrapper{
   display: flex;
-  margin-top: 2rem;
+  margin-top: 1em;
   position: static;   
   padding: 0.5rem 1rem;
   margin-inline: auto;
