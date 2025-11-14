@@ -42,3 +42,4 @@ htmlcov/
 
 #etc
 worldhaven/
+*.pyc
