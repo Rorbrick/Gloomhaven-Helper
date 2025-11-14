@@ -1,20 +1,20 @@
 <!doctype html>
 <html>
-    <head>
-      {% if title %}
-      <title>{{ title }} - Brown Town Hounds</title>
-      {% else %}
-      <title>Welcome to Brown Town Hounds</title>
-      {% endif %}
-    </head>
-    <body>
-        <div>
-            Brown Town Hounds:
-            <a href="{{ url_for('index') }}">Home</a>  
-            <a href="{{ url_for('register') }}">Create Character</a>  
-            <a href="{{ url_for('RetiredCharacters') }}">Retired Characters</a>  
-            <a href="{{ url_for('CreateParty') }}">Create Party</a> 
-        </div>
-        {% block content %}{% endblock %}
-    </body>
+  <head>
+    {% if title %}
+    <title>{{ title }} - Brown Town Hounds</title>
+    {% else %}
+    <title>Welcome to Brown Town Hounds</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>
+      Brown Town Hounds:
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('register') }}">Create Character</a>
+      <a href="{{ url_for('RetiredCharacters') }}">Retired Characters</a>
+      <a href="{{ url_for('CreateParty') }}">Create Party</a>
+    </div>
+    {% block content %}{% endblock %}
+  </body>
 </html>

@@ -10,10 +10,12 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app)
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     db.init_app(app)
     return app
+
 
 from app import routes, models
