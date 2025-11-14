@@ -1,20 +1,8 @@
 from flask import (
-    render_template,
-    flash,
-    redirect,
-    url_for,
     request,
     jsonify,
 )  # flask modules
 from app import app, db  # importing the app config file and the sqlite db
-from app.forms import (
-    RegistrationForm,
-    wrapper_func,
-    CharacterDetailsForm,
-    PerkPointCheckboxes,
-    PartyForm,
-    PartyRegistrationForm,
-)  # pulling in the RegistrationForm class from our forms.py script (located in app folder)
 from app.models import (
     Character,
     Class,
@@ -29,7 +17,6 @@ from app.models import (
 )  # pulling in the Character and Class classes from models.py script (located in app folder)
 import sqlalchemy as sa  # importing sql alchemy module. naming it sa
 from sqlalchemy import and_
-import math
 
 
 # main page load
