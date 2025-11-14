@@ -43,3 +43,4 @@ htmlcov/
 #etc
 worldhaven/
 *.pyc
+__pycache__/

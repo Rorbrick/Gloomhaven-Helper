@@ -29,9 +29,11 @@ with app.app_context():
         perk_obj = Perk.query.filter_by(name=cp["perk_name"]).first()
 
         if class_obj and perk_obj:
-            existing_class_perk = Class_Perk.query.filter_by(class_=class_obj,perk=perk_obj).first()
+            existing_class_perk = Class_Perk.query.filter_by(
+                class_=class_obj, perk=perk_obj
+            ).first()
             if not existing_class_perk:
                 link = Class_Perk(class_=class_obj, perk=perk_obj, times_unlockable=1)
                 db.session.add(link)
-        
+
     db.session.commit()

@@ -1,23 +1,25 @@
 :root {
-    font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-  
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
+  font-family:
+    "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial,
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-  
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
 
-html{
-  min-height: 100vh
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-html, body {
+html {
+  min-height: 100vh;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -28,15 +30,19 @@ body {
   margin: 0;
   height: 100%;
   background:
-    radial-gradient(circle at center, 
-      rgba(255, 255, 255, 0.12) 0%,     /* light center */
-      rgba(142, 142, 142, 0.08) 20%,    /* gentle fade */
-      rgba(0, 0, 0, 0.85) 100%          /* dark outer */),
-    url('textures/bgTexture.png');
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.12) 0%,
+      /* light center */ rgba(142, 142, 142, 0.08) 20%,
+      /* gentle fade */ rgba(0, 0, 0, 0.85) 100% /* dark outer */
+    ),
+    url("textures/bgTexture.png");
   /* per-layer controls (1st = gradient, 2nd = texture) */
   background-repeat: no-repeat, repeat;
-  background-size: cover, auto;          /* or: cover, 256px 256px */
-  background-position: center, top left;
+  background-size: cover, auto; /* or: cover, 256px 256px */
+  background-position:
+    center,
+    top left;
   background-attachment: scroll, scroll;
   /* no blend mode needed because gradient is already semi-transparent */
 
@@ -44,23 +50,25 @@ body {
 }
 
 footer {
-    position:fixed;
-    left:0px;
-    bottom:0px;
-    height:50px;
-    width:100%;
- }
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  height: 50px;
+  width: 100%;
+}
 
-button, input[type="checkbox"] {
+button,
+input[type="checkbox"] {
   transition: all 0.15s ease-in-out;
 }
 button:hover {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   transform: translateY(-1px);
   cursor: pointer;
 }
 
-h2, h3 {
+h2,
+h3 {
   color: #dadada;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -68,10 +76,19 @@ h2, h3 {
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-.mainCharWrapper, .createCharMainWrapper, .homePageMainWrapper, .retiredCharactersMainWrapper, .createPartyMainWrapper{
+.mainCharWrapper,
+.createCharMainWrapper,
+.homePageMainWrapper,
+.retiredCharactersMainWrapper,
+.createPartyMainWrapper {
   display: flex;
+<<<<<<< HEAD
   margin-top: 1em;
   position: static;   
+=======
+  margin-top: 2rem;
+  position: static;
+>>>>>>> 301ae4193cb8e2f352954456e54ea320211e2e46
   padding: 0.5rem 1rem;
   margin-inline: auto;
 
@@ -83,7 +100,7 @@ h2, h3 {
   border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-form .saveButton{
+form .saveButton {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,5 +113,5 @@ form .saveButton{
 input[type="checkbox"] {
   transform: scale(1.4);
   accent-color: #b8860b; /* Or whatever matches your theme */
-  margin: .3em;
+  margin: 0.3em;
 }
