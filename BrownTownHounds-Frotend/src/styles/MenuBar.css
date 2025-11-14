@@ -15,6 +15,8 @@
   box-shadow: 0 2px 4px rgba(194, 180, 180, 0.2);
   box-sizing: border-box;
   inset-inline: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-container {
@@ -36,7 +38,7 @@
 }
 
 .logo a {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: rgb(196, 191, 191);
   text-decoration: none;
@@ -68,7 +70,7 @@
   z-index: 50;
   display: flex;
   position: relative;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .nav-links li a:hover,
@@ -84,7 +86,7 @@
   align-self: center;
   color-scheme: light dark;
   color: rgb(196, 191, 191);
-  font-size: 1.5em;
+  font-size: 1em;
   font-family:
     "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial,
     sans-serif;
@@ -123,11 +125,10 @@
 
 .listboxInnerButtons {
   display: flex;
-  font-size: large;
   color: rgb(196, 191, 191);
   text-decoration: none;
   padding-left: 0.4rem;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .listboxOption:hover,
