@@ -82,13 +82,8 @@ h3 {
 .retiredCharactersMainWrapper,
 .createPartyMainWrapper {
   display: flex;
-<<<<<<< HEAD
   margin-top: 1em;
   position: static;   
-=======
-  margin-top: 2rem;
-  position: static;
->>>>>>> 301ae4193cb8e2f352954456e54ea320211e2e46
   padding: 0.5rem 1rem;
   margin-inline: auto;
 

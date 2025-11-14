@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .mainCharWrapper{
     color: rgb(196, 191, 191);
     width: 70rem;
@@ -26,39 +25,6 @@
     border: 1px solid rgba(255,255,255,0.05);
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     border-radius: 12px;
-=======
-.mainCharWrapper {
-  color: rgb(196, 191, 191);
-  width: 70rem;
-  flex-direction: column;
-}
-
-.secondaryCharWrapper {
-  display: flex;
-  position: relative;
-  width: fit-content;
-  align-self: center;
-}
-
-.charInnerWrapper {
-  display: flex;
-  position: relative;
-}
-
-.perksDiv,
-.charNotesDiv,
-.charInputDiv {
-  background: linear-gradient(
-    180deg,
-    rgba(64, 63, 63, 0.45),
-    rgba(30, 30, 30, 0.598)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  margin-bottom: 1rem;
-  align-self: center;
->>>>>>> 301ae4193cb8e2f352954456e54ea320211e2e46
 }
 
 .charInputDiv:hover,
@@ -77,18 +43,9 @@
   border-radius: 10px;
 }
 
-<<<<<<< HEAD
 .charImageDiv{
     padding: 1rem;
 
-=======
-.nameplateDiv {
-  align-self: flex-start;
-}
-
-.charImageDiv {
-  padding: 1rem;
->>>>>>> 301ae4193cb8e2f352954456e54ea320211e2e46
 }
 
 .innerNotesDive {
@@ -99,7 +56,6 @@
   padding: 0;
 }
 
-<<<<<<< HEAD
 .charInfoDiv{
     display: flex;
     position: relative;
@@ -107,16 +63,6 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
-=======
-.charInfoDiv {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  height: 6rem;
-  margin-right: 3rem;
-  left: 2rem;
-  height: fit-content;
->>>>>>> 301ae4193cb8e2f352954456e54ea320211e2e46
 }
 
 .perksDiv {
