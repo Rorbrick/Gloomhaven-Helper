@@ -70,7 +70,7 @@
   z-index: 50;
   display: flex;
   position: relative;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
 .nav-links li a:hover,
@@ -86,7 +86,7 @@
   align-self: center;
   color-scheme: light dark;
   color: rgb(196, 191, 191);
-  font-size: 1em;
+  font-size: 1.1em;
   font-family:
     "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial,
     sans-serif;

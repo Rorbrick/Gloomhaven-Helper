@@ -48,6 +48,13 @@
 
 }
 
+.charName{
+  display: flex;
+  position: relative;
+  align-self: center;
+  text-align: center;
+}
+
 .innerNotesDive {
   height: 20em;
   max-height: 20em;

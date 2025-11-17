@@ -239,7 +239,7 @@ function CharacterDetails() {
   return (
     <div className="mainCharWrapper">
       {/** Display character name and class from the set character details fetched previously. */}
-      <h1 className="partyName">
+      <h1 className="charName">
         {character.name}
         <br />{" "}
       </h1>
