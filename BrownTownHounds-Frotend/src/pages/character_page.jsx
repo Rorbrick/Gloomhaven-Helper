@@ -360,7 +360,7 @@ function CharacterDetails() {
                   <div>{findPerkIcons(perk.perk_name)}</div>
                   {magnifierState &&
                     createPortal(
-                      //Create portal attaches the element to the specifiied part of the doc (in this case, body)
+                      //Create portal attaches the element to the specified part of the doc (in this case, body)
                       <img
                         src={magnifierImage}
                         className="magnifierImage"

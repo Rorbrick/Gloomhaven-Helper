@@ -44,3 +44,4 @@ htmlcov/
 worldhaven/
 *.pyc
 __pycache__/
+.kube/
