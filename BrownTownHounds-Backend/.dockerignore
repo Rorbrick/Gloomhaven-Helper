@@ -1,0 +1,27 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Git
+.git
+.gitignore
+
+# Virtual environments
+venv/
+.env/
+
+# Local config files
+.flaskenv
+*.env
+
+# Kubernetes YAMLs (important!)
+*.yaml
+*.yml
+
+# Editor files
+.vscode/
+.idea/
+
+# Other stuff you want to exclude
+Dockerfile
+docker-compose.yml

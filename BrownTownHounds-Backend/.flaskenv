@@ -1,1 +1,1 @@
-FLASK_APP=BrownTownHounds-Backend.py
+FLASK_APP=run.py

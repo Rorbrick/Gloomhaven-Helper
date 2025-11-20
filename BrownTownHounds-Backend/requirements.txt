@@ -1,3 +1,9 @@
 requests
 flask_wtf
 flask
+flask_sqlalchemy
+flask_migrate
+flask_cors
+psycopg2-binary
+gunicorn
+python-dotenv
