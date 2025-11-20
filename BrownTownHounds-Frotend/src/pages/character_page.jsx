@@ -207,11 +207,11 @@ function CharacterDetails() {
   };
 
   const findPerkIcons = (perkName) => {
-    /**matching anything inside square brakets (ie [perk_icon]). Then breaking out the perk name into an array with each word as it's own item. Then finding the perk code and replacing
+    /**matching anything inside square brackets (ie [perk_icon]). Then breaking out the perk name into an array with each word as it's own item. Then finding the perk code and replacing
     it with an image object, referencing the PNG and building that into a new array*/
-    const perkIconPattern = /\[(.*?)\]/;
+    const perkIconPattern = /\[(.*?)\]/; // match [perk_icon]
     const perkNameArray = perkName.split(" ").map((p, index) => {
-      const match = p.match(perkIconPattern);
+      const match = p.match(perkIconPattern); //If pattern matches, return an image object
       if (match) {
         const perkIcon = match[1];
         return (
@@ -228,9 +228,9 @@ function CharacterDetails() {
           />
         );
       }
-      return p + " ";
+      return p + " "; //otherwise, return the word and add a space
     });
-    return perkNameArray;
+    return perkNameArray; // return the new array
   };
 
   if (isLoading) return <p>Loading...</p>;
