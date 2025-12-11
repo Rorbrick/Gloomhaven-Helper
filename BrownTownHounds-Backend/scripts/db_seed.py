@@ -35,5 +35,7 @@ with app.app_context():
             if not existing_class_perk:
                 link = Class_Perk(class_=class_obj, perk=perk_obj, times_unlockable=1)
                 db.session.add(link)
+        else:
+            print(f"Class or Perk missing.")
 
     db.session.commit()
